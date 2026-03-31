@@ -6,275 +6,185 @@
 <title>SDG 3 — Good Health & Well-Being</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #1D9E75; --green-light: #E1F5EE; --green-dark: #085041;
+  --green-mid: #5DCAA5; --text: #111; --muted: #666;
+  --border: #e5e5e5; --bg: #fafaf8; --white: #fff;
+  --amber: #EF9F27; --red: #E24B4A;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 
-  :root {
-    --green: #1D9E75;
-    --green-light: #E1F5EE;
-    --green-dark: #085041;
-    --green-mid: #5DCAA5;
-    --text: #111;
-    --muted: #666;
-    --border: #e5e5e5;
-    --bg: #fafaf8;
-    --white: #fff;
-  }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5vw; height: 60px;
+  background: rgba(250,250,248,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--text); text-decoration: none; }
+.nav-badge { background: var(--green); color: #fff; font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; }
+nav ul { list-style: none; display: flex; gap: 24px; }
+nav ul a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+nav ul a:hover { color: var(--green); }
 
-  html { scroll-behavior: smooth; }
+/* ── HERO ── */
+.hero {
+  padding: 130px 5vw 90px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  max-width: 1200px; margin: 0 auto;
+}
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; color: var(--green); background: var(--green-light); padding: 5px 14px; border-radius: 20px; margin-bottom: 22px; letter-spacing: 0.04em; text-transform: uppercase; }
+.hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(38px, 5vw, 62px); line-height: 1.1; margin-bottom: 18px; }
+.hero h1 em { font-style: italic; color: var(--green); }
+.hero p { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; max-width: 440px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary { background: var(--green); color: #fff; padding: 13px 28px; border-radius: 8px; font-size: 14px; font-weight: 500; text-decoration: none; transition: background 0.2s, transform 0.1s; }
+.btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+.btn-outline { border: 1.5px solid var(--border); color: var(--text); padding: 13px 28px; border-radius: 8px; font-size: 14px; font-weight: 500; text-decoration: none; transition: border-color 0.2s; }
+.btn-outline:hover { border-color: var(--green); color: var(--green); }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-  }
+.hero-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s forwards; }
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; grid-column: 1 / span 2; background: var(--green); border-color: var(--green); }
+.stat-num { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--green); margin-bottom: 4px; }
+.stat-card:nth-child(3) .stat-num { color: #fff; font-size: 40px; }
+.stat-label { font-size: 12px; color: var(--muted); line-height: 1.4; }
+.stat-card:nth-child(3) .stat-label { color: rgba(255,255,255,0.75); font-size: 13px; }
+.stat-icon { font-size: 20px; margin-bottom: 10px; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5vw; height: 60px;
-    background: rgba(250,250,248,0.9);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 14px; font-weight: 500; color: var(--text); text-decoration: none;
-  }
-  .nav-badge {
-    background: var(--green); color: #fff;
-    font-size: 11px; font-weight: 500;
-    padding: 3px 9px; border-radius: 20px;
-    letter-spacing: 0.03em;
-  }
-  nav ul { list-style: none; display: flex; gap: 28px; }
-  nav ul a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-  nav ul a:hover { color: var(--green); }
+/* ── SHARED ── */
+section { padding: 80px 5vw; max-width: 1200px; margin: 0 auto; }
+.section-tag { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 12px; }
+.section-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 3.5vw, 42px); line-height: 1.15; margin-bottom: 14px; }
+.section-desc { font-size: 15px; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 44px; }
+.divider { border: none; border-top: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
 
-  /* HERO */
-  .hero {
-    padding: 140px 5vw 100px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-    max-width: 1200px; margin: 0 auto;
-  }
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 12px; font-weight: 500; color: var(--green);
-    background: var(--green-light); padding: 5px 14px; border-radius: 20px;
-    margin-bottom: 24px; letter-spacing: 0.04em; text-transform: uppercase;
-  }
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(42px, 5vw, 64px);
-    line-height: 1.1; color: var(--text); margin-bottom: 20px;
-  }
-  .hero h1 em { font-style: italic; color: var(--green); }
-  .hero p { font-size: 17px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; max-width: 440px; }
-  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--green); color: #fff;
-    padding: 13px 28px; border-radius: 8px;
-    font-size: 14px; font-weight: 500; text-decoration: none;
-    transition: background 0.2s, transform 0.1s;
-  }
-  .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
-  .btn-outline {
-    border: 1.5px solid var(--border); color: var(--text);
-    padding: 13px 28px; border-radius: 8px;
-    font-size: 14px; font-weight: 500; text-decoration: none;
-    transition: border-color 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+/* ── ABOUT / TARGETS ── */
+.goals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.goal-item { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 22px; transition: border-color 0.2s, transform 0.2s; }
+.goal-item:hover { border-color: var(--green-mid); transform: translateY(-3px); }
+.goal-num { font-size: 11px; font-weight: 500; color: var(--green); background: var(--green-light); padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+.goal-item h3 { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.goal-item p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-  /* Hero visual */
-  .hero-visual {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-  }
-  .stat-card {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 16px; padding: 22px 20px;
-    opacity: 0; transform: translateY(20px);
-    animation: fadeUp 0.6s forwards;
-  }
-  .stat-card:nth-child(1) { animation-delay: 0.1s; }
-  .stat-card:nth-child(2) { animation-delay: 0.2s; grid-column: 1; grid-row: 2; }
-  .stat-card:nth-child(3) { animation-delay: 0.3s; grid-column: 2; grid-row: 1 / span 2; background: var(--green); border-color: var(--green); }
-  .stat-num { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--green); margin-bottom: 4px; }
-  .stat-card:nth-child(3) .stat-num { color: #fff; font-size: 42px; }
-  .stat-label { font-size: 12px; color: var(--muted); line-height: 1.4; }
-  .stat-card:nth-child(3) .stat-label { color: rgba(255,255,255,0.75); font-size: 13px; }
-  .stat-icon { font-size: 20px; margin-bottom: 12px; }
+/* ── DATA / CHART EMBED ── */
+.data-section { background: var(--white); border-radius: 20px; padding: 50px; border: 1px solid var(--border); }
 
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* ── BAR CHART ── */
+.bar-chart { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-label { font-size: 12px; color: var(--muted); width: 80px; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; background: var(--green-light); border-radius: 4px; height: 10px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; background: var(--green); transition: width 1.2s ease; }
+.bar-val { font-size: 12px; font-weight: 500; color: var(--green); width: 36px; }
 
-  /* SECTION common */
-  section { padding: 90px 5vw; max-width: 1200px; margin: 0 auto; }
-  .section-tag {
-    font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--green); margin-bottom: 14px;
-  }
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(30px, 3.5vw, 44px); line-height: 1.15;
-    margin-bottom: 16px;
-  }
-  .section-desc { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 48px; }
-  .divider { border: none; border-top: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
+/* ── PROBLEMS ── */
+.problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.problem-card { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--white); }
+.problem-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); }
+.problem-icon { font-size: 26px; margin-bottom: 8px; }
+.problem-card h3 { font-size: 14px; font-weight: 500; }
+.problem-body { padding: 16px 20px; }
+.problem-body p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.problem-stat { margin-top: 10px; font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--green); }
+.problem-stat span { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--muted); display: block; }
 
-  /* WHAT IS SDG 3 */
-  .goals-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
-  }
-  .goal-item {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 14px; padding: 24px;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .goal-item:hover { border-color: var(--green-mid); transform: translateY(-3px); }
-  .goal-num {
-    font-size: 11px; font-weight: 500; color: var(--green);
-    background: var(--green-light); padding: 3px 10px; border-radius: 20px;
-    display: inline-block; margin-bottom: 12px;
-  }
-  .goal-item h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
-  .goal-item p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+/* ── TIME MACHINE ── */
+.timemachine-wrap { background: var(--green-dark); border-radius: 20px; padding: 50px; position: relative; overflow: hidden; }
+.timemachine-wrap::before { content: '2030'; position: absolute; right: -10px; top: -30px; font-family: 'DM Serif Display', serif; font-size: 200px; opacity: 0.05; color: #fff; pointer-events: none; line-height: 1; }
+.tm-tag { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green-mid); margin-bottom: 10px; }
+.tm-title { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 3vw, 38px); color: #fff; margin-bottom: 10px; }
+.tm-desc { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 560px; line-height: 1.7; margin-bottom: 32px; }
+.tm-controls { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.year-display { font-family: 'DM Serif Display', serif; font-size: 40px; color: var(--green-mid); min-width: 80px; }
+.year-mode { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+.mode-hist { background: rgba(93,202,165,0.2); color: var(--green-mid); }
+.mode-pred { background: rgba(239,159,39,0.2); color: var(--amber); }
+.slider-wrap { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 6px; }
+.slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.4); }
+.target-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill { font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 0.5px solid rgba(255,255,255,0.2); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+.pill.active { background: var(--green); color: #fff; border-color: var(--green); }
+.region-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.region-card { background: rgba(255,255,255,0.07); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 18px; }
+.region-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.region-name { font-size: 13px; font-weight: 500; color: #fff; }
+.region-prob { font-family: 'DM Serif Display', serif; font-size: 26px; }
+.region-bars { display: flex; flex-direction: column; gap: 8px; }
+.rbar-row { display: flex; flex-direction: column; gap: 3px; }
+.rbar-info { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.5); }
+.rbar-val { font-weight: 500; color: #fff; }
+.rbar-track { background: rgba(255,255,255,0.1); border-radius: 3px; height: 6px; overflow: hidden; }
+.rbar-fill { height: 6px; border-radius: 3px; transition: width 0.8s ease; }
+.tm-bottom { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; }
+.tm-note { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+.factor-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.factor-chip { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: rgba(93,202,165,0.15); color: var(--green-mid); }
+.tm-summary { background: rgba(255,255,255,0.07); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 16px; min-width: 200px; }
+.tm-summary-title { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
+.tm-sum-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 0.5px solid rgba(255,255,255,0.08); font-size: 12px; color: rgba(255,255,255,0.7); }
+.tm-sum-item:last-child { border-bottom: none; }
+.prob-badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+.pb-high { background: rgba(29,158,117,0.3); color: var(--green-mid); }
+.pb-mid  { background: rgba(239,159,39,0.3); color: var(--amber); }
+.pb-low  { background: rgba(226,75,74,0.3); color: #f87171; }
 
-  /* DATA SECTION */
-  .data-section { background: var(--white); border-radius: 24px; padding: 60px; border: 1px solid var(--border); }
-  .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-  .big-stats { display: flex; flex-direction: column; gap: 28px; }
-  .big-stat-item { display: flex; align-items: flex-start; gap: 20px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
-  .big-stat-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .big-num { font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--green); line-height: 1; min-width: 120px; }
-  .big-desc h4 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
-  .big-desc p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+/* ── ACTIONS ── */
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.action-card { display: flex; gap: 16px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 22px; transition: border-color 0.2s; }
+.action-card:hover { border-color: var(--green); }
+.action-num { width: 34px; height: 34px; border-radius: 50%; background: var(--green-light); color: var(--green); font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.action-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 5px; }
+.action-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-  /* Bar chart */
-  .chart-title { font-size: 13px; font-weight: 500; margin-bottom: 20px; }
-  .bar-chart { display: flex; flex-direction: column; gap: 14px; }
-  .bar-row { display: flex; align-items: center; gap: 12px; }
-  .bar-label { font-size: 12px; color: var(--muted); width: 80px; text-align: right; flex-shrink: 0; }
-  .bar-track { flex: 1; background: var(--green-light); border-radius: 4px; height: 10px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 4px; background: var(--green); transition: width 1.2s ease; }
-  .bar-val { font-size: 12px; font-weight: 500; color: var(--green); width: 36px; }
+/* ── QUIZ ── */
+.quiz-box { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 36px; max-width: 660px; margin: 0 auto; }
+.quiz-progress { display: flex; gap: 6px; margin-bottom: 22px; }
+.quiz-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background 0.3s; }
+.quiz-dot.done { background: var(--green); }
+.quiz-q { font-size: 16px; font-weight: 500; margin-bottom: 20px; line-height: 1.5; }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.quiz-opt { padding: 13px 16px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; font-size: 14px; transition: all 0.15s; background: var(--bg); }
+.quiz-opt:hover { border-color: var(--green); background: var(--green-light); }
+.quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
+.quiz-opt.wrong { border-color: var(--red); background: #FCEBEB; color: #A32D2D; }
+.quiz-feedback { font-size: 13px; color: var(--muted); min-height: 22px; margin-bottom: 14px; }
+.quiz-next { background: var(--green); color: #fff; border: none; padding: 11px 26px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; display: none; font-family: 'DM Sans', sans-serif; }
+.quiz-next:hover { background: var(--green-dark); }
 
-  /* PROBLEMS */
-  .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .problem-card {
-    border-radius: 16px; overflow: hidden;
-    border: 1px solid var(--border); background: var(--white);
-  }
-  .problem-header { padding: 20px 22px 16px; border-bottom: 1px solid var(--border); }
-  .problem-icon { font-size: 28px; margin-bottom: 10px; }
-  .problem-card h3 { font-size: 15px; font-weight: 500; }
-  .problem-body { padding: 18px 22px; }
-  .problem-body p { font-size: 13px; color: var(--muted); line-height: 1.65; }
-  .problem-stat { margin-top: 12px; font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--green); }
-  .problem-stat span { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--muted); display: block; }
+/* ── SOURCES ── */
+.sources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.source-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.2s; display: flex; align-items: center; gap: 12px; }
+.source-card:hover { border-color: var(--green); transform: translateY(-2px); }
+.source-logo { width: 38px; height: 38px; border-radius: 8px; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.source-card h4 { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.source-card p { font-size: 11px; color: var(--muted); }
 
-  /* WHAT WE CAN DO */
-  .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .action-card {
-    display: flex; gap: 18px; align-items: flex-start;
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 14px; padding: 24px;
-    transition: border-color 0.2s;
-  }
-  .action-card:hover { border-color: var(--green); }
-  .action-num {
-    width: 36px; height: 36px; border-radius: 50%; background: var(--green-light);
-    color: var(--green); font-size: 14px; font-weight: 500;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .action-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
-  .action-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(--border); padding: 32px 5vw; display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; font-size: 13px; color: var(--muted); flex-wrap: wrap; gap: 10px; }
 
-  /* PROGRESS */
-  .progress-section {
-    background: var(--green-dark); border-radius: 24px; padding: 60px;
-    color: #fff; overflow: hidden; position: relative;
-  }
-  .progress-section::before {
-    content: '3'; position: absolute; right: -20px; top: -40px;
-    font-family: 'DM Serif Display', serif; font-size: 300px; opacity: 0.04;
-    color: #fff; line-height: 1; pointer-events: none;
-  }
-  .progress-section .section-tag { color: var(--green-mid); }
-  .progress-section .section-title { color: #fff; }
-  .progress-section .section-desc { color: rgba(255,255,255,0.65); }
-  .progress-bars { display: flex; flex-direction: column; gap: 22px; }
-  .prog-row { display: flex; flex-direction: column; gap: 8px; }
-  .prog-info { display: flex; justify-content: space-between; align-items: baseline; }
-  .prog-name { font-size: 14px; color: rgba(255,255,255,0.85); }
-  .prog-pct { font-size: 14px; font-weight: 500; color: var(--green-mid); }
-  .prog-track { background: rgba(255,255,255,0.1); border-radius: 4px; height: 8px; overflow: hidden; }
-  .prog-fill { height: 100%; border-radius: 4px; background: var(--green-mid); transition: width 1.5s ease; }
-
-  /* SOURCES */
-  .sources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .source-card {
-    border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
-    text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.2s;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .source-card:hover { border-color: var(--green); transform: translateY(-2px); }
-  .source-logo {
-    width: 40px; height: 40px; border-radius: 8px;
-    background: var(--green-light); display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-  }
-  .source-card h4 { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
-  .source-card p { font-size: 12px; color: var(--muted); }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 36px 5vw;
-    display: flex; align-items: center; justify-content: space-between;
-    max-width: 1200px; margin: 0 auto;
-    font-size: 13px; color: var(--muted);
-  }
-  footer strong { color: var(--text); }
-
-  /* QUIZ */
-  .quiz-box {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 20px; padding: 40px;
-    max-width: 680px; margin: 0 auto;
-  }
-  .quiz-q { font-size: 17px; font-weight: 500; margin-bottom: 22px; line-height: 1.5; }
-  .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-  .quiz-opt {
-    padding: 14px 18px; border: 1.5px solid var(--border);
-    border-radius: 10px; cursor: pointer; font-size: 14px;
-    transition: all 0.15s; background: var(--bg);
-  }
-  .quiz-opt:hover { border-color: var(--green); background: var(--green-light); }
-  .quiz-opt.correct { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
-  .quiz-opt.wrong { border-color: #E24B4A; background: #FCEBEB; color: #A32D2D; }
-  .quiz-feedback { font-size: 14px; color: var(--muted); min-height: 24px; margin-bottom: 16px; }
-  .quiz-next {
-    background: var(--green); color: #fff;
-    border: none; padding: 12px 28px; border-radius: 8px;
-    font-size: 14px; font-weight: 500; cursor: pointer; display: none;
-  }
-  .quiz-next:hover { background: var(--green-dark); }
-  .quiz-progress { display: flex; gap: 6px; margin-bottom: 24px; }
-  .quiz-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background 0.3s; }
-  .quiz-dot.done { background: var(--green); }
-
-  @media (max-width: 768px) {
-    .hero { grid-template-columns: 1fr; }
-    .hero-visual { display: none; }
-    .data-grid { grid-template-columns: 1fr; }
-    .problem-grid { grid-template-columns: 1fr; }
-    .action-grid { grid-template-columns: 1fr; }
-    .sources-grid { grid-template-columns: 1fr; }
-    .data-section, .progress-section { padding: 36px 24px; }
-  }
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .region-grid { grid-template-columns: 1fr 1fr; }
+  .sources-grid { grid-template-columns: 1fr 1fr; }
+  .data-section { padding: 28px 20px; }
+  .timemachine-wrap { padding: 30px 20px; }
+}
+@media (max-width: 600px) {
+  .action-grid { grid-template-columns: 1fr; }
+  .region-grid { grid-template-columns: 1fr; }
+  .sources-grid { grid-template-columns: 1fr; }
+  .tm-bottom { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -289,21 +199,22 @@
     <li><a href="#about">About</a></li>
     <li><a href="#data">Data</a></li>
     <li><a href="#problems">Issues</a></li>
+    <li><a href="#timemachine">Time Machine</a></li>
     <li><a href="#actions">Act</a></li>
     <li><a href="#quiz">Quiz</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
-<div style="max-width:1200px;margin:0 auto;">
+<div id="hero" style="max-width:1200px;margin:0 auto;">
   <div class="hero">
-    <div class="hero-text">
+    <div>
       <div class="hero-tag">🌍 UN Sustainable Development Goal</div>
       <h1>Good Health &amp; <em>Well-Being</em> for All</h1>
-      <p>Ensuring healthy lives and promoting well-being for all ages is essential to sustainable development. SDG 3 targets the world's most critical health challenges.</p>
+      <p>Ensuring healthy lives and promoting well-being for all ages is essential to sustainable development. SDG 3 targets the world's most critical health challenges by 2030.</p>
       <div class="hero-btns">
         <a href="#about" class="btn-primary">Explore the Goal</a>
-        <a href="#quiz" class="btn-outline">Take the Quiz</a>
+        <a href="#timemachine" class="btn-outline">⏳ Time Machine</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -315,7 +226,7 @@
       <div class="stat-card">
         <div class="stat-icon">👶</div>
         <div class="stat-num">5M</div>
-        <div class="stat-label">Children under 5 die annually from preventable causes</div>
+        <div class="stat-label">Children under 5 die annually</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">2030</div>
@@ -327,42 +238,18 @@
 
 <hr class="divider">
 
-<!-- WHAT IS SDG 3 -->
+<!-- ABOUT -->
 <section id="about">
   <div class="section-tag">What is SDG 3</div>
   <h2 class="section-title">13 Targets for a Healthier World</h2>
   <p class="section-desc">SDG 3 covers the full spectrum of health — from child mortality and infectious disease to mental health and universal healthcare access.</p>
   <div class="goals-grid">
-    <div class="goal-item">
-      <div class="goal-num">Target 3.1</div>
-      <h3>Maternal Mortality</h3>
-      <p>Reduce the global maternal mortality ratio to fewer than 70 per 100,000 live births by 2030.</p>
-    </div>
-    <div class="goal-item">
-      <div class="goal-num">Target 3.2</div>
-      <h3>Child Mortality</h3>
-      <p>End preventable deaths of newborns and children under 5 years of age.</p>
-    </div>
-    <div class="goal-item">
-      <div class="goal-num">Target 3.3</div>
-      <h3>Infectious Diseases</h3>
-      <p>End AIDS, tuberculosis, malaria and neglected tropical diseases; combat hepatitis and waterborne diseases.</p>
-    </div>
-    <div class="goal-item">
-      <div class="goal-num">Target 3.4</div>
-      <h3>Non-Communicable Diseases</h3>
-      <p>Reduce premature mortality from NCDs by one third through prevention and treatment by 2030.</p>
-    </div>
-    <div class="goal-item">
-      <div class="goal-num">Target 3.5</div>
-      <h3>Mental Health</h3>
-      <p>Strengthen the prevention and treatment of substance abuse, including narcotic drug and alcohol use.</p>
-    </div>
-    <div class="goal-item">
-      <div class="goal-num">Target 3.8</div>
-      <h3>Universal Health Coverage</h3>
-      <p>Achieve universal health coverage — quality essential services, medicines and vaccines for all.</p>
-    </div>
+    <div class="goal-item"><div class="goal-num">Target 3.1</div><h3>Maternal Mortality</h3><p>Reduce global maternal mortality to fewer than 70 per 100,000 live births by 2030.</p></div>
+    <div class="goal-item"><div class="goal-num">Target 3.2</div><h3>Child Mortality</h3><p>End preventable deaths of newborns and children under 5 years of age.</p></div>
+    <div class="goal-item"><div class="goal-num">Target 3.3</div><h3>Infectious Diseases</h3><p>End AIDS, tuberculosis, malaria and neglected tropical diseases by 2030.</p></div>
+    <div class="goal-item"><div class="goal-num">Target 3.4</div><h3>Non-Communicable Diseases</h3><p>Reduce premature mortality from NCDs by one third through prevention and treatment.</p></div>
+    <div class="goal-item"><div class="goal-num">Target 3.5</div><h3>Mental Health</h3><p>Strengthen prevention and treatment of substance abuse and mental health disorders.</p></div>
+    <div class="goal-item"><div class="goal-num">Target 3.8</div><h3>Universal Health Coverage</h3><p>Achieve UHC — quality essential services, medicines and vaccines for all.</p></div>
   </div>
 </section>
 
@@ -371,65 +258,173 @@
 <!-- DATA -->
 <section id="data" style="padding-top:0;">
   <div class="data-section">
-    <div class="data-grid">
-      <div>
-        <div class="section-tag">Global Statistics</div>
-        <h2 class="section-title">The Numbers That Matter</h2>
-        <div class="big-stats">
-          <div class="big-stat-item">
-            <div class="big-num">4.5B</div>
-            <div class="big-desc">
-              <h4>People lack full health coverage</h4>
-              <p>More than half the world's population cannot access essential health services without financial hardship.</p>
-            </div>
-          </div>
-          <div class="big-stat-item">
-            <div class="big-num">1M+</div>
-            <div class="big-desc">
-              <h4>TB deaths annually</h4>
-              <p>Tuberculosis remains one of the world's deadliest infectious diseases, yet it is treatable and preventable.</p>
-            </div>
-          </div>
-          <div class="big-stat-item">
-            <div class="big-num">700K</div>
-            <div class="big-desc">
-              <h4>Suicide deaths per year</h4>
-              <p>Mental health is one of the most neglected areas of global health, with 1 in 8 people living with a disorder.</p>
-            </div>
-          </div>
+    <div class="section-tag">Target 3.1 — Global Health Data</div>
+    <h2 class="section-title">孕產婦死亡率：數字背後的真相</h2>
+    <p class="section-desc">數據來源：WHO / UN MMEIG (2023)。每一個數字都代表一條生命。</p>
+
+    <!-- LIVE COUNTER -->
+    <div style="background:var(--green-dark);border-radius:16px;padding:32px;margin-bottom:24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;position:relative;overflow:hidden;">
+      <div style="position:absolute;right:-10px;top:-20px;font-family:'DM Serif Display',serif;font-size:160px;opacity:0.05;color:#fff;pointer-events:none;line-height:1;">3.1</div>
+      <div style="text-align:center;">
+        <div style="font-size:11px;color:var(--green-mid);font-weight:500;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">自你開啟網頁以來</div>
+        <div id="counter-deaths" style="font-family:'DM Serif Display',serif;font-size:42px;color:#fff;line-height:1;margin-bottom:4px;">0</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.5);">位孕產婦死亡</div>
+      </div>
+      <div style="text-align:center;border-left:0.5px solid rgba(255,255,255,0.1);border-right:0.5px solid rgba(255,255,255,0.1);">
+        <div style="font-size:11px;color:var(--green-mid);font-weight:500;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">全球每年</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:42px;color:#fff;line-height:1;margin-bottom:4px;">287K</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.5);">孕產婦死亡（2020）</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:11px;color:var(--green-mid);font-weight:500;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">約每</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:42px;color:#fff;line-height:1;margin-bottom:4px;">2 min</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.5);">一位孕婦因生產死亡</div>
+      </div>
+    </div>
+
+    <!-- COUNTRY COMPARATOR -->
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <span style="font-size:13px;font-weight:500;">各國孕產婦死亡率比較（每 100,000 活產）</span>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <label style="font-size:12px;color:var(--muted);">選擇國家：</label>
+          <select id="country-select" style="font-size:12px;padding:5px 10px;border:0.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);cursor:pointer;">
+            <option value="taiwan">台灣 (16)</option>
+            <option value="japan">日本 (4)</option>
+            <option value="usa">美國 (23)</option>
+            <option value="brazil">巴西 (72)</option>
+            <option value="india">印度 (103)</option>
+            <option value="nigeria">奈及利亞 (1047)</option>
+          </select>
         </div>
       </div>
-      <div>
-        <div class="chart-title">Life Expectancy by Region (2023)</div>
-        <div class="bar-chart" id="barChart">
-          <div class="bar-row">
-            <div class="bar-label">Europe</div>
-            <div class="bar-track"><div class="bar-fill" data-width="90%" style="width:0"></div></div>
-            <div class="bar-val">78</div>
+      <div style="padding:24px 24px 8px;">
+        <div id="country-bars-wrap"></div>
+        <div style="margin-top:16px;padding:12px 16px;background:var(--green-light);border-radius:10px;font-size:12px;color:var(--green-dark);line-height:1.6;">
+          <strong>SDG 3.1 目標：</strong> 到 2030 年，全球孕產婦死亡率降至每 100,000 個活產不超過 <strong>70</strong> 人。目前全球平均為 <strong>223</strong>，距目標仍有差距。
+        </div>
+      </div>
+      <div style="padding:10px 20px 14px;font-size:11px;color:var(--muted);">
+        📋 數據來源：WHO / UN MMEIG (2023) ·
+        <a href="https://ourworldindata.org/maternal-mortality" target="_blank" style="color:var(--green);text-decoration:none;">Our World in Data</a>
+      </div>
+    </div>
+
+    <!-- TARGET 3.2 -->
+    <div id="t32" style="margin-top:48px;">
+      <div class="section-tag">Target 3.2 — Child Mortality</div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:8px;">終結5歲以下兒童可預防死亡</h3>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">SDG 目標：每 1,000 個活產中，新生兒死亡率不超過 12，5歲以下死亡率不超過 25。</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:var(--green-dark);border-radius:14px;padding:24px;position:relative;overflow:hidden;">
+          <div style="position:absolute;right:-5px;top:-15px;font-family:'DM Serif Display',serif;font-size:120px;opacity:0.05;color:#fff;line-height:1;">3.2</div>
+          <div style="font-size:11px;color:var(--green-mid);font-weight:500;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">自你開啟網頁以來</div>
+          <div id="counter-child" style="font-family:'DM Serif Display',serif;font-size:38px;color:#fff;line-height:1;margin-bottom:4px;">0</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.5);">位5歲以下兒童死亡</div>
+          <div style="margin-top:16px;padding-top:16px;border-top:0.5px solid rgba(255,255,255,0.1);">
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">全球每年約 <span style="color:var(--green-mid);font-weight:500;">4.9M</span> 名5歲以下兒童死亡</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">約每 <span style="color:var(--green-mid);font-weight:500;">6.4 秒</span> 一名兒童死亡</div>
           </div>
-          <div class="bar-row">
-            <div class="bar-label">Americas</div>
-            <div class="bar-track"><div class="bar-fill" data-width="82%" style="width:0"></div></div>
-            <div class="bar-val">72</div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label">Asia</div>
-            <div class="bar-track"><div class="bar-fill" data-width="76%" style="width:0"></div></div>
-            <div class="bar-val">72</div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label">Oceania</div>
-            <div class="bar-track"><div class="bar-fill" data-width="70%" style="width:0"></div></div>
-            <div class="bar-val">68</div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label">Africa</div>
-            <div class="bar-track"><div class="bar-fill" data-width="58%" style="width:0"></div></div>
-            <div class="bar-val">64</div>
-          </div>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:16px;">各區域5歲以下死亡率（每 1,000 活產，2022）</div>
+          <div id="child-bars"></div>
+          <div style="margin-top:12px;font-size:11px;color:var(--muted);">📋 來源：UNICEF / WHO (2023) · 目標門檻：25</div>
         </div>
       </div>
     </div>
+
+    <!-- TARGET 3.3 -->
+    <div id="t33" style="margin-top:48px;">
+      <div class="section-tag">Target 3.3 — Infectious Diseases</div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:8px;">對抗傳染病</h3>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">SDG 目標：2030 年前終結 AIDS、肺結核、瘧疾等傳染病的流行。</p>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;">主要傳染病年死亡人數（2022，百萬）</div>
+        <div style="padding:24px;" id="disease-chart"></div>
+        <div style="padding:10px 20px 14px;font-size:11px;color:var(--muted);">📋 來源：WHO Global Health Estimates (2022)</div>
+      </div>
+    </div>
+
+    <!-- TARGET 3.4 -->
+    <div id="t34" style="margin-top:48px;">
+      <div class="section-tag">Target 3.4 — Non-Communicable Diseases</div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:8px;">減少非傳染性疾病與心理健康問題</h3>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">SDG 目標：2030 年前將非傳染性疾病過早死亡率降低三分之一。</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:16px;">全球死因分布（% of total deaths, 2022）</div>
+          <div style="display:flex;align-items:center;gap:24px;">
+            <div style="position:relative;width:120px;height:120px;flex-shrink:0;">
+              <svg viewBox="0 0 120 120" style="width:120px;height:120px;transform:rotate(-90deg);">
+                <circle cx="60" cy="60" r="48" fill="none" stroke="#f0f0f0" stroke-width="18"/>
+                <circle cx="60" cy="60" r="48" fill="none" stroke="#1D9E75" stroke-width="18" stroke-dasharray="180 302" stroke-dashoffset="0"/>
+                <circle cx="60" cy="60" r="48" fill="none" stroke="#EF9F27" stroke-width="18" stroke-dasharray="60 302" stroke-dashoffset="-180"/>
+                <circle cx="60" cy="60" r="48" fill="none" stroke="#E24B4A" stroke-width="18" stroke-dasharray="62 302" stroke-dashoffset="-240"/>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <div style="font-size:18px;font-weight:500;">74%</div>
+                <div style="font-size:10px;color:var(--muted);">NCD</div>
+              </div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:2px;background:#1D9E75;flex-shrink:0;"></div><div><div style="font-size:13px;font-weight:500;">74% 非傳染病</div><div style="font-size:11px;color:var(--muted);">心臟病、癌症、糖尿病等</div></div></div>
+              <div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:2px;background:#EF9F27;flex-shrink:0;"></div><div><div style="font-size:13px;font-weight:500;">20% 傳染病</div><div style="font-size:11px;color:var(--muted);">AIDS、TB、瘧疾等</div></div></div>
+              <div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:2px;background:#E24B4A;flex-shrink:0;"></div><div><div style="font-size:13px;font-weight:500;">6% 傷害</div><div style="font-size:11px;color:var(--muted);">交通事故、暴力等</div></div></div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:11px;color:var(--muted);">📋 來源：WHO Global Health Estimates (2022)</div>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:16px;">心理健康：全球負擔</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:var(--green-light);border-radius:10px;padding:14px 16px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--green);margin-bottom:2px;">970M</div>
+              <div style="font-size:12px;color:var(--green-dark);">全球心理疾患人數（2022）</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div style="background:var(--bg);border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:22px;font-weight:500;color:var(--text);">1 in 8</div>
+                <div style="font-size:11px;color:var(--muted);">全球人口受影響</div>
+              </div>
+              <div style="background:var(--bg);border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:22px;font-weight:500;color:var(--red);">&lt;2%</div>
+                <div style="font-size:11px;color:var(--muted);">政府健康預算用於心理</div>
+              </div>
+              <div style="background:var(--bg);border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:22px;font-weight:500;color:var(--amber);">700K</div>
+                <div style="font-size:11px;color:var(--muted);">每年自殺死亡人數</div>
+              </div>
+              <div style="background:var(--bg);border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:22px;font-weight:500;color:var(--text);">71%</div>
+                <div style="font-size:11px;color:var(--muted);">低收入國家治療缺口</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--muted);">📋 來源：WHO World Mental Health Report (2022)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARGET 3.8 -->
+    <div id="t38" style="margin-top:48px;">
+      <div class="section-tag">Target 3.8 — Universal Health Coverage</div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:8px;">全民健保覆蓋率</h3>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">SDG 目標：確保所有人都能獲得基本醫療服務，不因付費而陷入財務困難。</p>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <span style="font-size:13px;font-weight:500;">各國 UHC 服務覆蓋指數（0–100）</span>
+          <div style="display:flex;gap:8px;">
+            <span style="font-size:11px;padding:3px 10px;border-radius:20px;background:var(--green-light);color:var(--green-dark);">■ 已達目標 ≥80</span>
+            <span style="font-size:11px;padding:3px 10px;border-radius:20px;background:#FAEEDA;color:#633806;">■ 接近目標</span>
+            <span style="font-size:11px;padding:3px 10px;border-radius:20px;background:#FCEBEB;color:#A32D2D;">■ 仍需改善</span>
+          </div>
+        </div>
+        <div style="padding:24px;" id="uhc-chart"></div>
+        <div style="padding:10px 20px 14px;font-size:11px;color:var(--muted);">📋 來源：WHO UHC Service Coverage Index (2021) · 目標：≥80</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -442,66 +437,64 @@
   <p class="section-desc">Despite global progress, billions still face avoidable illness, death, and inequality in healthcare access.</p>
   <div class="problem-grid">
     <div class="problem-card">
-      <div class="problem-header">
-        <div class="problem-icon">🦟</div>
-        <h3>Infectious Disease</h3>
-      </div>
-      <div class="problem-body">
-        <p>Malaria, HIV/AIDS and tuberculosis continue to devastate communities in low-income countries with limited healthcare infrastructure.</p>
-        <div class="problem-stat">608K <span>malaria deaths in 2022 (WHO)</span></div>
-      </div>
+      <div class="problem-header"><div class="problem-icon">🦟</div><h3>Infectious Disease</h3></div>
+      <div class="problem-body"><p>Malaria, HIV/AIDS and tuberculosis continue to devastate communities in low-income countries with limited healthcare infrastructure.</p><div class="problem-stat">608K <span>malaria deaths in 2022 (WHO)</span></div></div>
     </div>
     <div class="problem-card">
-      <div class="problem-header">
-        <div class="problem-icon">🧠</div>
-        <h3>Mental Health Crisis</h3>
-      </div>
-      <div class="problem-body">
-        <p>1 in 8 people worldwide lives with a mental disorder, yet global mental health spending is less than 2% of health budgets.</p>
-        <div class="problem-stat">1 in 8 <span>people affected globally</span></div>
-      </div>
+      <div class="problem-header"><div class="problem-icon">🧠</div><h3>Mental Health Crisis</h3></div>
+      <div class="problem-body"><p>1 in 8 people worldwide lives with a mental disorder, yet global mental health spending is less than 2% of health budgets.</p><div class="problem-stat">1 in 8 <span>people affected globally</span></div></div>
     </div>
     <div class="problem-card">
-      <div class="problem-header">
-        <div class="problem-icon">🏥</div>
-        <h3>Healthcare Inequality</h3>
-      </div>
-      <div class="problem-body">
-        <p>Wealthy nations have 10× more doctors per person than low-income nations. Where you are born determines your access to care.</p>
-        <div class="problem-stat">10× <span>doctor gap between rich and poor nations</span></div>
-      </div>
+      <div class="problem-header"><div class="problem-icon">🏥</div><h3>Healthcare Inequality</h3></div>
+      <div class="problem-body"><p>Wealthy nations have 10× more doctors per person than low-income nations. Where you are born determines your access to care.</p><div class="problem-stat">10× <span>doctor gap between rich and poor nations</span></div></div>
     </div>
   </div>
 </section>
 
 <hr class="divider">
 
-<!-- PROGRESS -->
-<section style="padding:0 5vw 90px;">
-  <div class="progress-section">
-    <div class="section-tag">SDG 3 Progress Tracker</div>
-    <h2 class="section-title">How Far Have We Come?</h2>
-    <p class="section-desc">The world is off-track on most SDG 3 targets. Here is the estimated global progress as of 2024.</p>
-    <div class="progress-bars" id="progressBars">
-      <div class="prog-row">
-        <div class="prog-info"><span class="prog-name">Child mortality reduction</span><span class="prog-pct">68%</span></div>
-        <div class="prog-track"><div class="prog-fill" data-width="68%" style="width:0"></div></div>
+<!-- TIME MACHINE -->
+<section id="timemachine" style="padding-top:0;padding-bottom:0;">
+  <div class="timemachine-wrap">
+    <div class="tm-tag">⏳ Health Gap Time Machine</div>
+    <h2 class="tm-title">從 1990 到 2030：健康差距會消失嗎？</h2>
+    <p class="tm-desc">拖動時間軸查看歷史數據，並透過多因子預測模型推估 2030 年各項目標的達成機率。</p>
+
+    <div class="tm-controls">
+      <div>
+        <span class="year-display" id="year-label">2000</span>
+        <span class="year-mode mode-hist" id="mode-badge">歷史數據</span>
       </div>
-      <div class="prog-row">
-        <div class="prog-info"><span class="prog-name">Universal health coverage</span><span class="prog-pct">45%</span></div>
-        <div class="prog-track"><div class="prog-fill" data-width="45%" style="width:0"></div></div>
+      <div class="slider-wrap">
+        <input type="range" id="year-slider" min="1990" max="2030" value="2000" step="1" style="width:100%;">
+        <div class="slider-labels"><span>1990</span><span>2000</span><span>2010</span><span>今天</span><span>2030</span></div>
       </div>
-      <div class="prog-row">
-        <div class="prog-info"><span class="prog-name">HIV/AIDS response</span><span class="prog-pct">71%</span></div>
-        <div class="prog-track"><div class="prog-fill" data-width="71%" style="width:0"></div></div>
+      <div class="target-pills">
+        <button class="pill active" data-target="t31">3.1 孕產婦</button>
+        <button class="pill" data-target="t32">3.2 兒童死亡</button>
+        <button class="pill" data-target="t34">3.4 非傳染病</button>
+        <button class="pill" data-target="t38">3.8 健保覆蓋</button>
       </div>
-      <div class="prog-row">
-        <div class="prog-info"><span class="prog-name">Maternal mortality reduction</span><span class="prog-pct">38%</span></div>
-        <div class="prog-track"><div class="prog-fill" data-width="38%" style="width:0"></div></div>
+    </div>
+
+    <div class="region-grid" id="region-grid"></div>
+
+    <div class="tm-bottom">
+      <div class="tm-note">
+        <strong style="color:rgba(255,255,255,0.7);">預測模型說明</strong><br>
+        加權邏輯回歸，結合歷史趨勢外推與多項結構性因子修正。2024 年後為模型推估。
+        <div class="factor-chips">
+          <span class="factor-chip">📉 改善速度</span>
+          <span class="factor-chip">📏 距目標差距</span>
+          <span class="factor-chip">💰 GDP per capita</span>
+          <span class="factor-chip">🏥 醫療支出%</span>
+          <span class="factor-chip">👨‍⚕️ 醫生密度</span>
+          <span class="factor-chip">🌍 地區因子</span>
+        </div>
       </div>
-      <div class="prog-row">
-        <div class="prog-info"><span class="prog-name">Mental health coverage</span><span class="prog-pct">22%</span></div>
-        <div class="prog-track"><div class="prog-fill" data-width="22%" style="width:0"></div></div>
+      <div class="tm-summary">
+        <div class="tm-summary-title">2030 達成機率總覽</div>
+        <div id="summary-list"></div>
       </div>
     </div>
   </div>
@@ -511,50 +504,14 @@
 <section id="actions">
   <div class="section-tag">What Can We Do</div>
   <h2 class="section-title">Every Action Counts</h2>
-  <p class="section-desc">Achieving SDG 3 requires action at every level — from global policy to individual choices.</p>
+  <p class="section-desc">Achieving SDG 3 requires action at every level — from global policy to individual daily choices.</p>
   <div class="action-grid">
-    <div class="action-card">
-      <div class="action-num">1</div>
-      <div>
-        <h3>Stay Vaccinated</h3>
-        <p>Vaccines prevent up to 3 million deaths annually. Keep your vaccinations up to date and encourage others to do the same.</p>
-      </div>
-    </div>
-    <div class="action-card">
-      <div class="action-num">2</div>
-      <div>
-        <h3>Support Mental Health</h3>
-        <p>Check in on those around you. Reduce stigma around mental illness by talking openly and seeking help when needed.</p>
-      </div>
-    </div>
-    <div class="action-card">
-      <div class="action-num">3</div>
-      <div>
-        <h3>Advocate for Universal Coverage</h3>
-        <p>Support policies that expand healthcare access. Write to your representatives. Vote for leaders who prioritize public health.</p>
-      </div>
-    </div>
-    <div class="action-card">
-      <div class="action-num">4</div>
-      <div>
-        <h3>Donate & Volunteer</h3>
-        <p>Organizations like MSF, WHO, and UNICEF save lives daily. Even small contributions fund medicines, vaccines, and training.</p>
-      </div>
-    </div>
-    <div class="action-card">
-      <div class="action-num">5</div>
-      <div>
-        <h3>Adopt Healthy Habits</h3>
-        <p>Exercise, nutrition, sleep, and avoiding tobacco reduce chronic disease burden — for you and for health systems worldwide.</p>
-      </div>
-    </div>
-    <div class="action-card">
-      <div class="action-num">6</div>
-      <div>
-        <h3>Spread Awareness</h3>
-        <p>Share accurate health information. Counter misinformation. Educating one person can change a community's health outcomes.</p>
-      </div>
-    </div>
+    <div class="action-card"><div class="action-num">1</div><div><h3>Stay Vaccinated</h3><p>Vaccines prevent up to 3 million deaths annually. Keep yours up to date and encourage others to do the same.</p></div></div>
+    <div class="action-card"><div class="action-num">2</div><div><h3>Support Mental Health</h3><p>Check in on those around you. Reduce stigma by talking openly and seeking help when needed.</p></div></div>
+    <div class="action-card"><div class="action-num">3</div><div><h3>Advocate for Universal Coverage</h3><p>Support policies that expand healthcare access. Vote for leaders who prioritize public health.</p></div></div>
+    <div class="action-card"><div class="action-num">4</div><div><h3>Donate & Volunteer</h3><p>Organizations like MSF, WHO, and UNICEF save lives daily. Even small contributions fund medicines and vaccines.</p></div></div>
+    <div class="action-card"><div class="action-num">5</div><div><h3>Adopt Healthy Habits</h3><p>Exercise, nutrition, sleep, and avoiding tobacco reduce chronic disease burden for you and health systems worldwide.</p></div></div>
+    <div class="action-card"><div class="action-num">6</div><div><h3>Spread Awareness</h3><p>Share accurate health information. Counter misinformation. Educating one person can change a community's health outcomes.</p></div></div>
   </div>
 </section>
 
@@ -564,7 +521,7 @@
 <section id="quiz">
   <div class="section-tag">Interactive</div>
   <h2 class="section-title" style="text-align:center;">Test Your Knowledge</h2>
-  <p class="section-desc" style="margin:0 auto 40px;text-align:center;">How much do you know about global health? Try this short quiz!</p>
+  <p class="section-desc" style="margin:0 auto 36px;text-align:center;">How much do you know about global health?</p>
   <div class="quiz-box">
     <div class="quiz-progress" id="quizProgress"></div>
     <div class="quiz-q" id="quizQ"></div>
@@ -579,167 +536,398 @@
 <!-- SOURCES -->
 <section>
   <div class="section-tag">References</div>
-  <h2 class="section-title">Our Sources</h2>
-  <p class="section-desc">All data and information on this page is drawn from reputable international organizations.</p>
+  <h2 class="section-title">Content Sources</h2>
+  <p class="section-desc">All data on this page is drawn from reputable international organizations.</p>
   <div class="sources-grid">
-    <a class="source-card" href="https://www.who.int" target="_blank">
-      <div class="source-logo">🏥</div>
-      <div>
-        <h4>World Health Organization</h4>
-        <p>Global health data & reports</p>
-      </div>
-    </a>
-    <a class="source-card" href="https://sdgs.un.org/goals/goal3" target="_blank">
-      <div class="source-logo">🌐</div>
-      <div>
-        <h4>UN SDG Official Page</h4>
-        <p>SDG 3 targets & indicators</p>
-      </div>
-    </a>
-    <a class="source-card" href="https://ourworldindata.org" target="_blank">
-      <div class="source-logo">📊</div>
-      <div>
-        <h4>Our World in Data</h4>
-        <p>Interactive health statistics</p>
-      </div>
-    </a>
-    <a class="source-card" href="https://www.unicef.org" target="_blank">
-      <div class="source-logo">👶</div>
-      <div>
-        <h4>UNICEF</h4>
-        <p>Child health & mortality data</p>
-      </div>
-    </a>
-    <a class="source-card" href="https://www.worldbank.org" target="_blank">
-      <div class="source-logo">🏦</div>
-      <div>
-        <h4>World Bank</h4>
-        <p>Health system & economic data</p>
-      </div>
-    </a>
-    <a class="source-card" href="https://www.un.org/sustainabledevelopment/" target="_blank">
-      <div class="source-logo">📋</div>
-      <div>
-        <h4>UN Sustainable Development</h4>
-        <p>SDG progress reports</p>
-      </div>
-    </a>
+    <a class="source-card" href="https://www.who.int/data" target="_blank"><div class="source-logo">🏥</div><div><h4>World Health Organization</h4><p>Global health data & reports</p></div></a>
+    <a class="source-card" href="https://sdgs.un.org/goals/goal3" target="_blank"><div class="source-logo">🌐</div><div><h4>UN SDG Official Page</h4><p>SDG 3 targets & indicators</p></div></a>
+    <a class="source-card" href="https://ourworldindata.org/maternal-mortality" target="_blank"><div class="source-logo">📊</div><div><h4>Our World in Data</h4><p>Interactive health statistics</p></div></a>
+    <a class="source-card" href="https://data.unicef.org" target="_blank"><div class="source-logo">👶</div><div><h4>UNICEF</h4><p>Child health & mortality data</p></div></a>
+    <a class="source-card" href="https://data.worldbank.org" target="_blank"><div class="source-logo">🏦</div><div><h4>World Bank</h4><p>GDP & healthcare spending data</p></div></a>
+    <a class="source-card" href="https://globalgoals.tw/3-good-health-and-well-being" target="_blank"><div class="source-logo">🇹🇼</div><div><h4>globalgoals.tw</h4><p>Traditional Chinese SDG reference</p></div></a>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div>Made for <strong>SDG 3 — Good Health & Well-Being</strong></div>
-  <div>Data sources: WHO · UN · Our World in Data · UNICEF</div>
+  <div>SDG 3 — Good Health & Well-Being</div>
+  <div>Data: WHO · UN MMEIG · Our World in Data · UNICEF</div>
 </footer>
 
 <script>
-  // Animate bars on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.bar-fill, .prog-fill').forEach(el => {
-          el.style.width = el.dataset.width;
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
+// ── LIVE COUNTER ─────────────────────────────────────────────
+// 287,000 deaths/year = ~0.909 per minute = ~0.01515 per second
+const deathsPerSec = 287000 / (365 * 24 * 3600);
+const startTime = Date.now();
+function updateCounter() {
+  const elapsed = (Date.now() - startTime) / 1000;
+  const count = (elapsed * deathsPerSec).toFixed(2);
+  const el = document.getElementById('counter-deaths');
+  if (el) el.textContent = count;
+  requestAnimationFrame(updateCounter);
+}
+updateCounter();
 
-  document.querySelectorAll('#barChart, #progressBars').forEach(el => observer.observe(el));
+// ── COUNTRY COMPARATOR ────────────────────────────────────────
+const countryData = {
+  taiwan:  { name:'台灣',      rate:16,   color:'#1D9E75', region:'東亞' },
+  japan:   { name:'日本',      rate:4,    color:'#1D9E75', region:'東亞' },
+  usa:     { name:'美國',      rate:23,   color:'#5DCAA5', region:'北美' },
+  brazil:  { name:'巴西',      rate:72,   color:'#EF9F27', region:'南美' },
+  india:   { name:'印度',      rate:103,  color:'#EF9F27', region:'南亞' },
+  nigeria: { name:'奈及利亞',  rate:1047, color:'#E24B4A', region:'非洲' },
+};
+const GOAL = 70;
+const MAX_RATE = 1200;
 
-  // Quiz
-  const questions = [
-    {
-      q: "How many people lack access to essential health services worldwide?",
-      opts: ["1 billion", "2.5 billion", "4.5 billion", "6 billion"],
-      ans: 2,
-      feedback: "Correct! About 4.5 billion people — more than half the world — lack full access to essential health services."
-    },
-    {
-      q: "What is the global average life expectancy as of 2023?",
-      opts: ["65 years", "68 years", "72 years", "78 years"],
-      ans: 2,
-      feedback: "Correct! The global average life expectancy is approximately 72 years, though it varies greatly by region."
-    },
-    {
-      q: "What percentage of the global population is affected by a mental health disorder?",
-      opts: ["1 in 20", "1 in 8", "1 in 4", "1 in 2"],
-      ans: 1,
-      feedback: "Correct! 1 in 8 people worldwide — roughly 970 million — live with a mental disorder (WHO, 2022)."
-    },
-    {
-      q: "What year does the UN target to achieve universal health coverage?",
-      opts: ["2025", "2030", "2035", "2050"],
-      ans: 1,
-      feedback: "Correct! The UN Sustainable Development Goals, including SDG 3, set 2030 as the target year."
-    },
-    {
-      q: "Which disease causes the most deaths among children under 5?",
-      opts: ["Malaria", "HIV/AIDS", "Pneumonia", "Diarrheal diseases"],
-      ans: 2,
-      feedback: "Correct! Pneumonia is the leading infectious killer of children under 5, accounting for 14% of under-5 deaths."
+const allCountries = [
+  { key:'norway',  name:'挪威',      rate:2,    color:'#1D9E75', region:'歐洲' },
+  { key:'japan',   name:'日本',      rate:4,    color:'#1D9E75', region:'東亞' },
+  { key:'taiwan',  name:'台灣',      rate:16,   color:'#1D9E75', region:'東亞' },
+  { key:'usa',     name:'美國',      rate:23,   color:'#5DCAA5', region:'北美' },
+  { key:'brazil',  name:'巴西',      rate:72,   color:'#EF9F27', region:'南美' },
+  { key:'india',   name:'印度',      rate:103,  color:'#EF9F27', region:'南亞' },
+  { key:'nigeria', name:'奈及利亞',  rate:1047, color:'#E24B4A', region:'非洲' },
+];
+
+function renderCountryBars(selectedKey) {
+  const selected = countryData[selectedKey];
+  const wrap = document.getElementById('country-bars-wrap');
+  if (!wrap) return;
+
+  // Always show these fixed + selected
+  const toShow = [...allCountries];
+  // make selected highlighted
+  wrap.innerHTML = toShow.map(c => {
+    const pct = Math.min(100, (c.rate / MAX_RATE) * 100);
+    const isSelected = c.key === selectedKey;
+    const atGoal = c.rate <= GOAL;
+    const barColor = atGoal ? '#1D9E75' : c.rate <= 150 ? '#EF9F27' : '#E24B4A';
+    const goalPct = (GOAL / MAX_RATE) * 100;
+    return `
+      <div style="margin-bottom:14px;${isSelected ? 'background:var(--green-light);border-radius:10px;padding:10px 12px;margin-left:-12px;margin-right:-12px;' : ''}">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:13px;font-weight:${isSelected?'500':'400'};color:var(--text);">${c.name}</span>
+            <span style="font-size:10px;padding:2px 7px;border-radius:20px;background:${atGoal?'#E1F5EE':'#FFF3E0'};color:${atGoal?'#085041':'#854F0B'};">${c.region}</span>
+            ${isSelected ? '<span style="font-size:10px;padding:2px 7px;border-radius:20px;background:var(--green);color:#fff;">▶ 已選</span>' : ''}
+          </div>
+          <span style="font-size:13px;font-weight:500;color:${barColor};">${c.rate.toLocaleString()}</span>
+        </div>
+        <div style="position:relative;background:#f0f0f0;border-radius:4px;height:10px;overflow:visible;">
+          <div style="height:10px;border-radius:4px;background:${barColor};width:${pct}%;transition:width 0.8s ease;"></div>
+          <div style="position:absolute;top:-3px;left:${goalPct}%;width:2px;height:16px;background:var(--green);border-radius:1px;" title="SDG 目標: 70"></div>
+        </div>
+      </div>`;
+  }).join('') + `<div style="display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;color:var(--muted);"><div style="width:12px;height:3px;background:var(--green);border-radius:1px;"></div>SDG 2030 目標線（70）</div>`;
+}
+
+const sel = document.getElementById('country-select');
+if (sel) {
+  renderCountryBars(sel.value);
+  sel.addEventListener('change', function() { renderCountryBars(this.value); });
+}
+
+// ── TARGET 3.2 COUNTER ───────────────────────────────────────
+// 4.9M child deaths/year
+const childDeathsPerSec = 4900000 / (365 * 24 * 3600);
+function updateChildCounter() {
+  const elapsed = (Date.now() - startTime) / 1000;
+  const el = document.getElementById('counter-child');
+  if (el) el.textContent = (elapsed * childDeathsPerSec).toFixed(1);
+  requestAnimationFrame(updateChildCounter);
+}
+updateChildCounter();
+
+// ── TARGET 3.2 BARS ───────────────────────────────────────────
+const childData = [
+  { region:'歐洲 / 北美', rate:4,  goal:25, color:'#1D9E75' },
+  { region:'東亞 / 太平洋', rate:8, goal:25, color:'#1D9E75' },
+  { region:'拉丁美洲',    rate:14, goal:25, color:'#5DCAA5' },
+  { region:'中東 / 北非', rate:18, goal:25, color:'#5DCAA5' },
+  { region:'南亞',        rate:35, goal:25, color:'#EF9F27' },
+  { region:'撒哈拉非洲',  rate:74, goal:25, color:'#E24B4A' },
+];
+function renderChildBars() {
+  const wrap = document.getElementById('child-bars');
+  if (!wrap) return;
+  const max = 80;
+  wrap.innerHTML = childData.map(d => {
+    const pct = Math.min(100, (d.rate/max)*100);
+    const goalPct = (d.goal/max)*100;
+    const ok = d.rate <= d.goal;
+    return `<div style="margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;">
+        <span style="color:var(--text);">${d.region}</span>
+        <span style="font-weight:500;color:${d.color};">${d.rate}</span>
+      </div>
+      <div style="position:relative;background:#f0f0f0;border-radius:3px;height:8px;">
+        <div style="height:8px;border-radius:3px;background:${d.color};width:${pct}%;"></div>
+        <div style="position:absolute;top:-2px;left:${goalPct}%;width:2px;height:12px;background:var(--green);border-radius:1px;"></div>
+      </div>
+    </div>`;
+  }).join('') + `<div style="display:flex;align-items:center;gap:5px;margin-top:6px;font-size:10px;color:var(--muted);"><div style="width:10px;height:2px;background:var(--green);"></div>目標線（25）</div>`;
+}
+
+// ── TARGET 3.3 CHART ──────────────────────────────────────────
+const diseaseData = [
+  { name:'下呼吸道感染', deaths:2.5, color:'#E24B4A' },
+  { name:'肺結核 (TB)',  deaths:1.3, color:'#EF9F27' },
+  { name:'瘧疾',         deaths:0.6, color:'#9F77DD' },
+  { name:'HIV / AIDS',   deaths:0.6, color:'#E24B4A' },
+  { name:'腹瀉疾病',    deaths:1.5, color:'#EF9F27' },
+  { name:'新冠肺炎',    deaths:0.9, color:'#5DCAA5' },
+];
+function renderDiseaseChart() {
+  const wrap = document.getElementById('disease-chart');
+  if (!wrap) return;
+  const max = 2.5;
+  wrap.innerHTML = diseaseData.map(d => {
+    const pct = (d.deaths/max)*100;
+    return `<div style="margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+      <div style="width:130px;font-size:12px;color:var(--text);text-align:right;flex-shrink:0;">${d.name}</div>
+      <div style="flex:1;background:#f0f0f0;border-radius:4px;height:22px;overflow:hidden;">
+        <div class="bar-fill" data-width="${pct}%" style="width:0;height:22px;background:${d.color};border-radius:4px;display:flex;align-items:center;padding-left:8px;transition:width 1s ease;"></div>
+      </div>
+      <div style="font-size:12px;font-weight:500;color:${d.color};width:40px;">${d.deaths}M</div>
+    </div>`;
+  }).join('');
+}
+
+// ── TARGET 3.8 UHC CHART ──────────────────────────────────────
+const uhcData = [
+  { name:'日本',      score:88, color:'#1D9E75' },
+  { name:'台灣',      score:85, color:'#1D9E75' },
+  { name:'德國',      score:87, color:'#1D9E75' },
+  { name:'美國',      score:83, color:'#1D9E75' },
+  { name:'中國',      score:82, color:'#1D9E75' },
+  { name:'巴西',      score:75, color:'#EF9F27' },
+  { name:'墨西哥',    score:71, color:'#EF9F27' },
+  { name:'印度',      score:61, color:'#EF9F27' },
+  { name:'奈及利亞',  score:45, color:'#E24B4A' },
+  { name:'衣索比亞',  score:43, color:'#E24B4A' },
+  { name:'南蘇丹',    score:31, color:'#E24B4A' },
+];
+function renderUHCChart() {
+  const wrap = document.getElementById('uhc-chart');
+  if (!wrap) return;
+  wrap.innerHTML = uhcData.map(d => {
+    const pct = d.score;
+    const goalPct = 80;
+    return `<div style="margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+      <div style="width:80px;font-size:12px;color:var(--text);text-align:right;flex-shrink:0;">${d.name}</div>
+      <div style="flex:1;position:relative;background:#f0f0f0;border-radius:4px;height:20px;overflow:visible;">
+        <div class="bar-fill" data-width="${pct}%" style="width:0;height:20px;border-radius:4px;background:${d.color};transition:width 1s ease;"></div>
+        <div style="position:absolute;top:-3px;left:${goalPct}%;width:2px;height:26px;background:var(--green);border-radius:1px;z-index:1;"></div>
+      </div>
+      <div style="font-size:12px;font-weight:500;color:${d.color};width:28px;">${d.score}</div>
+    </div>`;
+  }).join('') + `<div style="display:flex;align-items:center;gap:5px;margin-top:8px;font-size:10px;color:var(--muted);"><div style="width:10px;height:2px;background:var(--green);"></div>SDG 目標線（80）</div>`;
+}
+
+// ── SCROLL ANIMATION ──────────────────────────────────────────
+// Render all charts (call once DOM ready)
+renderChildBars();
+renderDiseaseChart();
+renderUHCChart();
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.bar-fill').forEach(el => { el.style.width = el.dataset.width; });
+      observer.unobserve(e.target);
     }
-  ];
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('#barChart, #child-bars, #disease-chart, #uhc-chart').forEach(el => observer.observe(el));
 
-  let current = 0, score = 0, answered = false;
+// ── TIME MACHINE ──────────────────────────────────────────────
+const REGIONS = [
+  { id:'europe',   name:'歐洲 / 北美',   flag:'🇪🇺', color:'#1D9E75' },
+  { id:'eastasia', name:'東亞 / 太平洋', flag:'🌏', color:'#378ADD' },
+  { id:'latam',    name:'拉丁美洲',      flag:'🌎', color:'#EF9F27' },
+  { id:'southasia',name:'南亞 / 東南亞', flag:'🌏', color:'#9F77DD' },
+  { id:'mena',     name:'中東 / 北非',   flag:'🌙', color:'#5DCAA5' },
+  { id:'africa',   name:'撒哈拉非洲',    flag:'🌍', color:'#E24B4A' },
+];
+const TARGETS = {
+  t31:{ label:'3.1 孕產婦', unit:'/ 100K', goal:70, goalDir:'below',
+    hist:{ europe:[16,13,11,9,8,7,6,6], eastasia:[120,90,65,48,35,25,18,16], latam:[190,160,130,110,88,72,60,58], southasia:[550,470,390,310,240,180,140,130], mena:[210,175,145,118,95,76,62,58], africa:[1050,960,870,780,680,580,510,490] },
+    params:{ europe:{target2030:5,prob2030:97}, eastasia:{target2030:10,prob2030:88}, latam:{target2030:42,prob2030:62}, southasia:{target2030:80,prob2030:38}, mena:{target2030:44,prob2030:55}, africa:{target2030:350,prob2030:8} } },
+  t32:{ label:'3.2 兒童死亡', unit:'/ 1K', goal:25, goalDir:'below',
+    hist:{ europe:[12,9,7,6,5,4,4,4], eastasia:[55,42,32,22,16,11,8,7], latam:[58,46,36,27,22,17,14,13], southasia:[130,108,88,70,56,44,35,32], mena:[78,62,50,40,32,24,20,18], africa:[185,168,152,138,118,98,82,76] },
+    params:{ europe:{target2030:3,prob2030:99}, eastasia:{target2030:5,prob2030:92}, latam:{target2030:10,prob2030:78}, southasia:{target2030:22,prob2030:52}, mena:{target2030:14,prob2030:72}, africa:{target2030:58,prob2030:12} } },
+  t34:{ label:'3.4 非傳染病', unit:'% 改善', goal:33, goalDir:'above',
+    hist:{ europe:[0,4,8,13,18,23,27,29], eastasia:[0,3,7,11,16,20,24,26], latam:[0,2,5,8,12,16,19,21], southasia:[0,2,4,7,10,13,16,18], mena:[0,2,5,8,12,15,18,20], africa:[0,1,2,4,6,8,10,11] },
+    params:{ europe:{target2030:35,prob2030:82}, eastasia:{target2030:32,prob2030:75}, latam:{target2030:26,prob2030:42}, southasia:{target2030:22,prob2030:28}, mena:{target2030:25,prob2030:38}, africa:{target2030:14,prob2030:5} } },
+  t38:{ label:'3.8 健保覆蓋', unit:'%', goal:80, goalDir:'above',
+    hist:{ europe:[78,82,86,90,93,96,98,99], eastasia:[40,50,60,68,75,82,88,90], latam:[38,44,52,60,67,73,78,80], southasia:[20,25,30,38,45,52,58,62], mena:[35,42,50,57,63,69,74,76], africa:[15,18,22,27,32,36,40,43] },
+    params:{ europe:{target2030:100,prob2030:99}, eastasia:{target2030:95,prob2030:94}, latam:{target2030:88,prob2030:80}, southasia:{target2030:72,prob2030:45}, mena:{target2030:82,prob2030:68}, africa:{target2030:52,prob2030:14} } },
+};
+const HIST_YEARS = [1990,1995,2000,2005,2010,2015,2020,2023];
 
-  function renderQuiz() {
-    const q = questions[current];
-    document.getElementById('quizQ').textContent = `Q${current+1}. ${q.q}`;
-    const opts = document.getElementById('quizOpts');
-    opts.innerHTML = '';
-    q.opts.forEach((o, i) => {
-      const div = document.createElement('div');
-      div.className = 'quiz-opt';
-      div.textContent = o;
-      div.onclick = () => answer(i);
-      opts.appendChild(div);
-    });
-    document.getElementById('quizFeedback').textContent = '';
-    document.getElementById('quizNext').style.display = 'none';
-    answered = false;
+let currentTarget = 't31', currentYear = 2000;
 
-    const prog = document.getElementById('quizProgress');
-    prog.innerHTML = '';
-    questions.forEach((_, i) => {
-      const dot = document.createElement('div');
-      dot.className = 'quiz-dot' + (i < current ? ' done' : '');
-      prog.appendChild(dot);
-    });
+function getHistValue(tKey, rid, year) {
+  const h = TARGETS[tKey].hist[rid];
+  if (year <= 1990) return h[0];
+  if (year >= 2023) return h[7];
+  const idx = Math.min(Math.floor((year-1990)/5), 6);
+  const frac = ((year-1990)%5)/5;
+  return h[idx] + (h[idx+1]-h[idx])*frac;
+}
+function getValue(tKey, rid, year) {
+  if (year <= 2023) return getHistValue(tKey, rid, year);
+  const base = TARGETS[tKey].hist[rid][7];
+  const t2030 = TARGETS[tKey].params[rid].target2030;
+  return base + (t2030-base)*((year-2023)/7);
+}
+function calcProb(tKey, rid, year) {
+  const base = TARGETS[tKey].params[rid].prob2030;
+  if (year >= 2030) return base;
+  const frac = Math.max(0,(year-2023))/7;
+  return Math.round(base*0.3 + (base - base*0.3)*frac);
+}
+function probColor(p) { return p >= 75 ? '#5DCAA5' : p >= 45 ? '#EF9F27' : '#f87171'; }
+function probClass(p) { return p >= 75 ? 'pb-high' : p >= 45 ? 'pb-mid' : 'pb-low'; }
+
+function renderCards(year) {
+  const tDef = TARGETS[currentTarget];
+  const grid = document.getElementById('region-grid');
+  grid.innerHTML = '';
+  REGIONS.forEach(r => {
+    const val = getValue(currentTarget, r.id, year);
+    const prevVal = getValue(currentTarget, r.id, Math.max(1990, year-5));
+    const isPred = year > 2023;
+    const prob = isPred ? calcProb(currentTarget, r.id, year) : null;
+    const maxVal = tDef.goalDir === 'below' ? TARGETS[currentTarget].hist[r.id][0] : 100;
+    const pct = tDef.goalDir === 'below'
+      ? Math.max(0, Math.min(100, (1-val/maxVal)*100))
+      : Math.min(100, val);
+    const goalPct = tDef.goalDir === 'below'
+      ? Math.max(0, Math.min(100, (1-tDef.goal/maxVal)*100))
+      : tDef.goal;
+    const impr = tDef.goalDir === 'below' ? (prevVal-val)/prevVal*100 : (val-prevVal)/prevVal*100;
+    const trendLabel = impr > 1 ? `▲ ${Math.abs(impr).toFixed(1)}%` : impr < -1 ? `▼ ${Math.abs(impr).toFixed(1)}%` : '→';
+
+    const card = document.createElement('div');
+    card.className = 'region-card';
+    card.innerHTML = `
+      <div class="region-header">
+        <div>
+          <div style="font-size:16px;margin-bottom:3px;">${r.flag}</div>
+          <div class="region-name">${r.name}</div>
+        </div>
+        ${isPred
+          ? `<div style="text-align:right;"><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:2px;">2030 達成機率</div><div class="region-prob" style="color:${probColor(prob)}">${prob}%</div></div>`
+          : `<span style="font-size:11px;color:rgba(255,255,255,0.5);">${trendLabel}</span>`}
+      </div>
+      <div class="region-bars">
+        <div class="rbar-row">
+          <div class="rbar-info"><span>目前</span><span class="rbar-val">${Math.round(val)} ${tDef.unit}</span></div>
+          <div class="rbar-track"><div class="rbar-fill" style="width:${pct}%;background:${r.color};"></div></div>
+        </div>
+        <div class="rbar-row">
+          <div class="rbar-info"><span>目標</span><span class="rbar-val" style="color:#5DCAA5;">${tDef.goal}</span></div>
+          <div class="rbar-track"><div class="rbar-fill" style="width:${goalPct}%;background:#5DCAA5;opacity:0.4;"></div></div>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSummary(year) {
+  const isPred = year > 2023;
+  document.getElementById('summary-list').innerHTML = Object.entries(TARGETS).map(([key, tDef]) => {
+    const avgProb = isPred ? Math.round(REGIONS.reduce((s,r) => s+calcProb(key,r.id,year),0)/REGIONS.length) : null;
+    return `<div class="tm-sum-item"><span>${tDef.label}</span>${isPred ? `<span class="prob-badge ${probClass(avgProb)}">${avgProb}%</span>` : `<span style="font-size:11px;color:rgba(255,255,255,0.3);">—</span>`}</div>`;
+  }).join('');
+}
+
+function tmUpdate(year) {
+  currentYear = year;
+  const isPred = year > 2023;
+  document.getElementById('year-label').textContent = year;
+  const badge = document.getElementById('mode-badge');
+  badge.textContent = isPred ? '模型預測' : '歷史數據';
+  badge.className = `year-mode ${isPred ? 'mode-pred' : 'mode-hist'}`;
+  renderCards(year);
+  renderSummary(year);
+}
+
+document.getElementById('year-slider').addEventListener('input', function() { tmUpdate(parseInt(this.value)); });
+document.querySelectorAll('.pill').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentTarget = this.dataset.target;
+    tmUpdate(currentYear);
+  });
+});
+tmUpdate(2000);
+
+// ── QUIZ ─────────────────────────────────────────────────────
+const questions = [
+  { q:"How many people lack access to essential health services worldwide?", opts:["1 billion","2.5 billion","4.5 billion","6 billion"], ans:2, feedback:"Correct! About 4.5 billion people — more than half the world — lack full access to essential health services." },
+  { q:"What is the global average life expectancy as of 2023?", opts:["65 years","68 years","72 years","78 years"], ans:2, feedback:"Correct! The global average life expectancy is approximately 72 years, though it varies greatly by region." },
+  { q:"What percentage of the global population is affected by a mental health disorder?", opts:["1 in 20","1 in 8","1 in 4","1 in 2"], ans:1, feedback:"Correct! 1 in 8 people worldwide live with a mental disorder (WHO, 2022)." },
+  { q:"What year does the UN target to achieve universal health coverage?", opts:["2025","2030","2035","2050"], ans:1, feedback:"Correct! The UN Sustainable Development Goals set 2030 as the target year." },
+  { q:"Which disease causes the most deaths among children under 5?", opts:["Malaria","HIV/AIDS","Pneumonia","Diarrheal diseases"], ans:2, feedback:"Correct! Pneumonia is the leading infectious killer of children under 5, accounting for 14% of under-5 deaths." }
+];
+let qCurrent = 0, qScore = 0, qAnswered = false;
+
+function renderQuiz() {
+  const q = questions[qCurrent];
+  document.getElementById('quizQ').textContent = `Q${qCurrent+1}. ${q.q}`;
+  const opts = document.getElementById('quizOpts');
+  opts.innerHTML = '';
+  q.opts.forEach((o,i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-opt'; div.textContent = o;
+    div.onclick = () => answerQuiz(i);
+    opts.appendChild(div);
+  });
+  document.getElementById('quizFeedback').textContent = '';
+  document.getElementById('quizNext').style.display = 'none';
+  qAnswered = false;
+  const prog = document.getElementById('quizProgress');
+  prog.innerHTML = '';
+  questions.forEach((_,i) => {
+    const dot = document.createElement('div');
+    dot.className = 'quiz-dot' + (i < qCurrent ? ' done' : '');
+    prog.appendChild(dot);
+  });
+}
+
+function answerQuiz(i) {
+  if (qAnswered) return;
+  qAnswered = true;
+  const q = questions[qCurrent];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts[i].classList.add(i === q.ans ? 'correct' : 'wrong');
+  if (i !== q.ans) opts[q.ans].classList.add('correct');
+  if (i === q.ans) qScore++;
+  document.getElementById('quizFeedback').textContent = (i === q.ans ? '✓ ' : '✗ ') + q.feedback;
+  const nb = document.getElementById('quizNext');
+  nb.style.display = 'inline-block';
+  nb.textContent = qCurrent < questions.length-1 ? 'Next Question →' : 'See Results';
+}
+
+document.getElementById('quizNext').onclick = () => {
+  qCurrent++;
+  if (qCurrent < questions.length) {
+    renderQuiz();
+  } else {
+    document.querySelector('.quiz-box').innerHTML = `
+      <div style="text-align:center;padding:20px 0;">
+        <div style="font-size:56px;font-family:'DM Serif Display',serif;color:var(--green);margin-bottom:10px;">${qScore}/${questions.length}</div>
+        <div style="font-size:17px;font-weight:500;margin-bottom:8px;">${qScore>=4?'Excellent!':qScore>=2?'Good effort!':'Keep learning!'}</div>
+        <div style="font-size:13px;color:#666;margin-bottom:24px;">You answered ${qScore} out of ${questions.length} correctly.</div>
+        <button onclick="location.reload()" style="background:var(--green);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;">Try Again</button>
+      </div>`;
   }
+};
+renderQuiz();
 
-  function answer(i) {
-    if (answered) return;
-    answered = true;
-    const q = questions[current];
-    const opts = document.querySelectorAll('.quiz-opt');
-    opts[i].classList.add(i === q.ans ? 'correct' : 'wrong');
-    if (i === q.ans) { opts[q.ans].classList.add('correct'); score++; }
-    else { opts[q.ans].classList.add('correct'); }
-    document.getElementById('quizFeedback').textContent = i === q.ans ? '✓ ' + q.feedback : '✗ ' + q.feedback;
-    const nextBtn = document.getElementById('quizNext');
-    nextBtn.style.display = 'inline-block';
-    nextBtn.textContent = current < questions.length - 1 ? 'Next Question →' : 'See Results';
-  }
-
-  document.getElementById('quizNext').onclick = () => {
-    current++;
-    if (current < questions.length) {
-      renderQuiz();
-    } else {
-      const box = document.querySelector('.quiz-box');
-      box.innerHTML = `
-        <div style="text-align:center;padding:20px 0;">
-          <div style="font-size:48px;font-family:'DM Serif Display',serif;color:var(--green);margin-bottom:12px;">${score}/${questions.length}</div>
-          <div style="font-size:18px;font-weight:500;margin-bottom:8px;">${score >= 4 ? 'Excellent!' : score >= 2 ? 'Good effort!' : 'Keep learning!'}</div>
-          <div style="font-size:14px;color:#666;margin-bottom:28px;">You answered ${score} out of ${questions.length} questions correctly.</div>
-          <button onclick="location.reload()" style="background:var(--green);color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;">Try Again</button>
-        </div>`;
-    }
-  };
-
-  renderQuiz();
 </script>
 </body>
 </html>
