@@ -10,24 +10,23 @@ body {
 .container {
   background-color: white;
   padding: 20px;
-  margin: 50px;
+  margin: 50px auto;    /* auto = 水平置中 */
+  max-width: 700px;     /* 限制最大寬度，讓整體更小 */
   border: 1px solid #ccc;
-  overflow: auto; /* clearfix - keeps container wrapped around float */
+  overflow: auto;
 }
 
-/* Float div with overflow auto */
 div.float-box {
   float: right;
-  width: 50px;
-  height: 200px;
-  overflow: auto;       /* adds scrollbar only when needed */
+  width: 100px;         /* 更窄，像原圖 */
+  height: 180px;
+  overflow: auto;
   border: 3px solid green;
-  padding: 10px;
-  margin-left: 15px;
+  padding: 8px;
+  margin-left: 10px;
   background-color: white;
 }
 
-/* Inline-block spans (highlighted words) */
 span.highlight {
   display: inline-block;
   background-color: yellow;
@@ -42,7 +41,6 @@ span.highlight {
 
 <div class="container">
 
-  <!-- Float div must come BEFORE the paragraph -->
   <div class="float-box">
     A float div with overflow auto. A float div with overflow auto.
     A float div with overflow auto. A float div with overflow auto.
