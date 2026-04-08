@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  width: 50%;
+}
+
+th {
+  height: 70px;
+  background-color:darkgray;
+  color:white;
+}
+
+tr:nth-child(even){
+    background-color:yellow;
+}
+
+div.fixed {
+  position: fixed;
+  top:0;
+  right: 0;
+  width: 100px;
+  border: 3px solid green;
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+<table>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+  </tr>
+  <tr>
+    <td>Peter</td>
+    <td>Griffin</td>
+  </tr>
+  <tr>
+    <td>Lois</td>
+    <td>Griffin</td>
+  </tr>
+  <tr>
+    <td>Joe</td>
+    <td>Swanson</td>
+  </tr>
+</table>
+
+<div class="fixed">
+This div element has position: fixed;
+</div>
+
+</body>
+</html>
+
+
