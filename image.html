@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Image Styling - Paris</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 95%;
+            max-width: 1100px;
+            gap: 15px;
+        }
+
+        /* 共同樣式容器 */
+        .img-wrapper {
+            text-align: center;
+        }
+
+        /* 左側：radius 18px, no distortion */
+        .img-left {
+            width: 100%; /* 相對於 wrapper 的 33% */
+            height: 300px;
+            border-radius: 18px;
+            object-fit: cover; /* 不失真 */
+            border: 1px solid #ccc;
+        }
+
+        /* 中間：circle 150px, border, no distortion */
+        .img-center {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover; /* 不失真 */
+            border: 2px solid #333;
+            flex-shrink: 0;
+        }
+
+        /* 右側：distortion (fill) */
+        .img-right {
+            width: 100%;
+            height: 300px;
+            object-fit: fill; /* 強制拉伸導致失真 */
+            border: 1px solid #ccc;
+        }
+
+        .label {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #555;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 左側：不失真圓角 -->
+        <div class="img-wrapper" style="width: 33%;">
+            <img src="https://www.w3schools.com/css/img_paris.jpg" alt="Paris" class="img-left">
+            <div class="label">radius 18px<br>no distortion</div>
+        </div>
+
+        <!-- 中間：不失真圓形 -->
+        <div class="img-wrapper">
+            <img src="https://www.w3schools.com/css/img_paris.jpg" alt="Paris" class="img-center">
+            <div class="label">border 150px<br>no distortion</div>
+        </div>
+
+        <!-- 右側：失真拉伸 -->
+        <div class="img-wrapper" style="width: 33%;">
+            <img src="https://www.w3schools.com/css/img_paris.jpg" alt="Paris" class="img-right">
+            <div class="label">distortion<br>width 33%</div>
+        </div>
+    </div>
+
+</body>
+</html>
