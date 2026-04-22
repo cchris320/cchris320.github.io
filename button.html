@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .custom-button {
+            /* Size: h22 / R8 (height: 22px, radius: 8px) */
+            height: 22px;
+            border-radius: 8px;
+            
+            /* Background & Outline */
+            background-color: #ffffff;
+            border: 1px solid #2f2f2f;
+            
+            /* Font style: Roboto Regular 13px, Color: #2f2f2f */
+            font-family: 'Roboto', sans-serif;
+            font-size: 13px;
+            color: #2f2f2f;
+            
+            /* Alignment & Spacing */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            line-height: 1;
+            text-decoration: none;
+        }
+
+        .custom-button:hover {
+            background-color: #f7f7f7;
+        }
+
+        .custom-button:active {
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="custom-button">查看資訊</button>
+
+</body>
+</html>
