@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Design</title>
+    <title>Button and Image Design</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
@@ -12,11 +12,26 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container {
+            position: relative;
+            background-color: #ffffff;
+            padding: 40px;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
         }
 
         .custom-button {
-            /* Size: h22 / R8 (height: 22px, radius: 8px) */
+            /* Size: h22 / R8 */
             height: 22px;
             border-radius: 8px;
             
@@ -36,9 +51,9 @@
             padding: 0 12px;
             cursor: pointer;
             box-sizing: border-box;
-            outline: none;
-            line-height: 1;
             text-decoration: none;
+            line-height: 1;
+            transition: background-color 0.2s;
         }
 
         .custom-button:hover {
@@ -48,11 +63,27 @@
         .custom-button:active {
             background-color: #eeeeee;
         }
+
+        .preview-image {
+            width: 450px;
+            height: 240px;
+            display: block;
+            object-fit: cover;
+            border: 1px solid #cccccc;
+        }
     </style>
 </head>
 <body>
 
-    <button class="custom-button">查看資訊</button>
+    <div class="container">
+        <div class="header-area">
+            <a href="index.html" class="custom-button">查看資訊</a>
+        </div>
+        
+        <div style="position: relative;">
+            <img src="https://picsum.photos/450/240" alt="Preview Image" class="preview-image">
+        </div>
+    </div>
 
 </body>
 </html>
