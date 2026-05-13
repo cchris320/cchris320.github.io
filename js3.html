@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+var Person = {
+    firstName: "Tony",
+    lastName: "Lee",
+    age: 50,
+    eyeColor: "Blue"
+};
+
+// List all properties
+for (var key in Person) {
+    document.write(key + ": " + Person[key] + "<br>");
+}
+
+document.write("<hr>");
+
+// Delete age property
+delete Person.age;
+
+// Print object after deleting
+for (var key in Person) {
+    document.write(key + ": " + Person[key] + "<br>");
+}
+</script>
+
+</body>
+</html>
