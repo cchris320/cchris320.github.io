@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>肌肉放鬆指南 — 雙模式方向對齊</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+        background: #f0f4f8;
+        color: #2d3748;
+        line-height: 1.7;
+    }
+    header {
+        background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 60%, #4299e1 100%);
+        color: white;
+        text-align: center;
+        padding: 32px 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    header h1 {
+        font-size: 1.9rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+    header .meta {
+        opacity: 0.9;
+        font-size: 0.95rem;
+    }
+    header .meta span { margin: 0 8px; }
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 32px 20px;
+    }
+    section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+        padding: 24px 28px;
+        margin-bottom: 24px;
+    }
+    h2 {
+        font-size: 1.25rem;
+        color: #2c5282;
+        border-left: 4px solid #4299e1;
+        padding-left: 12px;
+        margin-bottom: 16px;
+    }
+    h3 {
+        font-size: 1.05rem;
+        color: #2d3748;
+        margin: 18px 0 8px;
+    }
+    ul, ol { padding-left: 22px; }
+    li { margin-bottom: 6px; }
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+    .info-item {
+        background: #ebf8ff;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border-left: 3px solid #4299e1;
+    }
+    .info-item .label {
+        font-size: 0.78rem;
+        color: #718096;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+    }
+    .info-item .value {
+        font-weight: 600;
+        color: #2c5282;
+    }
+    .flow {
+        background: #f7fafc;
+        border: 1.5px dashed #cbd5e0;
+        border-radius: 10px;
+        padding: 18px;
+        font-family: ui-monospace, Consolas, monospace;
+        white-space: pre;
+        overflow-x: auto;
+        color: #2d3748;
+        font-size: 0.92rem;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+    }
+    th, td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 0.94rem;
+        vertical-align: top;
+    }
+    th {
+        background: #ebf8ff;
+        color: #2c5282;
+    }
+    .status-done { color: #2f855a; font-weight: 700; }
+    .status-next { color: #c05621; font-weight: 700; }
+    .status-later { color: #718096; font-weight: 700; }
+    .note {
+        background: #fffaf0;
+        border-left: 4px solid #ed8936;
+        padding: 14px 18px;
+        border-radius: 8px;
+        color: #744210;
+    }
+    .mode-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+    .mode {
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 16px;
+    }
+    .mode h3 { margin-top: 0; color: #2c5282; }
+    .tier {
+        margin: 8px 0;
+        padding: 10px 12px;
+        border-radius: 8px;
+    }
+    .tier.base { background: #e6fffa; border-left: 3px solid #38b2ac; }
+    .tier.goal { background: #ebf8ff; border-left: 3px solid #4299e1; }
+    .tier.ideal { background: #faf5ff; border-left: 3px solid #9f7aea; }
+    @media (max-width: 720px) {
+        .info-grid,
+        .mode-grid { grid-template-columns: 1fr; }
+        header h1 { font-size: 1.45rem; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>肌肉放鬆指南 — 雙模式方向對齊</h1>
+    <div class="meta">
+        <span>對齊日期：2026-05-19</span>·
+        <span>策略：C-lite</span>·
+        <span>展示環境：GitHub Pages / localhost</span>
+    </div>
+</header>
+
+<div class="container">
+
+    <section>
+        <h2>專案定位</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="label">產品類型</div>
+                <div class="value">互動式健康自我照護工具</div>
+            </div>
+            <div class="info-item">
+                <div class="label">核心使用者</div>
+                <div class="value">久坐族 / 上班族 / 入門健身者</div>
+            </div>
+            <div class="info-item">
+                <div class="label">交付重點</div>
+                <div class="value">放鬆模式完整可用</div>
+            </div>
+            <div class="info-item">
+                <div class="label">技術亮點</div>
+                <div class="value">健身模式 MediaPipe form check demo</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>方向修正</h2>
+        <div class="note">
+            原本的「MediaPipe 姿勢分析推薦痛點」已取消作為產品方向。姿勢不等於疼痛，網頁不應推測使用者痛源。MediaPipe 改放到健身模式，用於它更擅長的骨架偵測與動作姿勢檢查。
+        </div>
+    </section>
+
+    <section>
+        <h2>雙模式架構</h2>
+        <div class="mode-grid">
+            <div class="mode">
+                <h3>放鬆模式</h3>
+                <ol>
+                    <li>使用者選痛點：SVG 肌肉圖 / 症狀快選</li>
+                    <li>選擇器材：徒手、滾筒、按摩球、彈力帶、筋膜槍</li>
+                    <li>查看放鬆方法：GIF、步驟、時間、注意事項</li>
+                    <li>按壓位置確認：感覺不對時顯示相鄰肌群</li>
+                </ol>
+            </div>
+            <div class="mode">
+                <h3>健身模式</h3>
+                <ol>
+                    <li>選擇訓練動作</li>
+                    <li>查看動作教學與常見錯誤</li>
+                    <li>啟動攝影機</li>
+                    <li>MediaPipe 骨架偵測與 form check</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>主要流程</h2>
+        <div class="flow">模式切換：放鬆 / 健身
+        ↓
+放鬆模式：
+  選痛點或症狀 → 選器材 → 看方法卡片 → 按壓位置確認
+                                      ↓
+                         感覺不對 → 顯示相鄰肌群
+
+健身模式：
+  選動作 → 看教學卡片 → 啟動攝影機 → MediaPipe form check
+                                      ↓
+                         初版：二頭彎舉</div>
+    </section>
+
+    <section>
+        <h2>功能狀態</h2>
+        <table>
+            <thead>
+                <tr><th>功能</th><th>狀態</th><th>備註</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>互動式 SVG 肌肉圖</td><td class="status-done">已完成</td><td>放鬆模式核心入口</td></tr>
+                <tr><td>症狀快選</td><td class="status-done">已完成</td><td>第二入口</td></tr>
+                <tr><td>器材多選</td><td class="status-done">已完成</td><td>沿用既有流程</td></tr>
+                <tr><td>7 個高頻肌群內容</td><td class="status-done">已完成</td><td>保守健康用語 + 安全提醒</td></tr>
+                <tr><td>方法卡片新版型</td><td class="status-done">已完成</td><td>支援 GIF 佔位</td></tr>
+                <tr><td>按壓位置確認</td><td class="status-next">下一步</td><td>感覺不對時顯示相鄰肌群</td></tr>
+                <tr><td>模式切換</td><td class="status-next">待做</td><td>放鬆 / 健身</td></tr>
+                <tr><td>健身模式骨架</td><td class="status-next">待做</td><td>先做二頭彎舉資料</td></tr>
+                <tr><td>MediaPipe form check</td><td class="status-next">待做</td><td>二頭彎舉：手肘穩定、動作幅度</td></tr>
+                <tr><td>MediaPipe 痛點推薦</td><td class="status-later">取消</td><td>不再作為產品方向</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>後續批次</h2>
+        <div class="tier base"><strong>Batch 5</strong>：放鬆模式按壓位置確認 + 相鄰肌群推薦。</div>
+        <div class="tier goal"><strong>Batch 6</strong>：模式切換 + 健身模式骨架 + `exercisesData`。</div>
+        <div class="tier goal"><strong>Batch 7</strong>：MediaPipe 二頭彎舉 form check demo。</div>
+        <div class="tier ideal"><strong>Batch 8</strong>：GIF 補齊、版面測試、GitHub Pages 部署、簡報收尾。</div>
+    </section>
+
+    <section>
+        <h2>展示說法</h2>
+        <p>
+            我們一開始考慮用 MediaPipe 分析姿勢並推薦痛點，但後來發現姿勢不等於病痛，這會造成過度判斷。因此我們重新設計成雙模式：放鬆模式由使用者主動選擇痛點，並透過按壓位置確認修正；健身模式則使用 MediaPipe 做它真正擅長的骨架偵測與動作姿勢檢查。
+        </p>
+    </section>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>肌肉放鬆指南</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header>
+    <h1>肌肉放鬆指南</h1>
+    <p>選擇疼痛部位，學習正確的放鬆伸展方式</p>
+</header>
+
+<div class="safety-notice">
+    注意：出現劇烈疼痛、麻木、放射痛或急性傷害時，請立即停止並尋求專業醫療協助。本網頁僅提供日常自我照護建議，不替代醫療診斷。
+</div>
+
+<div class="container">
+
+    <div class="mode-switch" role="tablist" aria-label="模式切換">
+        <button class="mode-btn active" id="relax-mode-btn" onclick="setMode('relax')">放鬆模式</button>
+        <button class="mode-btn" id="fitness-mode-btn" onclick="setMode('fitness')">健身模式</button>
+    </div>
+
+    <div id="relax-mode" class="mode-view">
+
+    <div class="step-flow">
+        <div class="step-item-flow active" id="flow-1">
+            <span class="badge">1</span> 點選疼痛部位
+        </div>
+        <span class="step-arrow-flow">›</span>
+        <div class="step-item-flow" id="flow-2">
+            <span class="badge">2</span> 選擇器材
+        </div>
+        <span class="step-arrow-flow">›</span>
+        <div class="step-item-flow" id="flow-3">
+            <span class="badge">3</span> 查看放鬆方法
+        </div>
+    </div>
+
+    <div class="symptom-picker">
+        <div class="symptom-picker-title">症狀快選</div>
+        <div class="symptom-buttons">
+            <button class="symptom-btn" onclick="selectSymptom('肩頸痠痛', this)">肩頸痠痛</button>
+            <button class="symptom-btn" onclick="selectSymptom('下背痠痛', this)">下背痠痛</button>
+            <button class="symptom-btn" onclick="selectSymptom('久坐髖緊', this)">久坐髖緊</button>
+            <button class="symptom-btn" onclick="selectSymptom('腿後與小腿緊', this)">腿後與小腿緊</button>
+            <button class="symptom-btn" onclick="selectSymptom('滑鼠手 / 前臂痠', this)">滑鼠手</button>
+        </div>
+        <div class="instruction">或自行點選肌肉</div>
+    </div>
+
+    <div id="muscle-label">點選圖中肌肉部位</div>
+
+    <div id="relax-svg-host">
+    <div id="svg-wrapper" aria-live="polite">
+        <div class="svg-loading">??????...</div>
+    </div>
+    </div>
+
+    <!-- Step 2: Equipment -->
+    <div id="equipment-section" class="step-section hidden">
+        <div class="section-title">步驟 2 ── 選擇手邊的器材（可多選）</div>
+        <div class="equip-grid">
+            <button class="equip-btn" data-equip="hands"  onclick="toggleEquip(this)">徒手</button>
+            <button class="equip-btn" data-equip="roller" onclick="toggleEquip(this)">滾筒</button>
+            <button class="equip-btn" data-equip="ball"   onclick="toggleEquip(this)">按摩球</button>
+            <button class="equip-btn" data-equip="band"   onclick="toggleEquip(this)">彈力帶</button>
+            <button class="equip-btn" data-equip="gun"    onclick="toggleEquip(this)">筋膜槍</button>
+        </div>
+        <div id="equip-availability-note" class="equip-availability-note"></div>
+        <button id="confirm-equip-btn" onclick="showMethods()" disabled>查看放鬆方法 →</button>
+    </div>
+
+    <!-- Step 3: Methods -->
+    <div id="methods-section" class="step-section hidden">
+        <div class="section-title" id="methods-title">步驟 3 ── 放鬆方法</div>
+        <div id="methods-cards"></div>
+        <div class="usage-advice">
+            使用建議：循序漸進、避免反彈式拉伸，運動傷害急性期勿熱敷或按摩。
+        </div>
+    </div>
+
+    </div>
+
+    <div id="fitness-mode" class="mode-view hidden">
+        <div class="fitness-panel">
+            <div class="fitness-header">
+                <div>
+                    <h2>健身模式</h2>
+                    <p>先以入門動作建立架構，MediaPipe 將用於骨架偵測與姿勢檢查。</p>
+                </div>
+            </div>
+
+            <div class="fitness-layout">
+                <div class="fitness-svg-panel">
+                    <div class="fitness-svg-panel-title">目標肌群預覽</div>
+                    <div id="fitness-svg-host"></div>
+                    <div class="fitness-target-label" id="fitness-target-label">選擇動作後顯示目標肌群</div>
+                </div>
+
+                <div class="fitness-main">
+                    <div class="exercise-list" id="exercise-list"></div>
+                    <div id="exercise-card"></div>
+                </div>
+            </div>
+
+            <div class="pose-panel">
+                <div class="pose-panel-title">MediaPipe form check</div>
+                <div class="pose-actions">
+                    <button class="pose-btn" id="pose-start-btn" onclick="startPoseAnalysis()">啟動姿勢檢查</button>
+                    <button class="pose-btn secondary" id="pose-stop-btn" onclick="stopPoseAnalysis()" disabled>關閉攝影機</button>
+                </div>
+                <div class="pose-status" id="pose-status">選擇動作後，可啟動攝影機檢查姿勢穩定與動作幅度。</div>
+                <video class="pose-video hidden" id="pose-video" autoplay playsinline muted></video>
+                <div class="pose-results" id="pose-results"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
