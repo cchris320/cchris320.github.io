@@ -47,6 +47,7 @@
             <button class="symptom-btn" onclick="selectSymptom('下背痠痛', this)">下背痠痛</button>
             <button class="symptom-btn" onclick="selectSymptom('久坐髖緊', this)">久坐髖緊</button>
             <button class="symptom-btn" onclick="selectSymptom('腿後與小腿緊', this)">腿後與小腿緊</button>
+            <button class="symptom-btn" onclick="selectSymptom('腹部與側腹緊繃', this)">腹部與側腹緊繃</button>
             <button class="symptom-btn" onclick="selectSymptom('滑鼠手 / 前臂痠', this)">滑鼠手</button>
         </div>
         <div class="instruction">或自行點選肌肉</div>
@@ -56,7 +57,7 @@
 
     <div id="relax-svg-host">
     <div id="svg-wrapper" aria-live="polite">
-        <div class="svg-loading">??????...</div>
+        <div class="svg-loading">載入肌肉圖中...</div>
     </div>
     </div>
 
@@ -109,6 +110,7 @@
 
             <div class="pose-panel">
                 <div class="pose-panel-title">MediaPipe form check</div>
+                <div class="pose-privacy-note">影像僅於本機瀏覽器即時分析，不會上傳、錄影或儲存。</div>
                 <div class="pose-actions">
                     <button class="pose-btn" id="pose-start-btn" onclick="startPoseAnalysis()">啟動姿勢檢查</button>
                     <button class="pose-btn secondary" id="pose-stop-btn" onclick="stopPoseAnalysis()" disabled>關閉攝影機</button>

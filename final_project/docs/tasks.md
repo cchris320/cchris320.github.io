@@ -254,6 +254,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - 方法卡已新增「參考來源」區塊，34 筆保留方法都有來源對應。
 - 步驟 3 已改為「最推薦方法」主視圖；多選器材時依 `methodPriority` 顯示 1 張主卡，其餘可信方法收合到「其他可用方法」。
 - 步驟 2 已加入器材可用性防呆：選定部位後，沒有可信內容的器材會灰色停用；若資料狀態仍進到不可用組合，步驟 3 會 fallback 到該部位最安全的已查證方法。
+- Claude review 後已完成展示前 quick fixes：修正拆分版 SVG 載入提示亂碼、補「腹部與側腹緊繃」症狀快選、MediaPipe tasks-vision 鎖定 `0.10.3`、新增攝影機本機處理隱私說明、示範圖加入 lazy loading。
 - GIF 製作工作區已建立：`assets/gif_work/gif_storyboard.html` 與 `assets/gif_work/gif_review.md`。
 - 第一批草稿先做 3 個徒手動作：`hip_flexor.hands`、`chest.hands`、`calf.hands`；確認品質後再輸出正式檔到 `assets/gifs/`。
 - 方向已從動態 GIF 改為靜態示範圖；正式圖片放在 `images/`。

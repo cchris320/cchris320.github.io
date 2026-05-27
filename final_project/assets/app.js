@@ -8,7 +8,7 @@ async function loadBodyMap() {
         const svgText = await response.text();
         wrapper.innerHTML = svgText.replace(/<\?xml[^>]*>/, '').trim();
     } catch (error) {
-        wrapper.innerHTML = '<div class="svg-loading">??????????? localhost ? GitHub Pages ?????</div>';
+        wrapper.innerHTML = '<div class="svg-loading">肌肉圖載入失敗，請使用 localhost 或 GitHub Pages 開啟此頁。</div>';
         console.error('Body map SVG failed to load:', error);
     }
 }
@@ -885,8 +885,8 @@ let formMaxWristY = 0;
 let lastFormFeedback = null;
 
 const poseConfig = {
-    moduleUrl: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/vision_bundle.mjs',
-    wasmUrl: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm',
+    moduleUrl: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/vision_bundle.mjs',
+    wasmUrl: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm',
     modelUrl: 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task'
 };
 
@@ -1804,7 +1804,7 @@ function renderMethodMedia(gif, title) {
     if (gif) {
         return `
             <div class="method-media">
-                <img class="method-gif" src="${escapeHTML(gif)}" alt="${escapeHTML(title)}示範圖">
+                <img class="method-gif" src="${escapeHTML(gif)}" alt="${escapeHTML(title)}示範圖" loading="lazy">
             </div>
         `;
     }

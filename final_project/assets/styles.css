@@ -196,6 +196,12 @@
             color: #718096;
             margin-bottom: 10px;
         }
+        .pose-privacy-note {
+            margin-bottom: 12px;
+            color: #718096;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
         .pose-actions {
             display: flex;
             flex-wrap: wrap;
