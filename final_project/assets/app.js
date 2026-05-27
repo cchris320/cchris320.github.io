@@ -348,7 +348,7 @@ const methodsData = {
             ],
             duration: '5-10 次慢呼吸 / 1-2 回',
             caution: '若出現頭暈、胸悶、腹部疼痛、近期腹部手術、疝氣或孕期不適，請停止並諮詢專業人員。',
-            image: '',
+            image: 'images/35.png',
             pose_target: null
         }
     },
@@ -364,7 +364,7 @@ const methodsData = {
             ],
             duration: '15-20 秒 × 2 組 / 每側',
             caution: '只做溫和拉伸，不要憋氣或硬壓；若下背、肋骨或腹部出現疼痛，請停止。',
-            image: '',
+            image: 'images/36.png',
             pose_target: null
         }
     },

@@ -22,9 +22,9 @@ final_project/
     styles.css
     body-map.svg
   images/
-    1.png ... 34.png
+    1.png ... 36.png
     webp/
-      1.webp ... 34.webp
+      1.webp ... 36.webp
   docs/
     tasks.md
     missing_data.md
