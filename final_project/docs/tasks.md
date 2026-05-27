@@ -255,6 +255,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - 步驟 3 已改為「最推薦方法」主視圖；多選器材時依 `methodPriority` 顯示 1 張主卡，其餘可信方法收合到「其他可用方法」。
 - 步驟 2 已加入器材可用性防呆：選定部位後，沒有可信內容的器材會灰色停用；若資料狀態仍進到不可用組合，步驟 3 會 fallback 到該部位最安全的已查證方法。
 - Claude review 後已完成展示前 quick fixes：修正拆分版 SVG 載入提示亂碼、補「腹部與側腹緊繃」症狀快選、MediaPipe tasks-vision 鎖定 `0.10.3`、新增攝影機本機處理隱私說明、示範圖加入 lazy loading。
+- MediaPipe pose landmarker lite `.task` 模型已改為本地 `assets/models/pose_landmarker_lite.task`，避免展示時依賴模型 latest URL。
 - 腹部與側腹示範圖已補上：`abdomen.hands` 使用 `images/35.png`，`obliques.hands` 使用 `images/36.png`。
 - 示範圖已新增 WebP 壓縮版並保留 PNG fallback；36 張 WebP 合計約 0.84 MB。
 - 健身 form check 已加入攝影機骨架疊圖，會在畫面上標示肩、肘、腕與上半身連線。

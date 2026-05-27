@@ -21,6 +21,8 @@ final_project/
     app.js
     styles.css
     body-map.svg
+    models/
+      pose_landmarker_lite.task
   images/
     1.png ... 36.png
     webp/

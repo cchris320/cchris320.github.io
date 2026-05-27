@@ -887,7 +887,7 @@ let lastFormFeedback = null;
 const poseConfig = {
     moduleUrl: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/vision_bundle.mjs',
     wasmUrl: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm',
-    modelUrl: 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task'
+    modelUrl: 'assets/models/pose_landmarker_lite.task'
 };
 
 window.addEventListener('DOMContentLoaded', async () => {
