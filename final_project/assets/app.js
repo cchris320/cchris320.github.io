@@ -34,7 +34,7 @@ const muscleMap = {
 };
 
 const methodsData = {
-    // muscle_key: { equip_key: { title, steps[], duration, caution, gif, pose_target } }
+    // muscle_key: { equip_key: { title, steps[], duration, caution, image, pose_target } }
     // Only combinations with real content are stored here. Missing combinations use a fallback card.
     neck: {
         hands: {
@@ -47,7 +47,7 @@ const methodsData = {
             ],
             duration: '15-30 秒 × 2-3 組 / 每側',
             caution: '避免用力拉扯或快速甩頭；若出現麻、刺、暈或放射痛，立即停止。',
-            gif: 'images/4.png',
+            image: 'images/4.png',
             pose_target: null
         },
         ball: {
@@ -60,7 +60,7 @@ const methodsData = {
             ],
             duration: '30-45 秒 × 2 回 / 每側',
             caution: '壓力以舒適為主，不要直接壓迫喉嚨、頸椎骨或造成頭暈。',
-            gif: 'images/12.png',
+            image: 'images/12.png',
             pose_target: null
         }
     },
@@ -75,7 +75,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2 組 / 每側',
             caution: '不要硬壓頭部；若肩膀或手臂出現麻刺感，先減少角度或停止。',
-            gif: 'images/13.png',
+            image: 'images/13.png',
             pose_target: null
         },
         ball: {
@@ -88,7 +88,7 @@ const methodsData = {
             ],
             duration: '45-60 秒 / 每側',
             caution: '壓力以可放鬆為主；避開頸椎、鎖骨與明顯疼痛點。',
-            gif: 'images/14.png',
+            image: 'images/14.png',
             pose_target: null
         },
         gun: {
@@ -101,7 +101,7 @@ const methodsData = {
             ],
             duration: '30-45 秒 / 每側',
             caution: '不要用在頸部前側、骨頭、急性腫脹或麻痛區域。',
-            gif: 'images/15.png',
+            image: 'images/15.png',
             pose_target: null
         },
         roller: {
@@ -114,7 +114,7 @@ const methodsData = {
             ],
             duration: '30-60 秒',
             caution: '不要讓滾筒滾到頸部；下背不適時降低臀部高度。',
-            gif: 'images/16.png',
+            image: 'images/16.png',
             pose_target: null
         }
     },
@@ -129,7 +129,7 @@ const methodsData = {
             ],
             duration: '15-30 秒 × 2-3 組',
             caution: '不要憋氣或硬拉；若疼痛往腿部放射，請停止並尋求專業評估。',
-            gif: 'images/9.png',
+            image: 'images/9.png',
             pose_target: null
         },
         ball: {
@@ -142,7 +142,7 @@ const methodsData = {
             ],
             duration: '30-45 秒 × 2 回 / 每側',
             caution: '避開脊椎骨、腎臟附近與劇痛點；急性拉傷或不明原因疼痛時不要按壓。',
-            gif: 'images/17.png',
+            image: 'images/17.png',
             pose_target: null
         },
         roller: {
@@ -155,7 +155,7 @@ const methodsData = {
             ],
             duration: '30-60 秒 / 每側',
             caution: '不要直接把滾筒壓在下背腰椎上；若越滾越痛，請停止。',
-            gif: 'images/18.png',
+            image: 'images/18.png',
             pose_target: null
         }
     },
@@ -170,7 +170,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2-3 組 / 每側',
             caution: '髖部或膝蓋不適時減少角度；不要用力壓膝蓋。',
-            gif: 'images/8.png',
+            image: 'images/8.png',
             pose_target: null
         },
         roller: {
@@ -183,7 +183,7 @@ const methodsData = {
             ],
             duration: '45-60 秒 / 每側',
             caution: '避免滾到尾椎或骨頭；若有坐骨神經症狀，先諮詢專業人員。',
-            gif: 'images/19.png',
+            image: 'images/19.png',
             pose_target: null
         },
         ball: {
@@ -196,7 +196,7 @@ const methodsData = {
             ],
             duration: '1-2 分鐘 / 每側',
             caution: '不要追求強烈疼痛感；若麻痛往腿部延伸，請停止。',
-            gif: 'images/20.png',
+            image: 'images/20.png',
             pose_target: null
         }
     },
@@ -211,7 +211,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2-3 組 / 每側',
             caution: '膝蓋可微彎；不要用彈震方式壓腿。',
-            gif: 'images/6.png',
+            image: 'images/6.png',
             pose_target: null
         },
         roller: {
@@ -224,7 +224,7 @@ const methodsData = {
             ],
             duration: '30-60 秒 / 每側',
             caution: '避開膝窩正中央；壓力太強時可雙腿同時放在滾筒上降低強度。',
-            gif: 'images/21.png',
+            image: 'images/21.png',
             pose_target: null
         },
         band: {
@@ -237,7 +237,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2 組 / 每側',
             caution: '避免用力拉到麻痛；下背不適時降低抬腿角度。',
-            gif: 'images/22.png',
+            image: 'images/22.png',
             pose_target: null
         }
     },
@@ -252,7 +252,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2-3 組 / 每側',
             caution: '不要讓腳跟彈起或腳尖外八太多；阿基里斯腱疼痛時先降低強度。',
-            gif: 'images/3.png',
+            image: 'images/3.png',
             pose_target: null
         },
         roller: {
@@ -265,7 +265,7 @@ const methodsData = {
             ],
             duration: '30-60 秒 / 每側',
             caution: '避開膝窩與跟腱末端；若有靜脈曲張或明顯腫脹，先詢問專業人員。',
-            gif: 'images/23.png',
+            image: 'images/23.png',
             pose_target: null
         },
         ball: {
@@ -278,7 +278,7 @@ const methodsData = {
             ],
             duration: '1 分鐘 / 每側',
             caution: '足底刺痛、麻木或急性發炎時不要按壓。',
-            gif: 'images/24.png',
+            image: 'images/24.png',
             pose_target: null
         },
         band: {
@@ -291,7 +291,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2 組 / 每側',
             caution: '膝蓋可微彎，不要鎖死；下背不適時降低拉力。',
-            gif: 'images/25.png',
+            image: 'images/25.png',
             pose_target: null
         }
     },
@@ -306,7 +306,7 @@ const methodsData = {
             ],
             duration: '15-30 秒 × 2 組 / 每側',
             caution: '只需溫和拉伸，不要壓到手腕疼痛或麻刺。',
-            gif: 'images/10.png',
+            image: 'images/10.png',
             pose_target: null
         },
         ball: {
@@ -319,7 +319,7 @@ const methodsData = {
             ],
             duration: '45-60 秒 / 每側',
             caution: '避開手肘骨點與手腕關節；若手指麻木或無力，請停止。',
-            gif: 'images/26.png',
+            image: 'images/26.png',
             pose_target: null
         },
         roller: {
@@ -332,7 +332,7 @@ const methodsData = {
             ],
             duration: '30-60 秒 / 每側',
             caution: '不要直接壓手腕關節；打字造成的持續疼痛應搭配休息與姿勢調整。',
-            gif: 'images/27.png',
+            image: 'images/27.png',
             pose_target: null
         }
     },
@@ -348,7 +348,7 @@ const methodsData = {
             ],
             duration: '5-10 次慢呼吸 / 1-2 回',
             caution: '若出現頭暈、胸悶、腹部疼痛、近期腹部手術、疝氣或孕期不適，請停止並諮詢專業人員。',
-            gif: '',
+            image: '',
             pose_target: null
         }
     },
@@ -364,7 +364,7 @@ const methodsData = {
             ],
             duration: '15-20 秒 × 2 組 / 每側',
             caution: '只做溫和拉伸，不要憋氣或硬壓；若下背、肋骨或腹部出現疼痛，請停止。',
-            gif: '',
+            image: '',
             pose_target: null
         }
     },
@@ -379,7 +379,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2-3 組 / 每側',
             caution: '保持骨盆穩定，不要過度前推到下背不適；膝蓋下方可墊毛巾保護。',
-            gif: 'images/1.png',
+            image: 'images/1.png',
             pose_target: null
         }
     },
@@ -394,7 +394,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2-3 組 / 每側',
             caution: '若肩前側出現疼痛或夾擠感，先降低角度或停止；避免聳肩。',
-            gif: 'images/2.png',
+            image: 'images/2.png',
             pose_target: null
         },
         roller: {
@@ -407,7 +407,7 @@ const methodsData = {
             ],
             duration: '30-60 秒 × 2-3 回',
             caution: '保護頸椎與腰椎，不要讓滾筒滾到頸部或下背；骨質疏鬆者請先諮詢專業人員。',
-            gif: 'images/28.png',
+            image: 'images/28.png',
             pose_target: null
         }
     },
@@ -422,7 +422,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2-3 組',
             caution: '只需溫和伸展，不要硬拉到不適；肩關節舊傷者降低強度。',
-            gif: 'images/29.png',
+            image: 'images/29.png',
             pose_target: null
         },
         ball: {
@@ -435,7 +435,7 @@ const methodsData = {
             ],
             duration: '45-60 秒 / 每側',
             caution: '避開脊椎骨與肩胛骨稜角；急性受傷區域不要按壓。',
-            gif: 'images/30.png',
+            image: 'images/30.png',
             pose_target: null
         }
     },
@@ -450,7 +450,7 @@ const methodsData = {
             ],
             duration: '15-30 秒 × 2 組 / 每側',
             caution: '不要硬扳手肘導致肩關節不適；肩夾擠或舊傷者降低角度。',
-            gif: 'images/5.png',
+            image: 'images/5.png',
             pose_target: null
         }
     },
@@ -465,7 +465,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2-3 組 / 每側',
             caution: '不要硬拉到膝蓋不適；膝關節舊傷可改側躺執行。',
-            gif: 'images/7.png',
+            image: 'images/7.png',
             pose_target: null
         },
         roller: {
@@ -478,7 +478,7 @@ const methodsData = {
             ],
             duration: '30-60 秒 / 每側',
             caution: '避免直接壓在膝蓋骨上方；越滾越痛時停止並休息。',
-            gif: 'images/31.png',
+            image: 'images/31.png',
             pose_target: null
         }
     },
@@ -493,7 +493,7 @@ const methodsData = {
             ],
             duration: '20-30 秒 × 2 組 / 每側',
             caution: '若肩膀活動度有限，手不必完全舉直；下背不適時降低側彎幅度。',
-            gif: 'images/32.png',
+            image: 'images/32.png',
             pose_target: null
         },
         roller: {
@@ -506,7 +506,7 @@ const methodsData = {
             ],
             duration: '30-45 秒 / 每側',
             caution: '避開肋骨與肩胛骨；若有麻刺感往手臂延伸，請停止。',
-            gif: 'images/33.png',
+            image: 'images/33.png',
             pose_target: null
         }
     },
@@ -521,7 +521,7 @@ const methodsData = {
             ],
             duration: '15-30 秒 × 2 組 / 每側',
             caution: '不要硬扭到肩膀不適；肩前側疼痛或舊傷者降低強度。',
-            gif: 'images/34.png',
+            image: 'images/34.png',
             pose_target: null
         }
     },
@@ -536,7 +536,7 @@ const methodsData = {
             ],
             duration: '15-30 秒 × 2 組 / 每側',
             caution: '不要硬扳手肘；頸部或肩膀不適時降低高度。',
-            gif: 'images/11.png',
+            image: 'images/11.png',
             pose_target: null
         }
     }
@@ -821,7 +821,7 @@ const exercisesData = {
             '手腕過度彎折'
         ],
         caution: '重量以可控制為主；肩、肘或手腕出現疼痛時請停止。',
-        gif: '',
+        image: '',
         formChecks: ['elbow_stability', 'curl_range']
     },
     triceps_extension: {
@@ -842,7 +842,7 @@ const exercisesData = {
             '腰部後仰借力'
         ],
         caution: '先用輕重量或低阻力；手肘或肩膀不適時請降低幅度或停止。',
-        gif: '',
+        image: '',
         formChecks: ['elbow_stability', 'extension_range']
     },
     shoulder_press: {
@@ -863,7 +863,7 @@ const exercisesData = {
             '下放太快，缺少控制'
         ],
         caution: '肩關節不適或夾擠感時請降低重量與幅度；避免硬推到疼痛位置。',
-        gif: '',
+        image: '',
         formChecks: ['overhead_range', 'elbow_path']
     }
 };
@@ -897,7 +897,16 @@ window.addEventListener('DOMContentLoaded', async () => {
         const el = document.getElementById(pathId);
         if (!el) continue;
         el.classList.add('muscle-clickable');
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('aria-label', muscleNames[muscle] || muscle);
+        el.setAttribute('aria-pressed', 'false');
         el.addEventListener('click', () => selectMuscle(muscle));
+        el.addEventListener('keydown', event => {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            selectMuscle(muscle);
+        });
     }
     renderExerciseList();
     renderExerciseCard(currentExercise);
@@ -915,6 +924,8 @@ function setMode(mode) {
     document.getElementById('fitness-mode').classList.toggle('hidden', isRelax);
     document.getElementById('relax-mode-btn').classList.toggle('active', isRelax);
     document.getElementById('fitness-mode-btn').classList.toggle('active', !isRelax);
+    document.getElementById('relax-mode-btn').setAttribute('aria-selected', String(isRelax));
+    document.getElementById('fitness-mode-btn').setAttribute('aria-selected', String(!isRelax));
 
     if (isRelax) {
         clearFitnessTargets();
@@ -930,7 +941,10 @@ function setMode(mode) {
 
 function clearRelaxHighlights() {
     document.querySelectorAll('#svg-wrapper path.muscle-active')
-        .forEach(el => el.classList.remove('muscle-active'));
+        .forEach(el => {
+            el.classList.remove('muscle-active');
+            el.setAttribute('aria-pressed', 'false');
+        });
     document.querySelectorAll('#svg-wrapper path.muscle-suggested')
         .forEach(el => el.classList.remove('muscle-suggested'));
 }
@@ -939,7 +953,10 @@ function restoreRelaxHighlight() {
     if (!currentMuscle) return;
     (muscleMap[currentMuscle] || []).forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.classList.add('muscle-active');
+        if (el) {
+            el.classList.add('muscle-active');
+            el.setAttribute('aria-pressed', 'true');
+        }
     });
 }
 
@@ -964,11 +981,13 @@ function selectMuscle(muscleId) {
         muscleMap[currentMuscle].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.classList.remove('muscle-active');
+            if (el) el.setAttribute('aria-pressed', 'false');
         });
     }
     muscleMap[muscleId].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('muscle-active');
+        if (el) el.setAttribute('aria-pressed', 'true');
     });
     currentMuscle = muscleId;
     document.getElementById('muscle-label').textContent = muscleNames[muscleId] || muscleId;
@@ -1061,7 +1080,7 @@ async function startPoseAnalysis() {
         });
 
         video.srcObject = poseStream;
-        video.classList.remove('hidden');
+        document.getElementById('pose-video-wrap')?.classList.remove('hidden');
         await video.play();
 
         stopBtn.disabled = false;
@@ -1114,6 +1133,7 @@ function renderPoseResult(result) {
     const results = document.getElementById('pose-results');
 
     if (!landmarks) {
+        clearPoseCanvas();
         status.textContent = '尚未偵測到上半身姿勢，請稍微後退並讓肩膀、手肘與手腕入鏡。';
         results.innerHTML = '';
         return;
@@ -1121,6 +1141,7 @@ function renderPoseResult(result) {
 
     const feedback = analyzeCurrentExercise(landmarks);
     lastFormFeedback = feedback;
+    drawPoseOverlay(landmarks, feedback);
     status.textContent = feedback.summary;
     results.innerHTML = renderFormFeedback(feedback);
 }
@@ -1314,6 +1335,82 @@ function visibilityScore(landmarks, indexes) {
     }, 0) / indexes.length;
 }
 
+function drawPoseOverlay(landmarks, feedback) {
+    const canvas = document.getElementById('pose-canvas');
+    const video = document.getElementById('pose-video');
+    if (!canvas || !video?.videoWidth || !video?.videoHeight) return;
+
+    const displayWidth = video.clientWidth || video.videoWidth;
+    const displayHeight = video.clientHeight || video.videoHeight;
+    if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+        canvas.width = displayWidth;
+        canvas.height = displayHeight;
+    }
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const activeSide = feedback?.sideLabel === '左手'
+        ? { shoulder: 11, elbow: 13, wrist: 15 }
+        : { shoulder: 12, elbow: 14, wrist: 16 };
+
+    const baseConnections = [
+        [11, 12], [11, 23], [12, 24], [23, 24],
+        [11, 13], [13, 15], [12, 14], [14, 16]
+    ];
+
+    baseConnections.forEach(([from, to]) => {
+        const active = [from, to].includes(activeSide.shoulder)
+            || [from, to].includes(activeSide.elbow)
+            || [from, to].includes(activeSide.wrist);
+        drawPoseLine(ctx, landmarks[from], landmarks[to], active);
+    });
+
+    [11, 12, 13, 14, 15, 16, 23, 24].forEach(index => {
+        const active = index === activeSide.shoulder || index === activeSide.elbow || index === activeSide.wrist;
+        drawPosePoint(ctx, landmarks[index], active);
+    });
+}
+
+function drawPoseLine(ctx, a, b, active = false) {
+    if (!isVisibleLandmark(a) || !isVisibleLandmark(b)) return;
+
+    ctx.strokeStyle = active ? 'rgba(246, 173, 85, 0.95)' : 'rgba(99, 179, 237, 0.85)';
+    ctx.lineWidth = active ? 5 : 3;
+    ctx.beginPath();
+    ctx.moveTo(a.x * ctx.canvas.width, a.y * ctx.canvas.height);
+    ctx.lineTo(b.x * ctx.canvas.width, b.y * ctx.canvas.height);
+    ctx.stroke();
+}
+
+function drawPosePoint(ctx, point, active = false) {
+    if (!isVisibleLandmark(point)) return;
+
+    const x = point.x * ctx.canvas.width;
+    const y = point.y * ctx.canvas.height;
+    ctx.fillStyle = active ? '#f6ad55' : '#63b3ed';
+    ctx.strokeStyle = 'rgba(26, 32, 44, 0.75)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, active ? 6 : 4.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+}
+
+function isVisibleLandmark(point) {
+    return Boolean(point) && (point.visibility ?? point.presence ?? 1) > 0.45;
+}
+
+function clearPoseCanvas() {
+    const canvas = document.getElementById('pose-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 function jointAngle(a, b, c) {
     const ab = { x: a.x - b.x, y: a.y - b.y };
     const cb = { x: c.x - b.x, y: c.y - b.y };
@@ -1368,8 +1465,9 @@ function stopPoseAnalysis(message = '攝影機已關閉。') {
     if (video) {
         video.pause();
         video.srcObject = null;
-        video.classList.add('hidden');
     }
+    document.getElementById('pose-video-wrap')?.classList.add('hidden');
+    clearPoseCanvas();
 
     if (startBtn && !startBtn.dataset.locked) startBtn.disabled = false;
     if (stopBtn) stopBtn.disabled = true;
@@ -1615,7 +1713,7 @@ function renderMethodCard(equip, muscleId, muscleName, data, options = {}) {
             </div>
             <div class="method-card-body">
                 <div class="method-card-layout">
-                    ${renderMethodMedia(data.gif, data.title)}
+                    ${renderMethodMedia(data.image, data.title)}
                     <div class="method-content">
                         <h4>操作步驟</h4>
                         ${steps}
@@ -1800,20 +1898,28 @@ function renderExerciseCard(exerciseKey) {
     `;
 }
 
-function renderMethodMedia(gif, title) {
-    if (gif) {
+function renderMethodMedia(image, title) {
+    if (image) {
+        const webpImage = getWebpImagePath(image);
         return `
             <div class="method-media">
-                <img class="method-gif" src="${escapeHTML(gif)}" alt="${escapeHTML(title)}示範圖" loading="lazy">
+                <picture>
+                    <source srcset="${escapeHTML(webpImage)}" type="image/webp">
+                    <img class="method-image" src="${escapeHTML(image)}" alt="${escapeHTML(title)}示範圖" loading="lazy">
+                </picture>
             </div>
         `;
     }
 
     return `
         <div class="method-media">
-            <div class="method-gif-placeholder">示範圖待補</div>
+            <div class="method-image-placeholder">示範圖待補</div>
         </div>
     `;
+}
+
+function getWebpImagePath(image) {
+    return image.replace(/^images\/(.+)\.png$/i, 'images/webp/$1.webp');
 }
 
 function escapeHTML(value) {

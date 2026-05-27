@@ -20,11 +20,11 @@
 <div class="container">
 
     <div class="mode-switch" role="tablist" aria-label="模式切換">
-        <button class="mode-btn active" id="relax-mode-btn" onclick="setMode('relax')">放鬆模式</button>
-        <button class="mode-btn" id="fitness-mode-btn" onclick="setMode('fitness')">健身模式</button>
+        <button class="mode-btn active" id="relax-mode-btn" role="tab" aria-controls="relax-mode" aria-selected="true" onclick="setMode('relax')">放鬆模式</button>
+        <button class="mode-btn" id="fitness-mode-btn" role="tab" aria-controls="fitness-mode" aria-selected="false" onclick="setMode('fitness')">健身模式</button>
     </div>
 
-    <div id="relax-mode" class="mode-view">
+    <div id="relax-mode" class="mode-view" role="tabpanel" aria-labelledby="relax-mode-btn">
 
     <div class="step-flow">
         <div class="step-item-flow active" id="flow-1">
@@ -86,12 +86,13 @@
 
     </div>
 
-    <div id="fitness-mode" class="mode-view hidden">
+    <div id="fitness-mode" class="mode-view hidden" role="tabpanel" aria-labelledby="fitness-mode-btn">
         <div class="fitness-panel">
             <div class="fitness-header">
                 <div>
                     <h2>健身模式</h2>
                     <p>先以入門動作建立架構，MediaPipe 將用於骨架偵測與姿勢檢查。</p>
+                    <p class="fitness-guide">選擇動作後查看目標肌群，再啟動攝影機進行即時輔助檢查。</p>
                 </div>
             </div>
 
@@ -116,7 +117,10 @@
                     <button class="pose-btn secondary" id="pose-stop-btn" onclick="stopPoseAnalysis()" disabled>關閉攝影機</button>
                 </div>
                 <div class="pose-status" id="pose-status">選擇動作後，可啟動攝影機檢查姿勢穩定與動作幅度。</div>
-                <video class="pose-video hidden" id="pose-video" autoplay playsinline muted></video>
+                <div class="pose-video-wrap hidden" id="pose-video-wrap">
+                    <video class="pose-video" id="pose-video" autoplay playsinline muted></video>
+                    <canvas class="pose-canvas" id="pose-canvas"></canvas>
+                </div>
                 <div class="pose-results" id="pose-results"></div>
             </div>
         </div>
