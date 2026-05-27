@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>肌肉放鬆指南</title>
-    <link rel="stylesheet" href="assets/styles.css?v=fitness-images-20260527">
+    <link rel="stylesheet" href="assets/styles.css?v=fitness-layout-20260528">
 </head>
 <body>
 
@@ -97,14 +97,22 @@
             </div>
 
             <div class="fitness-layout">
-                <div class="fitness-svg-panel">
-                    <div class="fitness-svg-panel-title">目標肌群預覽</div>
-                    <div id="fitness-svg-host"></div>
-                    <div class="fitness-target-label" id="fitness-target-label">選擇動作後顯示目標肌群</div>
+                <div class="exercise-list" id="exercise-list"></div>
+
+                <div class="fitness-visual">
+                    <div class="fitness-reference-card fitness-demo-panel">
+                        <div class="fitness-reference-title">示範動作</div>
+                        <div id="fitness-demo-slot"></div>
+                    </div>
+
+                    <div class="fitness-reference-card fitness-svg-panel">
+                        <div class="fitness-reference-title">目標肌群</div>
+                        <div id="fitness-svg-host"></div>
+                        <div class="fitness-target-label" id="fitness-target-label">選擇動作後顯示目標肌群</div>
+                    </div>
                 </div>
 
-                <div class="fitness-main">
-                    <div class="exercise-list" id="exercise-list"></div>
+                <div class="fitness-text">
                     <div id="exercise-card"></div>
                 </div>
             </div>
@@ -128,6 +136,6 @@
 
 </div>
 
-<script src="assets/app.js?v=fitness-images-20260527" defer></script>
+<script src="assets/app.js?v=fitness-layout-20260528" defer></script>
 </body>
 </html>

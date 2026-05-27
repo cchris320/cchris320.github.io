@@ -1853,13 +1853,17 @@ function markFitnessTarget(muscleId) {
 
 function renderExerciseCard(exerciseKey) {
     const container = document.getElementById('exercise-card');
-    if (!container) return;
+    const demoSlot = document.getElementById('fitness-demo-slot');
+    if (!container && !demoSlot) return;
 
     const exercise = exercisesData[exerciseKey];
-    const targets = exercise.targetMuscles
-        .map(muscle => muscleNames[muscle] || muscle)
-        .join('、');
     const equipment = exercise.equipment.join('、');
+
+    if (demoSlot) {
+        demoSlot.innerHTML = renderExerciseMedia(exercise.image, exercise.title);
+    }
+
+    if (!container) return;
 
     container.innerHTML = `
         <div class="fitness-card">
@@ -1868,10 +1872,8 @@ function renderExerciseCard(exerciseKey) {
             </div>
             <div class="fitness-card-body">
                 <div class="fitness-meta">
-                    <span class="fitness-tag">目標肌群：${escapeHTML(targets)}</span>
                     <span class="fitness-tag">器材：${escapeHTML(equipment)}</span>
                 </div>
-                ${renderExerciseMedia(exercise.image, exercise.title)}
 
                 <h4>動作步驟</h4>
                 <ol>${exercise.steps.map(step => `<li>${escapeHTML(step)}</li>`).join('')}</ol>
@@ -1891,7 +1893,13 @@ function renderExerciseCard(exerciseKey) {
 }
 
 function renderExerciseMedia(image, title) {
-    if (!image) return '';
+    if (!image) {
+        return `
+            <div class="fitness-demo-media">
+                <div class="fitness-demo-placeholder">示範圖待補</div>
+            </div>
+        `;
+    }
 
     const webpImage = getWebpImagePath(image);
     return `

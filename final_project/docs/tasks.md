@@ -259,6 +259,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - 腹部與側腹示範圖已補上：`abdomen.hands` 使用 `images/35.png`，`obliques.hands` 使用 `images/36.png`。
 - 示範圖已新增 WebP 壓縮版並保留 PNG fallback；36 張 WebP 合計約 0.84 MB。
 - 健身模式三個動作已補上靜態示意圖與 WebP fallback：`biceps_curl`、`triceps_extension`、`shoulder_press`。
+- 健身模式版面已改為「視覺左、文字右」：上方動作按鈕橫跨整列，左欄放示範圖與目標肌群 SVG，右欄保留文字步驟。
 - 健身 form check 已加入攝影機骨架疊圖，會在畫面上標示肩、肘、腕與上半身連線。
 - 程式命名已從 `gif` 欄位整理為 `image` 欄位；SVG 肌肉 path 支援鍵盤 Enter/Space 選取，模式切換補上 tab aria 狀態。
 - GIF 製作工作區已建立：`assets/gif_work/gif_storyboard.html` 與 `assets/gif_work/gif_review.md`。
