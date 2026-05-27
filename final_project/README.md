@@ -7,7 +7,7 @@ A static web app for daily muscle relaxation guidance and basic fitness form-che
 - Relax mode: select a muscle area, choose available equipment, and view verified relaxation instructions.
 - Equipment safety guard: unavailable equipment is disabled for each muscle area.
 - Source notes: relaxation methods include trusted health or rehab references in the UI.
-- Fitness mode: biceps curl, triceps extension, and shoulder press demos with MediaPipe-based arm form checks.
+- Fitness mode: biceps curl, triceps extension, and shoulder press demos with static illustrations and MediaPipe-based arm form checks.
 - Fitness overlay: detected shoulder, elbow, wrist, and torso landmarks are drawn over the camera preview.
 - Optimized images: PNG files are kept as fallback, with WebP versions loaded first in modern browsers.
 - Separated assets: the body SVG, CSS, JavaScript, and images are split into deploy-friendly files.
@@ -27,6 +27,14 @@ final_project/
     1.png ... 36.png
     webp/
       1.webp ... 36.webp
+    fitness/
+      biceps_curl.png
+      triceps_extension.png
+      shoulder_press.png
+      webp/
+        biceps_curl.webp
+        triceps_extension.webp
+        shoulder_press.webp
   docs/
     tasks.md
     missing_data.md

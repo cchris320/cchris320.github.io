@@ -808,20 +808,17 @@ const exercisesData = {
         targetMuscles: ['biceps', 'forearm'],
         equipment: ['啞鈴', '彈力帶'],
         steps: [
-            '站姿或坐姿，背部打直，手肘自然靠近身體兩側',
-            '掌心朝上握住啞鈴或彈力帶，肩膀放鬆不要聳肩',
-            '吐氣時彎曲手肘，將手腕往肩膀方向抬起',
-            '吸氣時慢慢放下，回到手肘接近伸直的位置',
-            '全程讓手肘盡量固定，不要用身體晃動帶起重量'
+            '站姿或坐姿，背部打直，手肘靠近身體兩側',
+            '吐氣彎曲手肘，把重量往肩膀方向抬起',
+            '吸氣慢慢放下，全程避免身體後仰借力'
         ],
         commonMistakes: [
-            '手肘大幅前後移動，變成用肩膀代償',
-            '身體後仰借力',
-            '放下時太快，少了控制',
-            '手腕過度彎折'
+            '手肘前後晃動太大',
+            '身體後仰甩重量',
+            '手腕過度彎折或下放太快'
         ],
         caution: '重量以可控制為主；肩、肘或手腕出現疼痛時請停止。',
-        image: '',
+        image: 'images/fitness/biceps_curl.png',
         formChecks: ['elbow_stability', 'curl_range']
     },
     triceps_extension: {
@@ -829,20 +826,17 @@ const exercisesData = {
         targetMuscles: ['triceps', 'shoulder'],
         equipment: ['彈力帶', '啞鈴'],
         steps: [
-            '站姿，背部打直，核心輕微收緊',
-            '單手或雙手持啞鈴，或將彈力帶固定在身後上方',
-            '讓手肘保持穩定，慢慢伸直手臂',
-            '在手臂接近伸直時停一下，再慢慢回到起始位置',
-            '全程避免聳肩或讓手肘大幅外開'
+            '站姿，核心輕微收緊，雙手持啞鈴在頭後起始',
+            '吐氣伸直手肘，將重量往頭頂上方推起',
+            '吸氣慢慢回到頭後，手肘盡量朝前不外張'
         ],
         commonMistakes: [
-            '手肘左右晃動太多',
-            '用肩膀代償而不是手肘伸展',
-            '放回時太快，缺少控制',
-            '腰部後仰借力'
+            '手肘外張或左右晃動太多',
+            '聳肩代償而不是手肘伸展',
+            '腰部後仰或下放太快'
         ],
         caution: '先用輕重量或低阻力；手肘或肩膀不適時請降低幅度或停止。',
-        image: '',
+        image: 'images/fitness/triceps_extension.png',
         formChecks: ['elbow_stability', 'extension_range']
     },
     shoulder_press: {
@@ -850,20 +844,17 @@ const exercisesData = {
         targetMuscles: ['shoulder', 'triceps', 'trapezius'],
         equipment: ['啞鈴', '彈力帶'],
         steps: [
-            '站姿或坐姿，背部打直，核心輕微收緊',
-            '雙手持啞鈴或彈力帶，起始位置在肩膀兩側',
-            '手肘略低於肩膀，手腕保持中立不要過度後折',
-            '吐氣時將重量往上推到手臂接近伸直',
-            '吸氣時慢慢回到肩膀兩側，保持肩膀穩定'
+            '站姿或坐姿，核心輕微收緊，啞鈴放在肩膀兩側',
+            '吐氣往上推到手臂接近伸直，手腕維持中立',
+            '吸氣慢慢回到肩膀兩側，避免聳肩或腰部後仰'
         ],
         commonMistakes: [
             '腰部後仰，用身體代償推起重量',
             '聳肩過多，讓頸部承受壓力',
-            '手肘外開過大或手腕過度彎折',
-            '下放太快，缺少控制'
+            '手肘外開過大或下放太快'
         ],
         caution: '肩關節不適或夾擠感時請降低重量與幅度；避免硬推到疼痛位置。',
-        image: '',
+        image: 'images/fitness/shoulder_press.png',
         formChecks: ['overhead_range', 'elbow_path']
     }
 };
@@ -1880,6 +1871,7 @@ function renderExerciseCard(exerciseKey) {
                     <span class="fitness-tag">目標肌群：${escapeHTML(targets)}</span>
                     <span class="fitness-tag">器材：${escapeHTML(equipment)}</span>
                 </div>
+                ${renderExerciseMedia(exercise.image, exercise.title)}
 
                 <h4>動作步驟</h4>
                 <ol>${exercise.steps.map(step => `<li>${escapeHTML(step)}</li>`).join('')}</ol>
@@ -1894,6 +1886,20 @@ function renderExerciseCard(exerciseKey) {
                         : '此動作目前提供教學與目標肌群預覽，姿勢檢查尚未開放。'}
                 </div>
             </div>
+        </div>
+    `;
+}
+
+function renderExerciseMedia(image, title) {
+    if (!image) return '';
+
+    const webpImage = getWebpImagePath(image);
+    return `
+        <div class="fitness-demo-media">
+            <picture>
+                <source srcset="${escapeHTML(webpImage)}" type="image/webp">
+                <img class="fitness-demo-image" src="${escapeHTML(image)}" alt="${escapeHTML(title)}示意圖" loading="lazy">
+            </picture>
         </div>
     `;
 }
@@ -1919,6 +1925,11 @@ function renderMethodMedia(image, title) {
 }
 
 function getWebpImagePath(image) {
+    const nestedMatch = image.match(/^images\/(.+)\/([^/]+)\.png$/i);
+    if (nestedMatch) {
+        return `images/${nestedMatch[1]}/webp/${nestedMatch[2]}.webp`;
+    }
+
     return image.replace(/^images\/(.+)\.png$/i, 'images/webp/$1.webp');
 }
 

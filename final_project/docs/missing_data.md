@@ -1,6 +1,6 @@
 # 缺資料紀錄
 
-> 更新日期：2026-05-25  
+> 更新日期：2026-05-27  
 > 目的：只記錄目前仍缺、待查證、或可擴充的資料，不混入已完成素材。
 
 ## 目前已完整
@@ -9,6 +9,7 @@
 - `methodsData` 檢查結果：36 筆都有步驟、安全提醒、參考來源。
 - `images/1.png` 到 `images/36.png` 已接入 final project。
 - `images/webp/1.webp` 到 `images/webp/36.webp` 已建立，PNG 保留 fallback。
+- 健身模式三個動作已接入靜態示意圖與 WebP fallback。
 - `sourceLibrary` / `methodSourceRefs` 目前能覆蓋所有保留方法。
 - SVG 中每個可選部位目前都至少有 1 種放鬆方法。
 - `abdomen`、`obliques` 已採用低風險徒手方法：腹式呼吸、溫和側彎伸展。
@@ -21,13 +22,13 @@
 
 ### 健身模式示範素材
 
-目前三個健身動作有文字步驟、常見錯誤、目標肌群、MediaPipe form check，但沒有示範圖或影片。
+目前三個健身動作都有靜態示意圖、文字步驟、常見錯誤、目標肌群與 MediaPipe form check。短影片或微動態素材可作為未來加分項，不是展示必要缺口。
 
 | key | 動作 | 目前狀態 | 建議補法 |
 |-----|------|----------|----------|
-| `biceps_curl` | 二頭彎舉 | `image: ''`，目前也未在卡片中渲染示範媒體 | 補靜態圖或短影片 |
-| `triceps_extension` | 三頭肌伸展 | `image: ''`，目前也未在卡片中渲染示範媒體 | 補靜態圖或短影片 |
-| `shoulder_press` | 肩推 | `image: ''`，目前也未在卡片中渲染示範媒體 | 補靜態圖或短影片 |
+| `biceps_curl` | 二頭彎舉 | 已接 `images/fitness/biceps_curl.png` + WebP | 可再補短影片 |
+| `triceps_extension` | 三頭肌伸展 | 已接 `images/fitness/triceps_extension.png` + WebP | 可再補短影片 |
+| `shoulder_press` | 肩推 | 已接 `images/fitness/shoulder_press.png` + WebP | 可再補短影片 |
 
 ### 健身模式可信來源
 
@@ -77,7 +78,7 @@
 
 ## 建議優先順序
 
-1. 補健身模式三個動作的示範素材。
-2. 補健身模式參考來源與 form check 設計說明。
-3. 若要擴充放鬆模式，再從已移出的 8 筆開始查可信來源。
-4. 其他「器材 × 肌群」組合等核心展示穩定後再補。
+1. 補健身模式參考來源與 form check 設計說明。
+2. 若要擴充放鬆模式，再從已移出的 8 筆開始查可信來源。
+3. 其他「器材 × 肌群」組合等核心展示穩定後再補。
+4. 健身短影片或微動態示範可作為展示加分項。
