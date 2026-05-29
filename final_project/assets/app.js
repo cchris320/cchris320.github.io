@@ -1183,7 +1183,7 @@ function analyzeCurrentExercise(landmarks) {
             title: '二頭彎舉',
             rangeLabel: '彎舉幅度',
             minRange: 45,
-            maxElbowDrift: 0.28,
+            maxElbowDrift: 0.45,
             stableOk: '手肘保持穩定。',
             stableWarn: '手肘移動太多，試著固定在身體側邊。',
             rangeOk: '動作幅度足夠，持續保持慢速控制。',
