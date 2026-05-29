@@ -868,12 +868,12 @@ let poseLandmarker = null;
 let poseStream = null;
 let poseAnimationFrame = null;
 let lastPoseVideoTime = -1;
-let formBaseline = null;
-let formMinAngle = 180;
-let formMaxAngle = 0;
-let formMinWristY = 1;
-let formMaxWristY = 0;
+let poseSamples = [];
+let poseTrackingKey = null;
+let activeArmSide = null;
 let lastFormFeedback = null;
+
+const POSE_WINDOW_MS = 2500;
 
 const poseConfig = {
     moduleUrl: 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/vision_bundle.mjs',
@@ -1138,16 +1138,43 @@ function renderPoseResult(result) {
 }
 
 function resetFormTracking() {
-    formBaseline = null;
-    formMinAngle = 180;
-    formMaxAngle = 0;
-    formMinWristY = 1;
-    formMaxWristY = 0;
+    poseSamples = [];
+    poseTrackingKey = null;
+    activeArmSide = null;
     lastFormFeedback = null;
 }
 
 function resetCurlTracking() {
     resetFormTracking();
+}
+
+function ensureTrackingContext(sideName) {
+    const key = `${currentExercise}:${sideName}`;
+    if (poseTrackingKey !== key) {
+        poseTrackingKey = key;
+        poseSamples = [];
+    }
+}
+
+function pushPoseSample(sample) {
+    const now = performance.now();
+    poseSamples.push({ t: now, ...sample });
+    const cutoff = now - POSE_WINDOW_MS;
+    while (poseSamples.length && poseSamples[0].t < cutoff) {
+        poseSamples.shift();
+    }
+}
+
+function windowSpan(key) {
+    if (!poseSamples.length) return 0;
+    let min = Infinity;
+    let max = -Infinity;
+    for (const sample of poseSamples) {
+        const value = sample[key];
+        if (value < min) min = value;
+        if (value > max) max = value;
+    }
+    return max - min;
 }
 
 function analyzeCurrentExercise(landmarks) {
@@ -1205,9 +1232,10 @@ function analyzeElbowRangeExercise(landmarks, config) {
         return {
             summary: '尚未清楚偵測到手臂，請讓肩膀、手肘與手腕進入畫面。',
             sideLabel: '未偵測',
-            ok: false,
+            level: 'info',
             angle: 0,
             rangeText: '0°',
+            rangeLabel: config.rangeLabel,
             messages: ['請面向攝影機，讓至少一側手臂完整入鏡。']
         };
     }
@@ -1216,32 +1244,40 @@ function analyzeElbowRangeExercise(landmarks, config) {
     const elbow = landmarks[side.elbow];
     const wrist = landmarks[side.wrist];
     const shoulderWidth = Math.max(0.08, distance(landmarks[11], landmarks[12]));
-    const currentElbow = { x: elbow.x, y: elbow.y };
 
-    if (!formBaseline || formBaseline.exercise !== currentExercise || formBaseline.side !== side.name) {
-        formBaseline = { exercise: currentExercise, side: side.name, elbow: currentElbow };
-        formMinAngle = 180;
-        formMaxAngle = 0;
-    }
-
+    ensureTrackingContext(side.name);
     const angle = jointAngle(shoulder, elbow, wrist);
-    formMinAngle = Math.min(formMinAngle, angle);
-    formMaxAngle = Math.max(formMaxAngle, angle);
+    pushPoseSample({ angle, elbowX: elbow.x, elbowY: elbow.y });
 
-    const elbowDrift = distance(currentElbow, formBaseline.elbow) / shoulderWidth;
-    const range = formMaxAngle - formMinAngle;
-    const elbowStable = elbowDrift < config.maxElbowDrift;
+    const range = windowSpan('angle');
+    const elbowTravel = Math.hypot(windowSpan('elbowX'), windowSpan('elbowY')) / shoulderWidth;
+    const moving = range > 8;
+    const elbowStable = elbowTravel < config.maxElbowDrift;
     const rangeOk = range > config.minRange;
 
+    let level;
     const messages = [];
-    messages.push(elbowStable ? config.stableOk : config.stableWarn);
-    messages.push(rangeOk ? config.rangeOk : config.rangeWarn);
+    if (!moving) {
+        level = 'info';
+        messages.push('開始做動作，系統會量測你的幅度與手肘穩定度。');
+    } else if (!elbowStable) {
+        level = 'warn';
+        messages.push(config.stableWarn);
+    } else if (rangeOk) {
+        level = 'good';
+        messages.push(config.stableOk);
+        messages.push(config.rangeOk);
+    } else {
+        level = 'info';
+        messages.push(config.stableOk);
+        messages.push(config.rangeWarn);
+    }
 
     return {
         summary: `${side.label}${config.title}檢查中`,
         sideLabel: side.label,
-        ok: elbowStable && rangeOk,
-        elbowDrift,
+        level,
+        elbowTravel,
         range,
         rangeText: `${Math.round(range)}°`,
         rangeLabel: config.rangeLabel,
@@ -1256,9 +1292,10 @@ function analyzeShoulderPress(landmarks) {
         return {
             summary: '尚未清楚偵測到手臂，請讓肩膀、手肘與手腕進入畫面。',
             sideLabel: '未偵測',
-            ok: false,
+            level: 'info',
             angle: 0,
             rangeText: '0%',
+            rangeLabel: '上推高度',
             messages: ['請面向攝影機，讓至少一側手臂完整入鏡。']
         };
     }
@@ -1266,44 +1303,46 @@ function analyzeShoulderPress(landmarks) {
     const shoulder = landmarks[side.shoulder];
     const elbow = landmarks[side.elbow];
     const wrist = landmarks[side.wrist];
+    const hip = landmarks[side.name === 'left' ? 23 : 24];
     const shoulderWidth = Math.max(0.08, distance(landmarks[11], landmarks[12]));
-    const currentElbow = { x: elbow.x, y: elbow.y };
+    const torsoHeight = Math.max(0.12, Math.abs((hip?.y ?? shoulder.y + 0.3) - shoulder.y));
 
-    if (!formBaseline || formBaseline.exercise !== currentExercise || formBaseline.side !== side.name) {
-        formBaseline = { exercise: currentExercise, side: side.name, elbow: currentElbow };
-        formMinWristY = 1;
-        formMaxWristY = 0;
-        formMinAngle = 180;
-        formMaxAngle = 0;
-    }
-
+    ensureTrackingContext(side.name);
     const angle = jointAngle(shoulder, elbow, wrist);
-    formMinAngle = Math.min(formMinAngle, angle);
-    formMaxAngle = Math.max(formMaxAngle, angle);
-    formMinWristY = Math.min(formMinWristY, wrist.y);
-    formMaxWristY = Math.max(formMaxWristY, wrist.y);
+    pushPoseSample({ angle, elbowX: elbow.x, wristY: wrist.y });
 
-    const verticalRange = (formMaxWristY - formMinWristY) / shoulderWidth;
-    const overheadReached = formMinWristY < shoulder.y - shoulderWidth * 0.15;
-    const elbowDriftX = Math.abs(currentElbow.x - formBaseline.elbow.x) / shoulderWidth;
-    const elbowPathOk = elbowDriftX < 0.45;
-    const rangeOk = verticalRange > 0.45 && overheadReached && formMaxAngle > 135;
+    const wristTravel = windowSpan('wristY') / torsoHeight;
+    const overheadReached = wrist.y < shoulder.y - torsoHeight * 0.1;
+    const elbowDriftX = windowSpan('elbowX') / shoulderWidth;
+    const elbowPathOk = elbowDriftX < 0.6;
+    const moving = wristTravel > 0.12;
+    const heightOk = wristTravel > 0.5 && overheadReached;
 
+    let level;
     const messages = [];
-    messages.push(rangeOk
-        ? '手腕有推到肩膀上方，動作幅度足夠。'
-        : '上推幅度不足，試著讓手腕明顯推到肩膀上方。');
-    messages.push(elbowPathOk
-        ? '手肘路徑相對穩定。'
-        : '手肘左右偏移較多，試著沿穩定路徑上推。');
+    if (!moving) {
+        level = 'info';
+        messages.push('開始上推，系統會量測手腕行程與手肘路徑。');
+    } else if (!elbowPathOk) {
+        level = 'warn';
+        messages.push('手肘左右偏移較多，試著沿穩定路徑上推。');
+    } else if (heightOk) {
+        level = 'good';
+        messages.push('手腕有推到肩膀上方，動作幅度足夠。');
+        messages.push('手肘路徑相對穩定。');
+    } else {
+        level = 'info';
+        messages.push('手肘路徑相對穩定。');
+        messages.push(overheadReached ? '行程再大一點會更完整。' : '試著讓手腕明顯推到肩膀上方。');
+    }
 
     return {
         summary: `${side.label}肩推檢查中`,
         sideLabel: side.label,
-        ok: rangeOk && elbowPathOk,
+        level,
         elbowDrift: elbowDriftX,
-        range: verticalRange,
-        rangeText: `${Math.round(verticalRange * 100)}% 肩寬`,
+        range: wristTravel,
+        rangeText: `${Math.round(wristTravel * 100)}% 軀幹高`,
         rangeLabel: '上推高度',
         angle,
         messages
@@ -1313,8 +1352,22 @@ function analyzeShoulderPress(landmarks) {
 function chooseVisibleArm(landmarks) {
     const left = visibilityScore(landmarks, [11, 13, 15]);
     const right = visibilityScore(landmarks, [12, 14, 16]);
-    if (left < 0.45 && right < 0.45) return null;
-    return left >= right
+    if (left < 0.45 && right < 0.45) {
+        activeArmSide = null;
+        return null;
+    }
+
+    let pick = left >= right ? 'left' : 'right';
+    // Hysteresis: stay on the current arm unless the other is clearly more visible,
+    // so the tracked side (and its measurement window) doesn't flip frame-to-frame.
+    if (activeArmSide && pick !== activeArmSide) {
+        const keep = activeArmSide === 'left' ? left : right;
+        const other = activeArmSide === 'left' ? right : left;
+        if (keep > 0.4 && other - keep < 0.12) pick = activeArmSide;
+    }
+    activeArmSide = pick;
+
+    return pick === 'left'
         ? { name: 'left', label: '左手', shoulder: 11, elbow: 13, wrist: 15 }
         : { name: 'right', label: '右手', shoulder: 12, elbow: 14, wrist: 16 };
 }
@@ -1413,7 +1466,8 @@ function jointAngle(a, b, c) {
 }
 
 function renderFormFeedback(feedback) {
-    const statusClass = feedback.ok ? 'ok' : 'warn';
+    const level = feedback.level || (feedback.ok ? 'good' : 'warn');
+    const statusClass = level === 'good' ? 'ok' : (level === 'warn' ? 'warn' : 'info');
     return `
         <div class="form-feedback ${statusClass}">
             <div><strong>偵測手臂：</strong>${escapeHTML(feedback.sideLabel)}</div>

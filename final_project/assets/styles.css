@@ -291,15 +291,27 @@
         .form-feedback {
             padding: 12px 14px;
             border-radius: 8px;
-            border-left: 4px solid #ed8936;
-            background: #fffaf0;
-            color: #744210;
+            border-left: 4px solid #a0aec0;
+            background: #f7fafc;
+            color: #2d3748;
+        }
+        .curl-feedback.info,
+        .form-feedback.info {
+            border-left-color: #4299e1;
+            background: #ebf8ff;
+            color: #2c5282;
         }
         .curl-feedback.ok,
         .form-feedback.ok {
             border-left-color: #38a169;
             background: #f0fff4;
             color: #276749;
+        }
+        .curl-feedback.warn,
+        .form-feedback.warn {
+            border-left-color: #ed8936;
+            background: #fffaf0;
+            color: #744210;
         }
         .curl-feedback ul,
         .form-feedback ul {
