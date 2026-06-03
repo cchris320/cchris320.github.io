@@ -265,7 +265,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - 已補強展示可信度與可近用性：頁尾加入製作/更新/版本資訊，安全警語加入孕期、術後、慢性疾病等族群提醒，器材未開放狀態加入文字標籤，按壓位置確認加入相鄰肌群原因提示。
 - 健身 form check 已改為自動選擇較清楚的一側手臂，並加入骨架顏色圖例；未偵測到上半身或手臂時會顯示醒目提示卡。
 - 健身 form check 的手肘穩定度已改用修剪後滑動視窗、手肘相對肩膀位移與上半身尺度正規化，降低單一壞幀、側身與身體晃動造成的誤警告。
-- 健身骨架 overlay 已改為側身感知：正面保留雙側骨架，側身或遮擋時隱藏非分析手臂，避免仍完整畫出推測骨架。
+- 健身 form check 已明確限定正面操作：保留完整上半身骨架 overlay，不再嘗試自動判斷側身或遮擋；側身時可能出現 MediaPipe 推測點，使用者需正面面向鏡頭。
 - 程式命名已從 `gif` 欄位整理為 `image` 欄位；SVG 肌肉 path 支援鍵盤 Enter/Space 選取，模式切換補上 tab aria 狀態。
 - GIF 製作工作區已建立：`assets/gif_work/gif_storyboard.html` 與 `assets/gif_work/gif_review.md`。
 - 第一批草稿先做 3 個徒手動作：`hip_flexor.hands`、`chest.hands`、`calf.hands`；確認品質後再輸出正式檔到 `assets/gifs/`。

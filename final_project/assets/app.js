@@ -875,7 +875,6 @@ let lastFormFeedback = null;
 
 const POSE_WINDOW_MS = 2500;
 const LANDMARK_VISIBLE_THRESHOLD = 0.45;
-const SIDE_VIEW_SHOULDER_RATIO_THRESHOLD = 0.5;
 const armSides = {
     left: { name: 'left', label: '左手', shoulder: 11, elbow: 13, wrist: 15 },
     right: { name: 'right', label: '右手', shoulder: 12, elbow: 14, wrist: 16 }
@@ -1130,6 +1129,7 @@ function renderPoseResult(result) {
     const results = document.getElementById('pose-results');
 
     if (!landmarks) {
+        lastFormFeedback = null;
         clearPoseCanvas();
         if (status) status.textContent = '未偵測到上半身，請調整鏡頭。';
         if (results) results.innerHTML = renderNoPoseFeedback();
@@ -1137,7 +1137,7 @@ function renderPoseResult(result) {
     }
 
     const feedback = analyzeCurrentExercise(landmarks);
-    lastFormFeedback = feedback;
+    lastFormFeedback = { landmarks, feedback };
     drawPoseOverlay(landmarks, feedback);
     status.textContent = feedback.summary;
     results.innerHTML = renderFormFeedback(feedback);
@@ -1451,7 +1451,6 @@ function drawPoseOverlay(landmarks, feedback) {
     const activeIndexes = new Set(activeSide
         ? [activeSide.shoulder, activeSide.elbow, activeSide.wrist]
         : []);
-    const showReferenceArms = shouldShowReferenceArms(landmarks);
 
     const baseConnections = [
         { from: 11, to: 12, type: 'torso' },
@@ -1466,18 +1465,12 @@ function drawPoseOverlay(landmarks, feedback) {
 
     baseConnections.forEach(({ from, to, type }) => {
         const active = activeIndexes.has(from) && activeIndexes.has(to);
-        const threshold = overlayThresholdFor(type, active, showReferenceArms);
-        if (threshold === null) return;
-        drawPoseLine(ctx, landmarks[from], landmarks[to], active, threshold);
+        drawPoseLine(ctx, landmarks[from], landmarks[to], active);
     });
 
     [11, 12, 13, 14, 15, 16, 23, 24].forEach(index => {
         const active = activeIndexes.has(index);
-        const type = index === 13 || index === 15 ? 'left'
-            : (index === 14 || index === 16 ? 'right' : 'torso');
-        const threshold = overlayThresholdFor(type, active, showReferenceArms);
-        if (threshold === null) return;
-        drawPosePoint(ctx, landmarks[index], active, threshold);
+        drawPosePoint(ctx, landmarks[index], active);
     });
 }
 
@@ -1485,27 +1478,6 @@ function getFeedbackArmSide(feedback) {
     if (feedback?.sideLabel === '左手') return armSides.left;
     if (feedback?.sideLabel === '右手') return armSides.right;
     return null;
-}
-
-function shouldShowReferenceArms(landmarks) {
-    const leftShoulder = landmarks[11];
-    const rightShoulder = landmarks[12];
-    const leftHip = landmarks[23];
-    const rightHip = landmarks[24];
-    const torsoLandmarks = [leftShoulder, rightShoulder, leftHip, rightHip];
-    if (!torsoLandmarks.every(point => isVisibleLandmark(point))) return false;
-
-    const shoulderWidth = distance(leftShoulder, rightShoulder);
-    const shoulderMid = midpoint(leftShoulder, rightShoulder);
-    const hipMid = midpoint(leftHip, rightHip);
-    const torsoHeight = Math.max(0.12, distance(shoulderMid, hipMid));
-
-    return shoulderWidth / torsoHeight >= SIDE_VIEW_SHOULDER_RATIO_THRESHOLD;
-}
-
-function overlayThresholdFor(type, active, showReferenceArms) {
-    if (active || type === 'torso') return LANDMARK_VISIBLE_THRESHOLD;
-    return showReferenceArms ? LANDMARK_VISIBLE_THRESHOLD : null;
 }
 
 function drawPoseLine(ctx, a, b, active = false, threshold = LANDMARK_VISIBLE_THRESHOLD) {

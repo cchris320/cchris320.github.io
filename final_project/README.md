@@ -9,7 +9,7 @@ A static web app for daily muscle relaxation guidance and basic fitness form-che
 - Source notes: relaxation methods include trusted health or rehab references in the UI.
 - Fitness mode: biceps curl, triceps extension, and shoulder press demos with static illustrations and MediaPipe-based arm form checks.
 - Fitness overlay: detected shoulder, elbow, wrist, and torso landmarks are drawn over the camera preview.
-- Overlay filtering: front-facing views can show both arms, while side or occluded views hide the non-analyzed arm to reduce misleading predicted limbs.
+- Front-facing form check: the overlay keeps the full upper-body skeleton, and supported exercises are documented as front-facing camera use only.
 - Fitness notes: form-check behavior is documented as browser-only auxiliary feedback, not diagnosis or formal coaching assessment.
 - Robust form metrics: elbow stability uses trimmed motion windows and relative upper-body scaling to reduce noisy-frame warnings.
 - Arm tracking: form check automatically uses the clearer visible arm and explains the overlay colors in the UI.
