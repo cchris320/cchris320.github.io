@@ -261,6 +261,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - 健身模式三個動作已補上靜態示意圖與 WebP fallback：`biceps_curl`、`triceps_extension`、`shoulder_press`。
 - 健身模式版面已改為「視覺左、文字右」：上方動作按鈕橫跨整列，左欄放示範圖與目標肌群 SVG，右欄保留文字步驟。
 - 健身 form check 已加入攝影機骨架疊圖，會在畫面上標示肩、肘、腕與上半身連線。
+- 健身 form check 區已新增攝影機入鏡提示；`docs/fitness_form_check_notes.md` 已記錄判斷原則、目前閾值與限制。
 - 程式命名已從 `gif` 欄位整理為 `image` 欄位；SVG 肌肉 path 支援鍵盤 Enter/Space 選取，模式切換補上 tab aria 狀態。
 - GIF 製作工作區已建立：`assets/gif_work/gif_storyboard.html` 與 `assets/gif_work/gif_review.md`。
 - 第一批草稿先做 3 個徒手動作：`hip_flexor.hands`、`chest.hands`、`calf.hands`；確認品質後再輸出正式檔到 `assets/gifs/`。
@@ -271,7 +272,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - `assets/image_work/` 內臨時 prompt / 待調整 md 已清除，只保留參考圖。
 - `muscle_relax.html` 已接上全部 34 張放鬆模式示範圖；`methodsData` 目前每筆保留方法都有對應圖片。
 - 已為 SVG 中的 `abdomen`、`obliques` 補上低風險徒手方法：腹式呼吸、溫和側彎伸展；放鬆模式目前 36 筆都有步驟、安全提醒與參考來源。
-- 目前缺資料已整理到 `missing_data.md`；放鬆模式示範圖與健身示意圖已補齊，主要剩健身來源紀錄、form check 設計說明，以及已移出的 8 筆待查證方法。
+- 目前缺資料已整理到 `missing_data.md`；放鬆模式示範圖與健身示意圖已補齊，主要剩健身動作來源紀錄，以及已移出的 8 筆待查證方法。
 - 詳細清單見 `content_review.md`。
 
 ---

@@ -1,6 +1,6 @@
 # 缺資料紀錄
 
-> 更新日期：2026-05-27  
+> 更新日期：2026-06-03  
 > 目的：只記錄目前仍缺、待查證、或可擴充的資料，不混入已完成素材。
 
 ## 目前已完整
@@ -10,6 +10,7 @@
 - `images/1.png` 到 `images/36.png` 已接入 final project。
 - `images/webp/1.webp` 到 `images/webp/36.webp` 已建立，PNG 保留 fallback。
 - 健身模式三個動作已接入靜態示意圖與 WebP fallback。
+- 健身模式已新增攝影機入鏡提示與 `docs/fitness_form_check_notes.md` 設計說明。
 - `sourceLibrary` / `methodSourceRefs` 目前能覆蓋所有保留方法。
 - SVG 中每個可選部位目前都至少有 1 種放鬆方法。
 - `abdomen`、`obliques` 已採用低風險徒手方法：腹式呼吸、溫和側彎伸展。
@@ -37,7 +38,7 @@
 | 範圍 | 目前狀態 | 建議補法 |
 |------|----------|----------|
 | 三個健身動作文字 | 已有內容，但未建立 source refs | 補 `fitnessSourceLibrary` 或共用 `sourceLibrary` |
-| MediaPipe form check 判斷規則 | 已有基礎規則，但未附來源或設計說明 | 補一份 `fitness_form_check_notes.md`，記錄角度/高度判斷只是輔助提示，不是醫療或教練級評分 |
+| MediaPipe form check 判斷規則 | 已補 `fitness_form_check_notes.md` 設計說明 | 未來若要擴充下肢動作，再補新的角度與入鏡規則 |
 
 ## 已移出、待查證後再回補
 
@@ -78,7 +79,7 @@
 
 ## 建議優先順序
 
-1. 補健身模式參考來源與 form check 設計說明。
+1. 補健身動作文字的參考來源紀錄。
 2. 若要擴充放鬆模式，再從已移出的 8 筆開始查可信來源。
 3. 其他「器材 × 肌群」組合等核心展示穩定後再補。
 4. 健身短影片或微動態示範可作為展示加分項。

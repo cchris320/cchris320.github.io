@@ -1183,7 +1183,7 @@ function analyzeCurrentExercise(landmarks) {
             title: '二頭彎舉',
             rangeLabel: '彎舉幅度',
             minRange: 45,
-            maxElbowDrift: 0.45,
+            maxElbowDrift: 0.28,
             stableOk: '手肘保持穩定。',
             stableWarn: '手肘移動太多，試著固定在身體側邊。',
             rangeOk: '動作幅度足夠，持續保持慢速控制。',
@@ -1196,7 +1196,7 @@ function analyzeCurrentExercise(landmarks) {
             title: '三頭肌伸展',
             rangeLabel: '伸展幅度',
             minRange: 35,
-            maxElbowDrift: 0.7,
+            maxElbowDrift: 0.32,
             stableOk: '手肘保持穩定，伸展路徑清楚。',
             stableWarn: '手肘移動太多，試著讓上臂固定在身體旁或頭側。',
             rangeOk: '伸直與回收幅度足夠。',
@@ -1314,7 +1314,7 @@ function analyzeShoulderPress(landmarks) {
     const wristTravel = windowSpan('wristY') / torsoHeight;
     const overheadReached = wrist.y < shoulder.y - torsoHeight * 0.1;
     const elbowDriftX = windowSpan('elbowX') / shoulderWidth;
-    const elbowPathOk = elbowDriftX < 1.0;
+    const elbowPathOk = elbowDriftX < 0.6;
     const moving = wristTravel > 0.12;
     const heightOk = wristTravel > 0.5 && overheadReached;
 
