@@ -1290,24 +1290,17 @@ function analyzeCurrentExercise(landmarks) {
             rangeLabel: '彎舉幅度',
             minRange: 45,
             maxElbowDrift: 0.28,
+            maxUpperArmLift: 0.22,
             stableOk: '手肘保持穩定。',
             stableWarn: '手肘移動太多，試著固定在身體側邊。',
+            shoulderWarn: '上臂抬太高，二頭彎舉時請讓手肘留在身體側邊，不要抬到肩膀上方。',
             rangeOk: '動作幅度足夠，持續保持慢速控制。',
             rangeWarn: '動作幅度不足，手腕上抬與放下角度需要更明顯。'
         });
     }
 
     if (currentExercise === 'triceps_extension') {
-        return analyzeElbowRangeExercise(landmarks, {
-            title: '三頭肌伸展',
-            rangeLabel: '伸展幅度',
-            minRange: 35,
-            maxElbowDrift: 0.32,
-            stableOk: '手肘保持穩定，伸展路徑清楚。',
-            stableWarn: '手肘移動太多，試著讓上臂固定在身體旁或頭側。',
-            rangeOk: '伸直與回收幅度足夠。',
-            rangeWarn: '伸展幅度不足，手肘伸直與回收需要更明顯。'
-        });
+        return analyzeTricepsExtension(landmarks);
     }
 
     if (currentExercise === 'shoulder_press') {
@@ -1366,9 +1359,11 @@ function analyzeElbowRangeExercise(landmarks, config) {
 
     const range = windowSpan('angle');
     const elbowTravel = vectorWindowTravel('elbowRelX', 'elbowRelY') / metrics.scale;
+    const upperArmLift = windowSpan('elbowRelY') / metrics.scale;
     const moving = range > 8;
     const elbowStable = elbowTravel < config.maxElbowDrift;
     const rangeOk = range > config.minRange;
+    const shoulderOk = !config.maxUpperArmLift || upperArmLift < config.maxUpperArmLift;
 
     let level;
     const messages = [];
@@ -1376,8 +1371,8 @@ function analyzeElbowRangeExercise(landmarks, config) {
         level = 'info';
         messages.push('開始做動作，系統會量測你的幅度與手肘穩定度。');
     } else {
-        level = !elbowStable ? 'warn' : (rangeOk ? 'good' : 'info');
-        messages.push(elbowStable ? config.stableOk : config.stableWarn);
+        level = (!elbowStable || !shoulderOk) ? 'warn' : (rangeOk ? 'good' : 'info');
+        messages.push(shoulderOk ? (elbowStable ? config.stableOk : config.stableWarn) : config.shoulderWarn);
         messages.push(rangeOk ? config.rangeOk : config.rangeWarn);
     }
 
@@ -1386,9 +1381,89 @@ function analyzeElbowRangeExercise(landmarks, config) {
         sideLabel: side.label,
         level,
         elbowTravel,
+        upperArmLift,
         range,
         rangeText: `${Math.round(range)}°`,
         rangeLabel: config.rangeLabel,
+        angle,
+        messages
+    };
+}
+
+function analyzeTricepsExtension(landmarks) {
+    const side = chooseVisibleArm(landmarks);
+    if (!side) {
+        return {
+            summary: '尚未清楚偵測到手臂，請調整鏡頭。',
+            sideLabel: '未偵測',
+            level: 'warn',
+            angle: 0,
+            rangeText: '0°',
+            rangeLabel: '伸展幅度',
+            messages: [
+                '請調整鏡頭，讓頭頂、雙肩、雙手與髖部入鏡。',
+                '過頭三頭肌伸展請讓上臂、手肘與手腕都留在畫面中。'
+            ]
+        };
+    }
+
+    const shoulder = landmarks[side.shoulder];
+    const elbow = landmarks[side.elbow];
+    const wrist = landmarks[side.wrist];
+    const metrics = getUpperBodyMetrics(landmarks, side);
+    const confidence = visibilityScore(landmarks, [side.shoulder, side.elbow, side.wrist]);
+
+    ensureTrackingContext(side.name);
+    const angle = jointAngle(shoulder, elbow, wrist);
+    pushPoseSample({
+        angle,
+        elbowRelX: elbow.x - shoulder.x,
+        elbowRelY: elbow.y - shoulder.y,
+        wristRelY: wrist.y - shoulder.y,
+        confidence
+    });
+
+    const range = windowSpan('angle');
+    const elbowTravel = vectorWindowTravel('elbowRelX', 'elbowRelY') / metrics.scale;
+    const elbowAboveShoulder = elbow.y < shoulder.y + metrics.torsoHeight * 0.1;
+    const wristAboveShoulder = wrist.y < shoulder.y + metrics.torsoHeight * 0.15;
+    const elbowCloseToHead = Math.abs(elbow.x - shoulder.x) / metrics.scale < 0.55;
+    const moving = range > 8;
+    const elbowStable = elbowTravel < 0.38;
+    const rangeOk = range > 35;
+    const setupOk = elbowAboveShoulder && wristAboveShoulder && elbowCloseToHead;
+
+    let level;
+    const messages = [];
+    if (!moving) {
+        level = 'info';
+        messages.push('開始做過頭伸展，系統會量測伸直與回收幅度。');
+    } else if (!setupOk) {
+        level = 'warn';
+        messages.push('三頭肌伸展請把上臂抬到頭側，手肘與手腕留在肩膀上方。');
+        messages.push(rangeOk ? '伸直與回收幅度足夠。' : '伸展幅度不足，手肘伸直與回收需要更明顯。');
+    } else if (!elbowStable) {
+        level = 'warn';
+        messages.push('手肘晃動較多，試著讓上臂固定在頭側。');
+        messages.push(rangeOk ? '伸直與回收幅度足夠。' : '伸展幅度不足，手肘伸直與回收需要更明顯。');
+    } else if (rangeOk) {
+        level = 'good';
+        messages.push('上臂位置接近頭側，伸展路徑清楚。');
+        messages.push('伸直與回收幅度足夠。');
+    } else {
+        level = 'info';
+        messages.push('上臂位置接近頭側。');
+        messages.push('伸展幅度不足，手肘伸直與回收需要更明顯。');
+    }
+
+    return {
+        summary: `${side.label}三頭肌伸展檢查中`,
+        sideLabel: side.label,
+        level,
+        elbowTravel,
+        range,
+        rangeText: `${Math.round(range)}°`,
+        rangeLabel: '伸展幅度',
         angle,
         messages
     };

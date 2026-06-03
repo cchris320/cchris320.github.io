@@ -214,8 +214,8 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 2. 健身模式中新增「啟動姿勢檢查」。
 3. 針對三個動作做基礎檢查：
 
-- `biceps_curl`：手肘穩定度、彎舉幅度。
-- `triceps_extension`：手肘穩定度、伸展幅度。
+- `biceps_curl`：手肘穩定度、彎舉幅度、上臂是否抬太高。
+- `triceps_extension`：過頭位置、上臂是否接近頭側、伸展幅度。
 - `shoulder_press`：上推高度、手肘路徑穩定度。
 
 4. 回饋文字：
