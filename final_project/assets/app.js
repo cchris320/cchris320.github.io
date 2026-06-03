@@ -879,6 +879,7 @@ const POSE_WINDOW_MS = 2500;
 const LANDMARK_VISIBLE_THRESHOLD = 0.45;
 const SIDE_VIEW_RATIO_THRESHOLD = 0.42;
 const SIDE_VIEW_SHOULDER_WIDTH_THRESHOLD = 0.14;
+const SIDE_VIEW_ARM_OVERLAP_THRESHOLD = 0.32;
 const SIDE_VIEW_WARNING_FRAMES = 8;
 const armSides = {
     left: { name: 'left', label: '左手', shoulder: 11, elbow: 13, wrist: 15 },
@@ -1258,7 +1259,28 @@ function isLikelySideView(landmarks) {
         if (shoulderWidth / torsoHeight < SIDE_VIEW_RATIO_THRESHOLD) return true;
     }
 
-    return false;
+    return armProjectionOverlapScore(landmarks) < SIDE_VIEW_ARM_OVERLAP_THRESHOLD;
+}
+
+function armProjectionOverlapScore(landmarks) {
+    const leftShoulder = landmarks[11];
+    const rightShoulder = landmarks[12];
+    const leftElbow = landmarks[13];
+    const rightElbow = landmarks[14];
+    const leftHip = landmarks[23];
+    const rightHip = landmarks[24];
+    const required = [leftShoulder, rightShoulder, leftElbow, rightElbow];
+    if (!required.every(point => isVisibleLandmark(point))) return Infinity;
+
+    const shoulderMid = midpoint(leftShoulder, rightShoulder);
+    const hipMid = isVisibleLandmark(leftHip) && isVisibleLandmark(rightHip)
+        ? midpoint(leftHip, rightHip)
+        : { x: shoulderMid.x, y: shoulderMid.y + 0.35 };
+    const scale = Math.max(0.12, distance(shoulderMid, hipMid));
+    const shoulderGap = distance(leftShoulder, rightShoulder);
+    const elbowGap = distance(leftElbow, rightElbow);
+
+    return ((shoulderGap + elbowGap) / 2) / scale;
 }
 
 function analyzeCurrentExercise(landmarks) {
@@ -1498,6 +1520,7 @@ function drawPoseOverlay(landmarks, feedback) {
     const activeIndexes = new Set(activeSide
         ? [activeSide.shoulder, activeSide.elbow, activeSide.wrist]
         : []);
+    const showArmOverlay = !sideViewWarningActive;
 
     const baseConnections = [
         { from: 11, to: 12, type: 'torso' },
@@ -1511,11 +1534,14 @@ function drawPoseOverlay(landmarks, feedback) {
     ];
 
     baseConnections.forEach(({ from, to, type }) => {
+        if (type !== 'torso' && !showArmOverlay) return;
         const active = activeIndexes.has(from) && activeIndexes.has(to);
         drawPoseLine(ctx, landmarks[from], landmarks[to], active);
     });
 
     [11, 12, 13, 14, 15, 16, 23, 24].forEach(index => {
+        const isArmPoint = index === 13 || index === 14 || index === 15 || index === 16;
+        if (isArmPoint && !showArmOverlay) return;
         const active = activeIndexes.has(index);
         drawPosePoint(ctx, landmarks[index], active);
     });
