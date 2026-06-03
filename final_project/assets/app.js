@@ -874,6 +874,8 @@ let activeArmSide = null;
 let lastFormFeedback = null;
 
 const POSE_WINDOW_MS = 2500;
+const LANDMARK_VISIBLE_THRESHOLD = 0.45;
+const OVERLAY_REFERENCE_THRESHOLD = 0.62;
 const armSides = {
     left: { name: 'left', label: '左手', shoulder: 11, elbow: 13, wrist: 15 },
     right: { name: 'right', label: '右手', shoulder: 12, elbow: 14, wrist: 16 }
@@ -1398,8 +1400,8 @@ function analyzeShoulderPress(landmarks) {
 function chooseVisibleArm(landmarks) {
     const left = visibilityScore(landmarks, [11, 13, 15]);
     const right = visibilityScore(landmarks, [12, 14, 16]);
-    const leftOk = left >= 0.45;
-    const rightOk = right >= 0.45;
+    const leftOk = left >= LANDMARK_VISIBLE_THRESHOLD;
+    const rightOk = right >= LANDMARK_VISIBLE_THRESHOLD;
 
     if (!leftOk && !rightOk) {
         activeArmSide = null;
@@ -1445,30 +1447,62 @@ function drawPoseOverlay(landmarks, feedback) {
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
-    const activeSide = feedback?.sideLabel === '左手'
-        ? { shoulder: 11, elbow: 13, wrist: 15 }
-        : { shoulder: 12, elbow: 14, wrist: 16 };
+    const activeSide = getFeedbackArmSide(feedback);
+    const activeIndexes = new Set(activeSide
+        ? [activeSide.shoulder, activeSide.elbow, activeSide.wrist]
+        : []);
+    const sideVisibility = {
+        left: visibilityScore(landmarks, [11, 13, 15]),
+        right: visibilityScore(landmarks, [12, 14, 16])
+    };
+    const activeScore = activeSide ? sideVisibility[activeSide.name] : 0;
 
     const baseConnections = [
-        [11, 12], [11, 23], [12, 24], [23, 24],
-        [11, 13], [13, 15], [12, 14], [14, 16]
+        { from: 11, to: 12, type: 'torso' },
+        { from: 11, to: 23, type: 'torso' },
+        { from: 12, to: 24, type: 'torso' },
+        { from: 23, to: 24, type: 'torso' },
+        { from: 11, to: 13, type: 'left' },
+        { from: 13, to: 15, type: 'left' },
+        { from: 12, to: 14, type: 'right' },
+        { from: 14, to: 16, type: 'right' }
     ];
 
-    baseConnections.forEach(([from, to]) => {
-        const active = [from, to].includes(activeSide.shoulder)
-            || [from, to].includes(activeSide.elbow)
-            || [from, to].includes(activeSide.wrist);
-        drawPoseLine(ctx, landmarks[from], landmarks[to], active);
+    baseConnections.forEach(({ from, to, type }) => {
+        const active = activeIndexes.has(from) && activeIndexes.has(to);
+        const threshold = overlayThresholdFor(type, active, activeSide, activeScore, sideVisibility);
+        if (threshold === null) return;
+        drawPoseLine(ctx, landmarks[from], landmarks[to], active, threshold);
     });
 
     [11, 12, 13, 14, 15, 16, 23, 24].forEach(index => {
-        const active = index === activeSide.shoulder || index === activeSide.elbow || index === activeSide.wrist;
-        drawPosePoint(ctx, landmarks[index], active);
+        const active = activeIndexes.has(index);
+        const type = index === 13 || index === 15 ? 'left'
+            : (index === 14 || index === 16 ? 'right' : 'torso');
+        const threshold = overlayThresholdFor(type, active, activeSide, activeScore, sideVisibility);
+        if (threshold === null) return;
+        drawPosePoint(ctx, landmarks[index], active, threshold);
     });
 }
 
-function drawPoseLine(ctx, a, b, active = false) {
-    if (!isVisibleLandmark(a) || !isVisibleLandmark(b)) return;
+function getFeedbackArmSide(feedback) {
+    if (feedback?.sideLabel === '左手') return armSides.left;
+    if (feedback?.sideLabel === '右手') return armSides.right;
+    return null;
+}
+
+function overlayThresholdFor(type, active, activeSide, activeScore, sideVisibility) {
+    if (active || type === 'torso') return LANDMARK_VISIBLE_THRESHOLD;
+
+    const sideScore = sideVisibility[type];
+    if (sideScore < OVERLAY_REFERENCE_THRESHOLD) return null;
+    if (activeSide && activeScore - sideScore > 0.12) return null;
+
+    return OVERLAY_REFERENCE_THRESHOLD;
+}
+
+function drawPoseLine(ctx, a, b, active = false, threshold = LANDMARK_VISIBLE_THRESHOLD) {
+    if (!isVisibleLandmark(a, threshold) || !isVisibleLandmark(b, threshold)) return;
 
     ctx.strokeStyle = active ? 'rgba(246, 173, 85, 0.95)' : 'rgba(99, 179, 237, 0.85)';
     ctx.lineWidth = active ? 5 : 3;
@@ -1478,8 +1512,8 @@ function drawPoseLine(ctx, a, b, active = false) {
     ctx.stroke();
 }
 
-function drawPosePoint(ctx, point, active = false) {
-    if (!isVisibleLandmark(point)) return;
+function drawPosePoint(ctx, point, active = false, threshold = LANDMARK_VISIBLE_THRESHOLD) {
+    if (!isVisibleLandmark(point, threshold)) return;
 
     const x = point.x * ctx.canvas.width;
     const y = point.y * ctx.canvas.height;
@@ -1492,8 +1526,8 @@ function drawPosePoint(ctx, point, active = false) {
     ctx.stroke();
 }
 
-function isVisibleLandmark(point) {
-    return Boolean(point) && (point.visibility ?? point.presence ?? 1) > 0.45;
+function isVisibleLandmark(point, threshold = LANDMARK_VISIBLE_THRESHOLD) {
+    return Boolean(point) && (point.visibility ?? point.presence ?? 1) > threshold;
 }
 
 function clearPoseCanvas() {
