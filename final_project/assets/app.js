@@ -1550,15 +1550,21 @@ function updateEquipAvailability(muscleId) {
 
     document.querySelectorAll('.equip-btn').forEach(btn => {
         const equip = btn.dataset.equip;
+        const label = equipLabels[equip] || equip;
         const isAvailable = hasVerifiedMethod(muscleId, equip);
+        const state = btn.querySelector('.equip-state');
         btn.disabled = !isAvailable;
         btn.classList.toggle('is-unavailable', !isAvailable);
         btn.classList.remove('active');
         btn.title = isAvailable
-            ? `${equipLabels[equip] || equip}可用`
-            : `${equipLabels[equip] || equip}目前尚未建立可信內容`;
+            ? `${label}可用`
+            : `${label}目前尚未建立可信內容，為避免提供未查證方法暫不開放`;
+        btn.setAttribute('aria-label', isAvailable
+            ? `${label}可用`
+            : `${label}未開放，尚未建立可信內容`);
         btn.setAttribute('aria-disabled', String(!isAvailable));
-        if (!isAvailable) unavailableLabels.push(equipLabels[equip] || equip);
+        if (state) state.textContent = isAvailable ? '' : '未開放';
+        if (!isAvailable) unavailableLabels.push(label);
     });
 
     const note = document.getElementById('equip-availability-note');
@@ -1571,7 +1577,7 @@ function updateEquipAvailability(muscleId) {
 
     const availableLabels = availableEquips.map(equip => equipLabels[equip] || equip).join('、');
     note.textContent = unavailableLabels.length
-        ? `此部位目前可用：${availableLabels}。灰色器材暫無可信內容，先不開放選擇。`
+        ? `此部位目前可用：${availableLabels}。標示「未開放」的器材尚未建立可信內容，為避免提供未查證方法暫不開放。`
         : `此部位目前可用：${availableLabels}。`;
 }
 
@@ -1825,7 +1831,7 @@ function renderLocationCheck(muscleId, equip) {
             </div>
             <div class="location-message" id="location-message-${id}" aria-live="polite"></div>
             <div class="neighbor-panel hidden" id="neighbor-panel-${id}">
-                <p>可以改看相鄰肌群，再重新選擇器材與方法：</p>
+                <p>疼痛或緊繃感有時會來自鄰近肌群代償；如果目前位置沒有對到感受，可以改看相鄰肌群，再重新選擇器材與方法：</p>
                 <div class="neighbor-actions">${neighborButtons}</div>
             </div>
         </div>

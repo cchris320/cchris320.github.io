@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>肌肉放鬆指南</title>
-    <link rel="stylesheet" href="assets/styles.css?v=fitness-notes-20260603">
+    <link rel="stylesheet" href="assets/styles.css?v=trust-polish-20260603">
 </head>
 <body>
 
@@ -14,7 +14,7 @@
 </header>
 
 <div class="safety-notice">
-    注意：出現劇烈疼痛、麻木、放射痛或急性傷害時，請立即停止並尋求專業醫療協助。本網頁僅提供日常自我照護建議，不替代醫療診斷。
+    注意：出現劇烈疼痛、麻木、放射痛或急性傷害時，請立即停止並尋求專業醫療協助。本網頁僅提供日常自我照護與動作練習輔助，不替代醫療診斷、治療或專業教練指導。孕期、術後恢復、骨質疏鬆、慢性疾病、神經症狀或正在接受治療者，請先諮詢醫師或物理治療師。
 </div>
 
 <div class="container">
@@ -65,11 +65,11 @@
     <div id="equipment-section" class="step-section hidden">
         <div class="section-title">步驟 2 ── 選擇手邊的器材（可多選）</div>
         <div class="equip-grid">
-            <button class="equip-btn" data-equip="hands"  onclick="toggleEquip(this)">徒手</button>
-            <button class="equip-btn" data-equip="roller" onclick="toggleEquip(this)">滾筒</button>
-            <button class="equip-btn" data-equip="ball"   onclick="toggleEquip(this)">按摩球</button>
-            <button class="equip-btn" data-equip="band"   onclick="toggleEquip(this)">彈力帶</button>
-            <button class="equip-btn" data-equip="gun"    onclick="toggleEquip(this)">筋膜槍</button>
+            <button class="equip-btn" data-equip="hands"  onclick="toggleEquip(this)"><span class="equip-name">徒手</span><span class="equip-state"></span></button>
+            <button class="equip-btn" data-equip="roller" onclick="toggleEquip(this)"><span class="equip-name">滾筒</span><span class="equip-state"></span></button>
+            <button class="equip-btn" data-equip="ball"   onclick="toggleEquip(this)"><span class="equip-name">按摩球</span><span class="equip-state"></span></button>
+            <button class="equip-btn" data-equip="band"   onclick="toggleEquip(this)"><span class="equip-name">彈力帶</span><span class="equip-state"></span></button>
+            <button class="equip-btn" data-equip="gun"    onclick="toggleEquip(this)"><span class="equip-name">筋膜槍</span><span class="equip-state"></span></button>
         </div>
         <div id="equip-availability-note" class="equip-availability-note"></div>
         <button id="confirm-equip-btn" onclick="showMethods()" disabled>查看放鬆方法 →</button>
@@ -139,6 +139,12 @@
 
 </div>
 
-<script src="assets/app.js?v=fitness-notes-20260603" defer></script>
+<footer class="project-meta" aria-label="專案資訊">
+    <span>製作：cchris320</span>
+    <span>資料更新：2026-06-03</span>
+    <span>版本：Final Project v1.0</span>
+</footer>
+
+<script src="assets/app.js?v=trust-polish-20260603" defer></script>
 </body>
 </html>

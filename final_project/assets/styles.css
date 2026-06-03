@@ -57,6 +57,17 @@
             font-size: 0.92rem;
             line-height: 1.6;
         }
+        .project-meta {
+            max-width: 1000px;
+            margin: 18px auto 26px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            color: #718096;
+            font-size: 0.82rem;
+        }
 
         .instruction {
             text-align: center;
@@ -358,6 +369,9 @@
             margin-bottom: 20px;
         }
         .equip-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
             padding: 10px 22px;
             border: 2px solid #e2e8f0; border-radius: 30px;
             background: white; color: #4a5568;
@@ -380,6 +394,18 @@
             border-color: #e2e8f0;
             background: #f7fafc;
             color: #a0aec0;
+        }
+        .equip-state {
+            padding: 2px 6px;
+            border-radius: 999px;
+            background: #edf2f7;
+            color: #718096;
+            font-size: 0.72rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .equip-state:empty {
+            display: none;
         }
         .equip-availability-note {
             margin: -6px 0 16px;
