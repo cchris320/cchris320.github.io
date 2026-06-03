@@ -877,7 +877,10 @@ let sideViewWarningActive = false;
 
 const POSE_WINDOW_MS = 2500;
 const LANDMARK_VISIBLE_THRESHOLD = 0.45;
-const SIDE_VIEW_RATIO_THRESHOLD = 0.5;
+const SIDE_VIEW_RATIO_THRESHOLD = 0.65;
+const SIDE_VIEW_DEPTH_THRESHOLD = 0.14;
+const SIDE_VIEW_SHOULDER_WIDTH_THRESHOLD = 0.17;
+const SIDE_VIEW_HEAD_SHOULDER_RATIO_THRESHOLD = 1.25;
 const SIDE_VIEW_WARNING_FRAMES = 8;
 const armSides = {
     left: { name: 'left', label: '左手', shoulder: 11, elbow: 13, wrist: 15 },
@@ -1242,17 +1245,31 @@ function applySideViewWarning(feedback, landmarks) {
 function isLikelySideView(landmarks) {
     const leftShoulder = landmarks[11];
     const rightShoulder = landmarks[12];
+    if (!isVisibleLandmark(leftShoulder) || !isVisibleLandmark(rightShoulder)) return false;
+
     const leftHip = landmarks[23];
     const rightHip = landmarks[24];
-    const torsoLandmarks = [leftShoulder, rightShoulder, leftHip, rightHip];
-    if (!torsoLandmarks.every(point => isVisibleLandmark(point))) return false;
-
     const shoulderWidth = distance(leftShoulder, rightShoulder);
-    const shoulderMid = midpoint(leftShoulder, rightShoulder);
-    const hipMid = midpoint(leftHip, rightHip);
-    const torsoHeight = Math.max(0.12, distance(shoulderMid, hipMid));
+    const shoulderDepthDiff = Math.abs((leftShoulder.z || 0) - (rightShoulder.z || 0));
+    if (shoulderDepthDiff > SIDE_VIEW_DEPTH_THRESHOLD && shoulderDepthDiff > shoulderWidth * 0.65) {
+        return true;
+    }
 
-    return shoulderWidth / torsoHeight < SIDE_VIEW_RATIO_THRESHOLD;
+    const shoulderMid = midpoint(leftShoulder, rightShoulder);
+    const hipsVisible = isVisibleLandmark(leftHip) && isVisibleLandmark(rightHip);
+    if (hipsVisible) {
+        const hipMid = midpoint(leftHip, rightHip);
+        const torsoHeight = Math.max(0.12, distance(shoulderMid, hipMid));
+        if (shoulderWidth / torsoHeight < SIDE_VIEW_RATIO_THRESHOLD) return true;
+    }
+
+    const nose = landmarks[0];
+    if (isVisibleLandmark(nose)) {
+        const headToShoulder = Math.max(0.08, distance(nose, shoulderMid));
+        if (shoulderWidth / headToShoulder < SIDE_VIEW_HEAD_SHOULDER_RATIO_THRESHOLD) return true;
+    }
+
+    return shoulderWidth < SIDE_VIEW_SHOULDER_WIDTH_THRESHOLD;
 }
 
 function analyzeCurrentExercise(landmarks) {
