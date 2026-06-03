@@ -2,7 +2,7 @@
 
 > **專案**：`muscle_relax.html`
 > **方向對齊**：見 `direction_v2.md` / `project_plan.html`
-> **目前策略**：C-lite，放鬆模式完整交付 + 健身模式骨架 + 1 個 MediaPipe form check demo。
+> **目前策略**：C-lite，放鬆模式完整交付 + 健身模式骨架 + MediaPipe 骨架觀察 demo。
 > **執行原則**：每批做完先測試確認沒壞，再進下一批。
 
 ---
@@ -76,12 +76,12 @@
 
 - 姿勢不等於疼痛。
 - 容易造成過度健康判斷。
-- MediaPipe 更適合做骨架偵測與動作姿勢檢查。
+- MediaPipe 更適合做骨架偵測與動作輔助觀察。
 
 **處理策略**：
 
 - 不再把 MediaPipe 放在放鬆模式作為痛點推薦入口。
-- 既有 MediaPipe 程式可保留為技術素材，但後續要移到健身模式 form check。
+- 既有 MediaPipe 程式可保留為技術素材，但後續要移到健身模式骨架觀察。
 
 ---
 
@@ -160,7 +160,7 @@ const neighborMap = {
 - SVG 作為目標肌群預覽，不作為健身模式主入口。
 - 滑過或選中動作時，高亮 SVG 中的目標肌群。
 - 動作教學卡片。
-- MediaPipe form check 區塊先保留入口。
+- MediaPipe 骨架觀察區塊先保留入口。
 
 4. 新增 `exercisesData`：
 
@@ -195,9 +195,9 @@ const exercisesData = {
 
 ---
 
-## Batch 7：MediaPipe 三動作 form check demo
+## Batch 7：MediaPipe 三動作骨架觀察 demo
 
-**目標**：把 MediaPipe 用在健身模式，支援目前三個健身動作的基礎姿勢檢查。
+**目標**：把 MediaPipe 用在健身模式，支援目前三個健身動作的基礎骨架觀察。
 
 **檔案**：`muscle_relax.html`（後續可拆 `fitness_pose.js`）
 
@@ -211,8 +211,8 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 ### 要做的事
 
 1. 保留 MediaPipe Pose Landmarker 載入邏輯。
-2. 健身模式中新增「啟動姿勢檢查」。
-3. 針對三個動作做基礎檢查：
+2. 健身模式中新增「啟動骨架觀察」。
+3. 針對三個動作做基礎觀察：
 
 - `biceps_curl`：手肘穩定度、彎舉幅度、上臂是否抬太高。
 - `triceps_extension`：過頭位置、上臂是否接近頭側、伸展幅度。
@@ -229,7 +229,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 **驗收**：
 
 - localhost / GitHub Pages 可開啟攝影機。
-- 三個健身動作都能看到 form check 回饋。
+- 三個健身動作都能看到骨架觀察回饋。
 - 放鬆模式不再出現「姿勢分析推薦痛點」。
 
 ---
@@ -260,13 +260,14 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - 示範圖已新增 WebP 壓縮版並保留 PNG fallback；36 張 WebP 合計約 0.84 MB。
 - 健身模式三個動作已補上靜態示意圖與 WebP fallback：`biceps_curl`、`triceps_extension`、`shoulder_press`。
 - 健身模式版面已改為「視覺左、文字右」：上方動作按鈕橫跨整列，左欄放示範圖與目標肌群 SVG，右欄保留文字步驟。
-- 健身 form check 已加入攝影機骨架疊圖，會在畫面上標示肩、肘、腕與上半身連線。
-- 健身 form check 區已新增攝影機入鏡提示；`docs/fitness_form_check_notes.md` 已記錄判斷原則、目前閾值與限制。
+- 健身骨架觀察已加入攝影機骨架疊圖，會在畫面上標示肩、肘、腕與上半身連線。
+- 健身骨架觀察區已新增攝影機入鏡提示；`docs/fitness_form_check_notes.md` 已記錄判斷原則、目前閾值與限制。
 - 已補強展示可信度與可近用性：頁尾加入製作/更新/版本資訊，安全警語加入孕期、術後、慢性疾病等族群提醒，器材未開放狀態加入文字標籤，按壓位置確認加入相鄰肌群原因提示。
-- 健身 form check 已改為自動選擇較清楚的一側手臂，並加入骨架顏色圖例；未偵測到上半身或手臂時會顯示醒目提示卡。
-- 健身 form check 的手肘穩定度已改用修剪後滑動視窗、手肘相對肩膀位移與上半身尺度正規化，降低單一壞幀、側身與身體晃動造成的誤警告。
-- 健身 form check 已明確限定正面操作：保留完整上半身骨架 overlay，不再嘗試自動判斷側身或遮擋；側身時可能出現 MediaPipe 推測點，使用者需正面面向鏡頭。
-- 健身 form check 已新增側身警示：連續多幀偵測到身體明顯偏側時提示使用者轉向正面，判斷以肩寬投影、肩寬/軀幹高比例與左右肩肘投影重疊為主；警示時暫停顯示手臂線條，只保留軀幹參考線。攝影機預覽也改為顯示完整 video frame，避免 CSS 裁切造成畫面和 MediaPipe 分析範圍不一致。
+- 健身骨架觀察已改為自動選擇較清楚的一側手臂，並加入骨架顏色圖例；未偵測到上半身或手臂時會顯示醒目提示卡。
+- 健身骨架觀察的手肘穩定度已改用修剪後滑動視窗、手肘相對肩膀位移與上半身尺度正規化，降低單一壞幀、側身與身體晃動造成的誤警告。
+- 健身骨架觀察已明確限定正面操作：保留完整上半身骨架 overlay，不再嘗試自動判斷側身或遮擋；側身時可能出現 MediaPipe 推測點，使用者需正面面向鏡頭。
+- 健身骨架觀察已新增側身警示：連續多幀偵測到身體明顯偏側時提示使用者轉向正面，判斷以肩寬投影、肩寬/軀幹高比例與左右肩肘投影重疊為主；警示時暫停顯示手臂線條，只保留軀幹參考線。攝影機預覽也改為顯示完整 video frame，避免 CSS 裁切造成畫面和 MediaPipe 分析範圍不一致。
+- 健身模式文案已收斂為「骨架觀察／輔助提示」：保留角度、幅度與穩定度回饋，但不把 MediaPipe 輸出描述成姿勢正誤評分。
 - 程式命名已從 `gif` 欄位整理為 `image` 欄位；SVG 肌肉 path 支援鍵盤 Enter/Space 選取，模式切換補上 tab aria 狀態。
 - GIF 製作工作區已建立：`assets/gif_work/gif_storyboard.html` 與 `assets/gif_work/gif_review.md`。
 - 第一批草稿先做 3 個徒手動作：`hip_flexor.hands`、`chest.hands`、`calf.hands`；確認品質後再輸出正式檔到 `assets/gifs/`。
@@ -291,7 +292,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - [ ] 原 Batch 5 — MediaPipe 姿勢分析推薦痛點（取消/待重構）
 - [x] Batch 5 — 放鬆模式按壓位置確認 + 相鄰肌群
 - [x] Batch 6 — 模式切換 + 健身模式骨架
-- [x] Batch 7 — MediaPipe 三動作 form check demo
+- [x] Batch 7 — MediaPipe 三動作骨架觀察 demo
 - [ ] Batch 8 — 收尾與展示準備
 
 ---

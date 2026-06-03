@@ -1,19 +1,19 @@
 # Muscle Relax Guide
 
-A static web app for daily muscle relaxation guidance and basic fitness form-check demos.
+A static web app for daily muscle relaxation guidance and basic fitness skeleton-observation demos.
 
 ## Features
 
 - Relax mode: select a muscle area, choose available equipment, and view verified relaxation instructions.
 - Equipment safety guard: unavailable equipment is disabled for each muscle area.
 - Source notes: relaxation methods include trusted health or rehab references in the UI.
-- Fitness mode: biceps curl, triceps extension, and shoulder press demos with static illustrations and MediaPipe-based arm form checks.
+- Fitness mode: biceps curl, triceps extension, and shoulder press demos with static illustrations and MediaPipe-based skeleton, angle, and range observation.
 - Fitness overlay: detected shoulder, elbow, wrist, and torso landmarks are drawn over the camera preview.
-- Front-facing form check: the overlay keeps the full upper-body skeleton, and supported exercises are documented as front-facing camera use only.
+- Front-facing camera use: the overlay keeps the full upper-body skeleton, and supported exercises are documented as front-facing only.
 - Camera framing: the preview keeps the source video aspect ratio, and side-facing posture triggers a front-facing warning.
-- Fitness notes: form-check behavior is documented as browser-only auxiliary feedback, not diagnosis or formal coaching assessment.
+- Fitness notes: camera feedback is documented as browser-only auxiliary observation, not diagnosis, scoring, or formal coaching assessment.
 - Robust form metrics: elbow stability uses trimmed motion windows and relative upper-body scaling to reduce noisy-frame warnings.
-- Arm tracking: form check automatically uses the clearer visible arm and explains the overlay colors in the UI.
+- Arm tracking: skeleton observation automatically uses the clearer visible arm and explains the overlay colors in the UI.
 - Trust and accessibility polish: the UI shows update/version metadata, expanded safety disclaimers, and text labels for unavailable equipment.
 - Optimized images: PNG files are kept as fallback, with WebP versions loaded first in modern browsers.
 - Separated assets: the body SVG, CSS, JavaScript, and images are split into deploy-friendly files.
@@ -64,7 +64,7 @@ Then open:
 http://localhost:8000/
 ```
 
-Camera access for fitness form checks works on `localhost` or HTTPS, such as GitHub Pages.
+Camera access for fitness skeleton observation works on `localhost` or HTTPS, such as GitHub Pages.
 
 ## GitHub Pages
 

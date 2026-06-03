@@ -1049,13 +1049,13 @@ async function startPoseAnalysis() {
     const video = document.getElementById('pose-video');
 
     if (currentMode !== 'fitness') {
-        status.textContent = '請先切換到健身模式再啟動姿勢檢查。';
+        status.textContent = '請先切換到健身模式再啟動骨架觀察。';
         return;
     }
 
     const exercise = exercisesData[currentExercise];
     if (!exercise?.formChecks?.length) {
-        status.textContent = '目前選擇的動作尚未支援姿勢檢查。';
+        status.textContent = '目前選擇的動作尚未支援即時骨架觀察。';
         return;
     }
 
@@ -1070,7 +1070,7 @@ async function startPoseAnalysis() {
     }
 
     startBtn.disabled = true;
-    status.textContent = '正在載入姿勢分析模型...';
+    status.textContent = '正在載入骨架偵測模型...';
 
     try {
         await ensurePoseLandmarker();
@@ -1087,13 +1087,13 @@ async function startPoseAnalysis() {
         syncPoseViewport(video);
 
         stopBtn.disabled = false;
-        status.textContent = `分析中：${exercise.title}。請讓肩膀、手肘與手腕進入畫面，正面面向攝影機。`;
+        status.textContent = `觀察中：${exercise.title}。請讓肩膀、手肘與手腕進入畫面，正面面向攝影機。`;
         resetFormTracking();
         lastPoseVideoTime = -1;
         runPoseLoop();
     } catch (error) {
         startBtn.disabled = false;
-        stopPoseAnalysis(`姿勢分析無法啟動：${error.message || error}`);
+        stopPoseAnalysis(`骨架觀察無法啟動：${error.message || error}`);
     }
 }
 
@@ -1308,12 +1308,12 @@ function analyzeCurrentExercise(landmarks) {
     }
 
     return {
-        summary: '此動作尚未支援姿勢檢查。',
+        summary: '此動作尚未支援即時骨架觀察。',
         sideLabel: '未支援',
         ok: false,
         angle: 0,
         rangeText: '無',
-        messages: ['請選擇支援姿勢檢查的動作。']
+        messages: ['請選擇支援骨架觀察的動作。']
     };
 }
 
@@ -1377,7 +1377,7 @@ function analyzeElbowRangeExercise(landmarks, config) {
     }
 
     return {
-        summary: `${side.label}${config.title}檢查中`,
+        summary: `${side.label}${config.title}觀察中`,
         sideLabel: side.label,
         level,
         elbowTravel,
@@ -1457,7 +1457,7 @@ function analyzeTricepsExtension(landmarks) {
     }
 
     return {
-        summary: `${side.label}三頭肌伸展檢查中`,
+        summary: `${side.label}三頭肌伸展觀察中`,
         sideLabel: side.label,
         level,
         elbowTravel,
@@ -1527,7 +1527,7 @@ function analyzeShoulderPress(landmarks) {
     }
 
     return {
-        summary: `${side.label}肩推檢查中`,
+        summary: `${side.label}肩推觀察中`,
         sideLabel: side.label,
         level,
         elbowDrift: elbowDriftX,
@@ -2173,8 +2173,8 @@ function renderExerciseCard(exerciseKey) {
                 <div class="method-caution"><strong>注意事項：</strong>${escapeHTML(exercise.caution)}</div>
                 <div class="fitness-pose-placeholder">
                     ${exercise.formChecks.length
-                        ? '可使用下方 MediaPipe form check 檢查姿勢穩定與動作幅度。'
-                        : '此動作目前提供教學與目標肌群預覽，姿勢檢查尚未開放。'}
+                        ? '可使用下方 MediaPipe 骨架觀察查看角度、幅度與動作穩定提示。'
+                        : '此動作目前提供教學與目標肌群預覽，尚未開放即時骨架觀察。'}
                 </div>
             </div>
         </div>
