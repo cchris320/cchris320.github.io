@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>肌肉放鬆指南</title>
-    <link rel="stylesheet" href="assets/styles.css?v=trust-polish-20260603">
+    <link rel="stylesheet" href="assets/styles.css?v=arm-select-20260603">
 </head>
 <body>
 
@@ -123,6 +123,14 @@
                 <div class="pose-framing-note">
                     <strong>入鏡提示：</strong>請讓頭頂、雙肩、雙手與髖部入鏡；肩推與過頭伸展請預留頭頂上方空間，避免手舉高後超出畫面。
                 </div>
+                <div class="pose-arm-control">
+                    <span class="pose-arm-label">偵測手臂</span>
+                    <div class="pose-arm-options" role="group" aria-label="偵測手臂選擇">
+                        <button type="button" class="pose-arm-btn active" data-arm="auto" aria-pressed="true" onclick="setArmPreference('auto')">自動</button>
+                        <button type="button" class="pose-arm-btn" data-arm="left" aria-pressed="false" onclick="setArmPreference('left')">左手</button>
+                        <button type="button" class="pose-arm-btn" data-arm="right" aria-pressed="false" onclick="setArmPreference('right')">右手</button>
+                    </div>
+                </div>
                 <div class="pose-actions">
                     <button class="pose-btn" id="pose-start-btn" onclick="startPoseAnalysis()">啟動姿勢檢查</button>
                     <button class="pose-btn secondary" id="pose-stop-btn" onclick="stopPoseAnalysis()" disabled>關閉攝影機</button>
@@ -145,6 +153,6 @@
     <span>版本：Final Project v1.0</span>
 </footer>
 
-<script src="assets/app.js?v=trust-polish-20260603" defer></script>
+<script src="assets/app.js?v=arm-select-20260603" defer></script>
 </body>
 </html>

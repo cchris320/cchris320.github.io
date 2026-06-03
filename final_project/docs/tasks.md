@@ -263,6 +263,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - 健身 form check 已加入攝影機骨架疊圖，會在畫面上標示肩、肘、腕與上半身連線。
 - 健身 form check 區已新增攝影機入鏡提示；`docs/fitness_form_check_notes.md` 已記錄判斷原則、目前閾值與限制。
 - 已補強展示可信度與可近用性：頁尾加入製作/更新/版本資訊，安全警語加入孕期、術後、慢性疾病等族群提醒，器材未開放狀態加入文字標籤，按壓位置確認加入相鄰肌群原因提示。
+- 健身 form check 已新增偵測手臂選擇（自動 / 左手 / 右手），並把未偵測到上半身的狀態改為醒目提示卡。
 - 程式命名已從 `gif` 欄位整理為 `image` 欄位；SVG 肌肉 path 支援鍵盤 Enter/Space 選取，模式切換補上 tab aria 狀態。
 - GIF 製作工作區已建立：`assets/gif_work/gif_storyboard.html` 與 `assets/gif_work/gif_review.md`。
 - 第一批草稿先做 3 個徒手動作：`hip_flexor.hands`、`chest.hands`、`calf.hands`；確認品質後再輸出正式檔到 `assets/gifs/`。
