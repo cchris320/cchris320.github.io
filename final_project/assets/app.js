@@ -1173,13 +1173,13 @@ function setArmPreference(preference) {
 function getArmPreferenceLabel() {
     if (armPreference === 'left') return '左手';
     if (armPreference === 'right') return '右手';
-    return '自動';
+    return '自動（較清楚）';
 }
 
 function getArmDetectionPrompt() {
     if (armPreference === 'left') return '請讓左手的肩膀、手肘與手腕完整入鏡。';
     if (armPreference === 'right') return '請讓右手的肩膀、手肘與手腕完整入鏡。';
-    return '請面向攝影機，讓至少一側手臂完整入鏡。';
+    return '請面向攝影機，讓至少一側手臂完整入鏡；自動模式會選擇可見度較高的一側。';
 }
 
 function getArmMissingSummary() {
@@ -1274,11 +1274,14 @@ function analyzeElbowRangeExercise(landmarks, config) {
         return {
             summary: getArmMissingSummary(),
             sideLabel: '未偵測',
-            level: 'info',
+            level: 'warn',
             angle: 0,
             rangeText: '0°',
             rangeLabel: config.rangeLabel,
-            messages: [getArmDetectionPrompt()]
+            messages: [
+                '請調整鏡頭，讓頭頂、雙肩、雙手與髖部入鏡。',
+                getArmDetectionPrompt()
+            ]
         };
     }
 
@@ -1334,11 +1337,14 @@ function analyzeShoulderPress(landmarks) {
         return {
             summary: getArmMissingSummary(),
             sideLabel: '未偵測',
-            level: 'info',
+            level: 'warn',
             angle: 0,
             rangeText: '0%',
             rangeLabel: '上推高度',
-            messages: [getArmDetectionPrompt()]
+            messages: [
+                '請調整鏡頭，讓頭頂、雙肩、雙手與髖部入鏡。',
+                getArmDetectionPrompt()
+            ]
         };
     }
 
@@ -1394,10 +1400,12 @@ function analyzeShoulderPress(landmarks) {
 function chooseVisibleArm(landmarks) {
     const left = visibilityScore(landmarks, [11, 13, 15]);
     const right = visibilityScore(landmarks, [12, 14, 16]);
+    const leftOk = left >= 0.45;
+    const rightOk = right >= 0.45;
 
     if (armPreference === 'left' || armPreference === 'right') {
-        const selectedScore = armPreference === 'left' ? left : right;
-        if (selectedScore < 0.45) {
+        const selectedOk = armPreference === 'left' ? leftOk : rightOk;
+        if (!selectedOk) {
             activeArmSide = null;
             return null;
         }
@@ -1406,12 +1414,14 @@ function chooseVisibleArm(landmarks) {
         return armSides[armPreference];
     }
 
-    if (left < 0.45 && right < 0.45) {
+    if (!leftOk && !rightOk) {
         activeArmSide = null;
         return null;
     }
 
-    let pick = left >= right ? 'left' : 'right';
+    let pick = leftOk && rightOk
+        ? (left >= right ? 'left' : 'right')
+        : (leftOk ? 'left' : 'right');
     // Hysteresis: stay on the current arm unless the other is clearly more visible,
     // so the tracked side (and its measurement window) doesn't flip frame-to-frame.
     if (activeArmSide && pick !== activeArmSide) {
