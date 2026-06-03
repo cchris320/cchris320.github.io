@@ -877,10 +877,8 @@ let sideViewWarningActive = false;
 
 const POSE_WINDOW_MS = 2500;
 const LANDMARK_VISIBLE_THRESHOLD = 0.45;
-const SIDE_VIEW_RATIO_THRESHOLD = 0.65;
-const SIDE_VIEW_DEPTH_THRESHOLD = 0.14;
-const SIDE_VIEW_SHOULDER_WIDTH_THRESHOLD = 0.17;
-const SIDE_VIEW_HEAD_SHOULDER_RATIO_THRESHOLD = 1.25;
+const SIDE_VIEW_RATIO_THRESHOLD = 0.42;
+const SIDE_VIEW_SHOULDER_WIDTH_THRESHOLD = 0.14;
 const SIDE_VIEW_WARNING_FRAMES = 8;
 const armSides = {
     left: { name: 'left', label: '左手', shoulder: 11, elbow: 13, wrist: 15 },
@@ -1250,10 +1248,7 @@ function isLikelySideView(landmarks) {
     const leftHip = landmarks[23];
     const rightHip = landmarks[24];
     const shoulderWidth = distance(leftShoulder, rightShoulder);
-    const shoulderDepthDiff = Math.abs((leftShoulder.z || 0) - (rightShoulder.z || 0));
-    if (shoulderDepthDiff > SIDE_VIEW_DEPTH_THRESHOLD && shoulderDepthDiff > shoulderWidth * 0.65) {
-        return true;
-    }
+    if (shoulderWidth < SIDE_VIEW_SHOULDER_WIDTH_THRESHOLD) return true;
 
     const shoulderMid = midpoint(leftShoulder, rightShoulder);
     const hipsVisible = isVisibleLandmark(leftHip) && isVisibleLandmark(rightHip);
@@ -1263,13 +1258,7 @@ function isLikelySideView(landmarks) {
         if (shoulderWidth / torsoHeight < SIDE_VIEW_RATIO_THRESHOLD) return true;
     }
 
-    const nose = landmarks[0];
-    if (isVisibleLandmark(nose)) {
-        const headToShoulder = Math.max(0.08, distance(nose, shoulderMid));
-        if (shoulderWidth / headToShoulder < SIDE_VIEW_HEAD_SHOULDER_RATIO_THRESHOLD) return true;
-    }
-
-    return shoulderWidth < SIDE_VIEW_SHOULDER_WIDTH_THRESHOLD;
+    return false;
 }
 
 function analyzeCurrentExercise(landmarks) {
