@@ -872,7 +872,6 @@ let poseSamples = [];
 let poseTrackingKey = null;
 let activeArmSide = null;
 let lastFormFeedback = null;
-let armPreference = 'auto';
 
 const POSE_WINDOW_MS = 2500;
 const armSides = {
@@ -1153,43 +1152,6 @@ function resetCurlTracking() {
     resetFormTracking();
 }
 
-function setArmPreference(preference) {
-    if (!['auto', 'left', 'right'].includes(preference)) return;
-
-    armPreference = preference;
-    document.querySelectorAll('.pose-arm-btn').forEach(btn => {
-        const isActive = btn.dataset.arm === preference;
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-pressed', String(isActive));
-    });
-    resetFormTracking();
-
-    const status = document.getElementById('pose-status');
-    if (status && currentMode === 'fitness' && !poseStream) {
-        status.textContent = `已選擇${getArmPreferenceLabel()}偵測。啟動攝影機後，請讓肩膀、手肘與手腕入鏡。`;
-    }
-}
-
-function getArmPreferenceLabel() {
-    if (armPreference === 'left') return '左手';
-    if (armPreference === 'right') return '右手';
-    return '自動（較清楚）';
-}
-
-function getArmDetectionPrompt() {
-    if (armPreference === 'left') return '請讓左手的肩膀、手肘與手腕完整入鏡。';
-    if (armPreference === 'right') return '請讓右手的肩膀、手肘與手腕完整入鏡。';
-    return '請面向攝影機，讓至少一側手臂完整入鏡；自動模式會選擇可見度較高的一側。';
-}
-
-function getArmMissingSummary() {
-    if (armPreference === 'left' || armPreference === 'right') {
-        return `尚未清楚偵測到${getArmPreferenceLabel()}，請調整鏡頭或切回自動。`;
-    }
-
-    return '尚未清楚偵測到手臂，請讓肩膀、手肘與手腕進入畫面。';
-}
-
 function ensureTrackingContext(sideName) {
     const key = `${currentExercise}:${sideName}`;
     if (poseTrackingKey !== key) {
@@ -1272,7 +1234,7 @@ function analyzeElbowRangeExercise(landmarks, config) {
     const side = chooseVisibleArm(landmarks);
     if (!side) {
         return {
-            summary: getArmMissingSummary(),
+            summary: '尚未清楚偵測到手臂，請調整鏡頭。',
             sideLabel: '未偵測',
             level: 'warn',
             angle: 0,
@@ -1280,7 +1242,7 @@ function analyzeElbowRangeExercise(landmarks, config) {
             rangeLabel: config.rangeLabel,
             messages: [
                 '請調整鏡頭，讓頭頂、雙肩、雙手與髖部入鏡。',
-                getArmDetectionPrompt()
+                '請面向攝影機，讓至少一側手臂完整入鏡；系統會自動選擇可見度較高的一側。'
             ]
         };
     }
@@ -1335,7 +1297,7 @@ function analyzeShoulderPress(landmarks) {
     const side = chooseVisibleArm(landmarks);
     if (!side) {
         return {
-            summary: getArmMissingSummary(),
+            summary: '尚未清楚偵測到手臂，請調整鏡頭。',
             sideLabel: '未偵測',
             level: 'warn',
             angle: 0,
@@ -1343,7 +1305,7 @@ function analyzeShoulderPress(landmarks) {
             rangeLabel: '上推高度',
             messages: [
                 '請調整鏡頭，讓頭頂、雙肩、雙手與髖部入鏡。',
-                getArmDetectionPrompt()
+                '請面向攝影機，讓至少一側手臂完整入鏡；系統會自動選擇可見度較高的一側。'
             ]
         };
     }
@@ -1402,17 +1364,6 @@ function chooseVisibleArm(landmarks) {
     const right = visibilityScore(landmarks, [12, 14, 16]);
     const leftOk = left >= 0.45;
     const rightOk = right >= 0.45;
-
-    if (armPreference === 'left' || armPreference === 'right') {
-        const selectedOk = armPreference === 'left' ? leftOk : rightOk;
-        if (!selectedOk) {
-            activeArmSide = null;
-            return null;
-        }
-
-        activeArmSide = armPreference;
-        return armSides[armPreference];
-    }
 
     if (!leftOk && !rightOk) {
         activeArmSide = null;
