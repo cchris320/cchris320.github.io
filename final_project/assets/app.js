@@ -872,9 +872,13 @@ let poseSamples = [];
 let poseTrackingKey = null;
 let activeArmSide = null;
 let lastFormFeedback = null;
+let sideViewFrameCount = 0;
+let sideViewWarningActive = false;
 
 const POSE_WINDOW_MS = 2500;
 const LANDMARK_VISIBLE_THRESHOLD = 0.45;
+const SIDE_VIEW_RATIO_THRESHOLD = 0.5;
+const SIDE_VIEW_WARNING_FRAMES = 8;
 const armSides = {
     left: { name: 'left', label: '左手', shoulder: 11, elbow: 13, wrist: 15 },
     right: { name: 'right', label: '右手', shoulder: 12, elbow: 14, wrist: 16 }
@@ -1078,6 +1082,7 @@ async function startPoseAnalysis() {
         video.srcObject = poseStream;
         document.getElementById('pose-video-wrap')?.classList.remove('hidden');
         await video.play();
+        syncPoseViewport(video);
 
         stopBtn.disabled = false;
         status.textContent = `分析中：${exercise.title}。請讓肩膀、手肘與手腕進入畫面，正面面向攝影機。`;
@@ -1137,6 +1142,7 @@ function renderPoseResult(result) {
     }
 
     const feedback = analyzeCurrentExercise(landmarks);
+    applySideViewWarning(feedback, landmarks);
     lastFormFeedback = { landmarks, feedback };
     drawPoseOverlay(landmarks, feedback);
     status.textContent = feedback.summary;
@@ -1148,6 +1154,8 @@ function resetFormTracking() {
     poseTrackingKey = null;
     activeArmSide = null;
     lastFormFeedback = null;
+    sideViewFrameCount = 0;
+    sideViewWarningActive = false;
 }
 
 function resetCurlTracking() {
@@ -1214,6 +1222,37 @@ function getUpperBodyMetrics(landmarks, side) {
         torsoHeight,
         scale: Math.max(0.12, shoulderWidth, torsoHeight)
     };
+}
+
+function applySideViewWarning(feedback, landmarks) {
+    const likelySideView = isLikelySideView(landmarks);
+    sideViewFrameCount = likelySideView ? sideViewFrameCount + 1 : 0;
+    sideViewWarningActive = sideViewFrameCount >= SIDE_VIEW_WARNING_FRAMES;
+
+    if (!sideViewWarningActive) return;
+
+    feedback.level = 'warn';
+    feedback.summary = '偵測到身體偏側，請轉向正面。';
+    feedback.messages = [
+        '偵測到身體偏側，請正面面向鏡頭後再開始動作。',
+        ...feedback.messages
+    ];
+}
+
+function isLikelySideView(landmarks) {
+    const leftShoulder = landmarks[11];
+    const rightShoulder = landmarks[12];
+    const leftHip = landmarks[23];
+    const rightHip = landmarks[24];
+    const torsoLandmarks = [leftShoulder, rightShoulder, leftHip, rightHip];
+    if (!torsoLandmarks.every(point => isVisibleLandmark(point))) return false;
+
+    const shoulderWidth = distance(leftShoulder, rightShoulder);
+    const shoulderMid = midpoint(leftShoulder, rightShoulder);
+    const hipMid = midpoint(leftHip, rightHip);
+    const torsoHeight = Math.max(0.12, distance(shoulderMid, hipMid));
+
+    return shoulderWidth / torsoHeight < SIDE_VIEW_RATIO_THRESHOLD;
 }
 
 function analyzeCurrentExercise(landmarks) {
@@ -1435,6 +1474,8 @@ function drawPoseOverlay(landmarks, feedback) {
     const video = document.getElementById('pose-video');
     if (!canvas || !video?.videoWidth || !video?.videoHeight) return;
 
+    syncPoseViewport(video);
+
     const displayWidth = video.clientWidth || video.videoWidth;
     const displayHeight = video.clientHeight || video.videoHeight;
     if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
@@ -1472,6 +1513,13 @@ function drawPoseOverlay(landmarks, feedback) {
         const active = activeIndexes.has(index);
         drawPosePoint(ctx, landmarks[index], active);
     });
+}
+
+function syncPoseViewport(video) {
+    const wrap = document.getElementById('pose-video-wrap');
+    if (!wrap || !video?.videoWidth || !video?.videoHeight) return;
+
+    wrap.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
 }
 
 function getFeedbackArmSide(feedback) {
@@ -1547,7 +1595,7 @@ function renderNoPoseFeedback() {
         <div class="form-feedback warn">
             <div><strong>未偵測到上半身</strong></div>
             <ul>
-                <li>請調整鏡頭，讓頭頂、雙肩、雙手與髖部入鏡。</li>
+                <li>請正面面向鏡頭，讓頭頂、雙肩、雙手與髖部入鏡。</li>
                 <li>肩推與過頭伸展請預留頭頂上方空間。</li>
             </ul>
         </div>
