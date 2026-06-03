@@ -1170,15 +1170,48 @@ function pushPoseSample(sample) {
 }
 
 function windowSpan(key) {
-    if (!poseSamples.length) return 0;
-    let min = Infinity;
-    let max = -Infinity;
-    for (const sample of poseSamples) {
-        const value = sample[key];
-        if (value < min) min = value;
-        if (value > max) max = value;
+    const values = sampleValues(key);
+    if (values.length < 2) return 0;
+    values.sort((a, b) => a - b);
+
+    if (values.length < 6) {
+        return values[values.length - 1] - values[0];
     }
-    return max - min;
+
+    const lowerIndex = Math.floor((values.length - 1) * 0.1);
+    const upperIndex = Math.ceil((values.length - 1) * 0.9);
+    return Math.max(0, values[upperIndex] - values[lowerIndex]);
+}
+
+function sampleValues(key) {
+    const confident = poseSamples
+        .filter(sample => (sample.confidence ?? 1) >= 0.5 && Number.isFinite(sample[key]))
+        .map(sample => sample[key]);
+
+    if (confident.length >= 4 || confident.length === poseSamples.length) {
+        return confident;
+    }
+
+    return poseSamples
+        .filter(sample => Number.isFinite(sample[key]))
+        .map(sample => sample[key]);
+}
+
+function vectorWindowTravel(xKey, yKey) {
+    return Math.hypot(windowSpan(xKey), windowSpan(yKey));
+}
+
+function getUpperBodyMetrics(landmarks, side) {
+    const shoulder = landmarks[side.shoulder];
+    const hip = landmarks[side.name === 'left' ? 23 : 24];
+    const shoulderWidth = Math.max(0.08, distance(landmarks[11], landmarks[12]));
+    const torsoHeight = Math.max(0.12, Math.abs((hip?.y ?? shoulder.y + 0.3) - shoulder.y));
+
+    return {
+        shoulderWidth,
+        torsoHeight,
+        scale: Math.max(0.12, shoulderWidth, torsoHeight)
+    };
 }
 
 function analyzeCurrentExercise(landmarks) {
@@ -1250,14 +1283,20 @@ function analyzeElbowRangeExercise(landmarks, config) {
     const shoulder = landmarks[side.shoulder];
     const elbow = landmarks[side.elbow];
     const wrist = landmarks[side.wrist];
-    const shoulderWidth = Math.max(0.08, distance(landmarks[11], landmarks[12]));
+    const metrics = getUpperBodyMetrics(landmarks, side);
+    const confidence = visibilityScore(landmarks, [side.shoulder, side.elbow, side.wrist]);
 
     ensureTrackingContext(side.name);
     const angle = jointAngle(shoulder, elbow, wrist);
-    pushPoseSample({ angle, elbowX: elbow.x, elbowY: elbow.y });
+    pushPoseSample({
+        angle,
+        elbowRelX: elbow.x - shoulder.x,
+        elbowRelY: elbow.y - shoulder.y,
+        confidence
+    });
 
     const range = windowSpan('angle');
-    const elbowTravel = Math.hypot(windowSpan('elbowX'), windowSpan('elbowY')) / shoulderWidth;
+    const elbowTravel = vectorWindowTravel('elbowRelX', 'elbowRelY') / metrics.scale;
     const moving = range > 8;
     const elbowStable = elbowTravel < config.maxElbowDrift;
     const rangeOk = range > config.minRange;
@@ -1267,17 +1306,10 @@ function analyzeElbowRangeExercise(landmarks, config) {
     if (!moving) {
         level = 'info';
         messages.push('開始做動作，系統會量測你的幅度與手肘穩定度。');
-    } else if (!elbowStable) {
-        level = 'warn';
-        messages.push(config.stableWarn);
-    } else if (rangeOk) {
-        level = 'good';
-        messages.push(config.stableOk);
-        messages.push(config.rangeOk);
     } else {
-        level = 'info';
-        messages.push(config.stableOk);
-        messages.push(config.rangeWarn);
+        level = !elbowStable ? 'warn' : (rangeOk ? 'good' : 'info');
+        messages.push(elbowStable ? config.stableOk : config.stableWarn);
+        messages.push(rangeOk ? config.rangeOk : config.rangeWarn);
     }
 
     return {
@@ -1313,17 +1345,21 @@ function analyzeShoulderPress(landmarks) {
     const shoulder = landmarks[side.shoulder];
     const elbow = landmarks[side.elbow];
     const wrist = landmarks[side.wrist];
-    const hip = landmarks[side.name === 'left' ? 23 : 24];
-    const shoulderWidth = Math.max(0.08, distance(landmarks[11], landmarks[12]));
-    const torsoHeight = Math.max(0.12, Math.abs((hip?.y ?? shoulder.y + 0.3) - shoulder.y));
+    const metrics = getUpperBodyMetrics(landmarks, side);
+    const confidence = visibilityScore(landmarks, [side.shoulder, side.elbow, side.wrist]);
 
     ensureTrackingContext(side.name);
     const angle = jointAngle(shoulder, elbow, wrist);
-    pushPoseSample({ angle, elbowX: elbow.x, wristY: wrist.y });
+    pushPoseSample({
+        angle,
+        elbowRelX: elbow.x - shoulder.x,
+        wristRelY: wrist.y - shoulder.y,
+        confidence
+    });
 
-    const wristTravel = windowSpan('wristY') / torsoHeight;
-    const overheadReached = wrist.y < shoulder.y - torsoHeight * 0.1;
-    const elbowDriftX = windowSpan('elbowX') / shoulderWidth;
+    const wristTravel = windowSpan('wristRelY') / metrics.torsoHeight;
+    const overheadReached = wrist.y < shoulder.y - metrics.torsoHeight * 0.1;
+    const elbowDriftX = windowSpan('elbowRelX') / metrics.scale;
     const elbowPathOk = elbowDriftX < 0.6;
     const moving = wristTravel > 0.12;
     const heightOk = wristTravel > 0.5 && overheadReached;
