@@ -14,6 +14,7 @@ A static web app for daily muscle relaxation guidance and basic fitness skeleton
 - Fitness notes: camera feedback is documented as browser-only auxiliary observation, not diagnosis, scoring, or formal coaching assessment.
 - Robust form metrics: elbow stability uses trimmed motion windows and relative upper-body scaling to reduce noisy-frame warnings.
 - Arm tracking: skeleton observation automatically uses the clearer visible arm and explains the overlay colors in the UI.
+- Mobile body map: narrow screens switch between enlarged front and back views, and selecting a one-sided muscle view changes the body map automatically.
 - Trust and accessibility polish: the UI shows update/version metadata, expanded safety disclaimers, and text labels for unavailable equipment.
 - Optimized images: PNG files are kept as fallback, with WebP versions loaded first in modern browsers.
 - Separated assets: the body SVG, CSS, JavaScript, and images are split into deploy-friendly files.

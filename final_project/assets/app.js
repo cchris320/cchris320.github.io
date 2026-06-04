@@ -7,6 +7,7 @@ async function loadBodyMap() {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const svgText = await response.text();
         wrapper.innerHTML = svgText.replace(/<\?xml[^>]*>/, '').trim();
+        setupBodyViewControl(wrapper);
     } catch (error) {
         wrapper.innerHTML = '<div class="svg-loading">肌肉圖載入失敗，請使用 localhost 或 GitHub Pages 開啟此頁。</div>';
         console.error('Body map SVG failed to load:', error);
@@ -864,6 +865,11 @@ let currentMuscle = null;
 let currentMode = 'relax';
 let currentExercise = 'biceps_curl';
 let svgHome = null;
+let bodyView = 'front';
+let bodySvgElement = null;
+let bodySvgFullViewBox = null;
+
+const BODY_VIEW_BREAKPOINT = 720;
 let poseLandmarker = null;
 let poseStream = null;
 let poseAnimationFrame = null;
@@ -922,6 +928,7 @@ function setMode(mode) {
         clearRelaxHighlights();
     }
     moveSvgToMode(mode);
+    syncBodyView();
     document.getElementById('relax-mode').classList.toggle('hidden', !isRelax);
     document.getElementById('fitness-mode').classList.toggle('hidden', isRelax);
     document.getElementById('relax-mode-btn').classList.toggle('active', isRelax);
@@ -992,6 +999,7 @@ function selectMuscle(muscleId) {
         if (el) el.setAttribute('aria-pressed', 'true');
     });
     currentMuscle = muscleId;
+    ensureBodyViewForMuscles([muscleId]);
     document.getElementById('muscle-label').textContent = muscleNames[muscleId] || muscleId;
 
     // Show step 2
@@ -2121,6 +2129,7 @@ function previewExerciseTargets(exerciseKey) {
 
     clearFitnessTargets();
     exercise.targetMuscles.forEach(markFitnessTarget);
+    ensureBodyViewForMuscles(exercise.targetMuscles);
 
     const label = document.getElementById('fitness-target-label');
     if (label) {
@@ -2138,6 +2147,101 @@ function markFitnessTarget(muscleId) {
         const el = document.getElementById(id);
         if (el) el.classList.add('fitness-target');
     });
+}
+
+function setupBodyViewControl(wrapper) {
+    bodySvgElement = wrapper.querySelector('svg');
+    if (!bodySvgElement) return;
+
+    bodySvgElement.removeAttribute('width');
+    bodySvgElement.removeAttribute('height');
+    bodySvgElement.setAttribute('overflow', 'hidden');
+
+    const viewBox = bodySvgElement.getAttribute('viewBox')
+        ?.trim()
+        .split(/\s+/)
+        .map(Number);
+    if (!viewBox || viewBox.length !== 4 || viewBox.some(value => !Number.isFinite(value))) return;
+
+    bodySvgFullViewBox = {
+        x: viewBox[0],
+        y: viewBox[1],
+        width: viewBox[2],
+        height: viewBox[3]
+    };
+
+    const controls = document.createElement('div');
+    controls.className = 'body-view-toggle';
+    controls.setAttribute('role', 'group');
+    controls.setAttribute('aria-label', '人體圖視角');
+    controls.innerHTML = `
+        <button type="button" class="body-view-btn active" data-view="front" aria-pressed="true">正面</button>
+        <button type="button" class="body-view-btn" data-view="back" aria-pressed="false">背面</button>
+    `;
+    controls.querySelectorAll('.body-view-btn').forEach(button => {
+        button.addEventListener('click', () => setBodyView(button.dataset.view));
+    });
+
+    wrapper.insertBefore(controls, bodySvgElement);
+    window.addEventListener('resize', syncBodyView);
+    syncBodyView();
+}
+
+function setBodyView(view) {
+    if (view !== 'front' && view !== 'back') return;
+    bodyView = view;
+    document.querySelectorAll('.body-view-btn').forEach(button => {
+        const active = button.dataset.view === view;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+    });
+    syncBodyView();
+}
+
+function syncBodyView() {
+    if (!bodySvgElement || !bodySvgFullViewBox) return;
+
+    const { x, y, width, height } = bodySvgFullViewBox;
+    bodySvgElement.classList.remove('body-view-front', 'body-view-back');
+
+    if (window.innerWidth > BODY_VIEW_BREAKPOINT) {
+        bodySvgElement.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+        return;
+    }
+
+    const halfWidth = width / 2;
+
+    if (bodyView === 'back') {
+        bodySvgElement.classList.add('body-view-back');
+        bodySvgElement.setAttribute('viewBox', `${x + halfWidth} ${y} ${halfWidth} ${height}`);
+    } else {
+        bodySvgElement.classList.add('body-view-front');
+        bodySvgElement.setAttribute('viewBox', `${x} ${y} ${halfWidth} ${height}`);
+    }
+}
+
+function ensureBodyViewForMuscles(muscleIds) {
+    if (!bodySvgElement || !bodySvgFullViewBox || window.innerWidth > BODY_VIEW_BREAKPOINT) return;
+
+    const paths = muscleIds
+        .flatMap(muscleId => muscleMap[muscleId] || [])
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+    const hasFront = paths.some(path => isInsideSvgGroup(path, 'g4116'));
+    const hasBack = paths.some(path => isInsideSvgGroup(path, 'g3613'));
+
+    if (hasFront && !hasBack) setBodyView('front');
+    if (hasBack && !hasFront) setBodyView('back');
+}
+
+function isInsideSvgGroup(element, groupId) {
+    let node = element;
+    while (node && node !== bodySvgElement) {
+        if (node.id === groupId) return true;
+        node = node.parentElement;
+    }
+    return false;
 }
 
 function renderExerciseCard(exerciseKey) {

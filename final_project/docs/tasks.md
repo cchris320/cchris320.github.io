@@ -268,6 +268,7 @@ MediaPipe 與 `getUserMedia` 需要 **HTTPS 或 localhost**。
 - 健身骨架觀察已明確限定正面操作：保留完整上半身骨架 overlay，不再嘗試自動判斷側身或遮擋；側身時可能出現 MediaPipe 推測點，使用者需正面面向鏡頭。
 - 健身骨架觀察已新增側身警示：連續多幀偵測到身體明顯偏側時提示使用者轉向正面，判斷以肩寬投影、肩寬/軀幹高比例與左右肩肘投影重疊為主；警示時暫停顯示手臂線條，只保留軀幹參考線。攝影機預覽也改為顯示完整 video frame，避免 CSS 裁切造成畫面和 MediaPipe 分析範圍不一致。
 - 健身模式文案已收斂為「骨架觀察／輔助提示」：保留角度、幅度與穩定度回饋，但不把 MediaPipe 輸出描述成姿勢正誤評分。
+- 已完成展示級視覺收尾：安全提醒改為可展開摘要、卡片圓角與陰影統一、健身模式加入青綠色區隔；手機版步驟列改用短標籤，人體圖可切換放大的正面／背面視角，選到僅位於單側的肌群時會自動切換。
 - 程式命名已從 `gif` 欄位整理為 `image` 欄位；SVG 肌肉 path 支援鍵盤 Enter/Space 選取，模式切換補上 tab aria 狀態。
 - GIF 製作工作區已建立：`assets/gif_work/gif_storyboard.html` 與 `assets/gif_work/gif_review.md`。
 - 第一批草稿先做 3 個徒手動作：`hip_flexor.hands`、`chest.hands`、`calf.hands`；確認品質後再輸出正式檔到 `assets/gifs/`。
