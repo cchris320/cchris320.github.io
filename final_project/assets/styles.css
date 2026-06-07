@@ -136,6 +136,13 @@
         #svg-wrapper path.muscle-clickable {
             cursor: pointer;
             transition: fill 0.15s;
+            outline: none;
+        }
+        #svg-wrapper path.muscle-clickable:focus-visible {
+            stroke: #1a365d !important;
+            stroke-width: 2.5px;
+            stroke-linejoin: round;
+            vector-effect: non-scaling-stroke;
         }
         #svg-wrapper path.muscle-clickable:hover {
             fill: rgba(66, 153, 225, 0.55) !important;
